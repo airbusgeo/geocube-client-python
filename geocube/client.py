@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import warnings
 from datetime import datetime
 from typing import Dict, List, Tuple, Union
 
@@ -233,7 +234,7 @@ class Client:
     def list_records(self, name: str = "", tags: Dict[str, str] = None,
                      from_time: datetime = None, to_time: datetime = None,
                      aoi: geometry.MultiPolygon = None,
-                     limit: int = 100, page: int = 0, with_aoi: bool = False) -> List[entities.Record]:
+                     limit: int = 10000, page: int = 0, with_aoi: bool = False) -> List[entities.Record]:
         """
         List records given filters
 
@@ -245,7 +246,7 @@ class Client:
         from_time: filter by date
         to_time: filter by date
         aoi: records that intersect the AOI in geographic coordinates
-        limit: the number of records returned
+        limit: the number of records returned (0 to return all records)
         page: start at 0
         with_aoi: also returns the AOI of the record. Otherwise, only the ID of the aoi is returned.
         load_aoi(record) can be called to retrieve the AOI later.
@@ -263,7 +264,12 @@ class Client:
         if to_time is not None:
             req.to_time.FromDatetime(to_time)
 
-        return [entities.Record.from_pb(resp.record) for resp in self.stub.ListRecords(req)]
+        records = [entities.Record.from_pb(resp.record) for resp in self.stub.ListRecords(req)]
+        if len(records) == limit:
+            warnings.warn("Maximum number of records reached. Call list_records(..., page=) or "
+                          "list_records(..., limit=) to get more records.")
+
+        return records
 
     @utils.catch_rpc_error
     def load_aoi(self, aoi_id: Union[str, entities.Record]) -> geometry.MultiPolygon:
@@ -380,10 +386,14 @@ class Client:
         ds_bands = None
         ds_dtype = "u1"
         if isinstance(record, tuple) or bands is None or dformat is None:
-            with rasterio.open(uri) as ds:
-                tile = entities.Tile.from_geotransform(ds.crs, ds.transform, ds.shape)
-                ds_bands = list(range(1, ds.count+1))
-                ds_dtype = ds.dtypes[0]
+            try:
+                with rasterio.open(uri) as ds:
+                    tile = entities.Tile.from_geotransform(ds.crs, ds.transform, ds.shape)
+                    ds_bands = list(range(1, ds.count+1))
+                    ds_dtype = ds.dtypes[0]
+            except Exception as e:
+                raise f'if "record" is a tuple or "bands" or "dformat" is not defined, geocube-client tries to deduce'\
+                      f'some information reading the file {uri}, but it encountered the following error :{e}.'
 
         if isinstance(record, tuple):
             try:
