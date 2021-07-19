@@ -14,9 +14,9 @@ class CubeIterator:
     """
     Iterator on a cube of datasets from the Geocube Server
 
-    Returns
+    Yields
     -------
-    - ndarray, imageHeader or filename depending on options
+    - array, Image or filename depending on options
     - list of record composing the image
     - error or None
     - download_size
@@ -89,15 +89,15 @@ class CubeIterator:
 
         if self.file_format == catalog_pb2.GTiff:
             filename = self.file_pattern.replace('{#}', str(self.num))
-            mindate = min(r.datetime for r in records).strftime("%Y-%m-%d_%H:%M:%S")
-            maxdate = max(r.datetime for r in records).strftime("%Y-%m-%d_%H:%M:%S")
-            filename = filename.replace('{date}', mindate if mindate == maxdate else mindate+"_"+maxdate)
+            min_date = min(r.datetime for r in records).strftime("%Y-%m-%d_%H:%M:%S")
+            max_date = max(r.datetime for r in records).strftime("%Y-%m-%d_%H:%M:%S")
+            filename = filename.replace('{date}', min_date if min_date == max_date else min_date+"_"+max_date)
             filename = filename.replace('{id}', '_'.join([r.id for r in records]))
             filename = filename.replace('{name}', records[0].name)
-            dirname = os.path.dirname(filename)
-            if dirname != '' and not os.path.exists(dirname):
+            dir_name = os.path.dirname(filename)
+            if dir_name != '' and not os.path.exists(dir_name):
                 try:
-                    os.makedirs(dirname)
+                    os.makedirs(dir_name)
                 except OSError as exc:  # Guard against race condition
                     if exc.errno != errno.EEXIST:
                         raise

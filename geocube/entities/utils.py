@@ -1,4 +1,4 @@
-from typing import Union, List, Tuple
+from typing import Union, List
 import geopandas as gpd
 
 from geocube import entities

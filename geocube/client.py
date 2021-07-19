@@ -388,7 +388,7 @@ class Client:
         if isinstance(record, tuple) or bands is None or dformat is None:
             try:
                 with rasterio.open(uri) as ds:
-                    tile = entities.Tile.from_geotransform(ds.crs, ds.transform, ds.shape)
+                    tile = entities.Tile.from_geotransform(ds.transform, ds.crs, ds.shape)
                     ds_bands = list(range(1, ds.count+1))
                     ds_dtype = ds.dtypes[0]
             except Exception as e:

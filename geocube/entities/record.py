@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import collections
 import pprint
 from datetime import datetime
 
@@ -134,7 +135,7 @@ class Record:
         Parameters
         ----------
         records: list of records to group. If records is a list of list, records is flatten.
-        func_key: function taking a record and returning a key (eg. entities.Record.key_date, lambda r:r.datetime.date())
+        func_key: function taking a record and returning a key (eg. entities.Record.key_date, lambda r:r.datetime)
 
         Returns
         -------

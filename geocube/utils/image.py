@@ -23,7 +23,7 @@ def timeserie_to_animation(images: List[np.array], gif_name: str, duration=0.2, 
                 pilim = Image.fromarray(image)
                 d = ImageDraw.Draw(pilim)
                 d.text((10, 10), legend[i], fill=c)
-                image=np.array(pilim)
+                image = np.array(pilim)
             writer.append_data(image)
 
 
@@ -31,7 +31,7 @@ def image_to_geotiff(image: np.ndarray, transform: affine.Affine, projection: st
     import rasterio
     if len(image.shape) == 2:
         image = np.expand_dims(image, 0)
-    elif image.shape[0] > 4:
+    elif image.shape[0] > image.shape[2]:
         image = np.moveaxis(image, -1, 0)
 
     meta = {'driver': 'GTiff',
