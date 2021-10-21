@@ -75,8 +75,11 @@ class Tile:
         p = geometry.Polygon([[x1, y1], [x1, y2], [x2, y2], [x2, y1], [x1, y1]])
         return gpd.GeoSeries(p, crs=self.crs)
 
-    def geometry(self, crs: str):
-        return self.geoseries().to_crs(crs).iloc[0]
+    def geometry(self, to_crs: str = None):
+        gs = self.geoseries()
+        if to_crs is not None:
+            gs = gs.to_crs(to_crs)
+        return gs.iloc[0]
 
     @staticmethod
     def _parse_geotransform(transform: Union[affine.Affine, Tuple[float, float, float, float, float, float]]) \
@@ -86,13 +89,16 @@ class Tile:
         return affine.Affine.from_gdal(*transform)
 
     @staticmethod
-    def plot(tiles: List[Tile], world_path: str = gpd.datasets.get_path('naturalearth_lowres')):
-        base = gpd.read_file(world_path).plot(color='lightgrey', edgecolor='white')
+    def plot(tiles: List[Tile], world_path: str = gpd.datasets.get_path('naturalearth_lowres'), ax=None, margin_pc=5):
+        if world_path is not None:
+            base = gpd.read_file(world_path).plot(color='lightgrey', edgecolor='white', ax=ax)
+        else:
+            base = ax
 
         ts = gpd.GeoSeries(pd.concat([t.geoseries().to_crs("epsg:4326") for t in tiles]))
-        ts.plot(ax=base, alpha=0.5)
+        ts.plot(ax=base, alpha=0.5, edgecolor='gray')
         bounds = ts.total_bounds
-        margin = 0.05*min(bounds[2] - bounds[0], bounds[3] - bounds[1])
+        margin = (margin_pc/100)*min(bounds[2] - bounds[0], bounds[3] - bounds[1])
         base.set_xlim(bounds[0]-margin, bounds[2]+margin)
         base.set_ylim(bounds[1]-margin, bounds[3]+margin)
         return base
