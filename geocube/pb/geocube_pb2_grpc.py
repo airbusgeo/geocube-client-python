@@ -11,7 +11,9 @@ from geocube.pb import variables_pb2 as geocube_dot_pb_dot_variables__pb2
 
 
 class GeocubeStub(object):
-    """Missing associated documentation comment in .proto file."""
+    """*
+    API
+    """
 
     def __init__(self, channel):
         """Constructor.
@@ -104,20 +106,25 @@ class GeocubeStub(object):
                 request_serializer=geocube_dot_pb_dot_operations__pb2.IndexDatasetsRequest.SerializeToString,
                 response_deserializer=geocube_dot_pb_dot_operations__pb2.IndexDatasetsResponse.FromString,
                 )
-        self.IngestDatasets = channel.unary_stream(
-                '/geocube.Geocube/IngestDatasets',
-                request_serializer=geocube_dot_pb_dot_operations__pb2.IngestDatasetsRequest.SerializeToString,
-                response_deserializer=geocube_dot_pb_dot_operations__pb2.IngestDatasetsResponse.FromString,
-                )
         self.ConfigConsolidation = channel.unary_unary(
                 '/geocube.Geocube/ConfigConsolidation',
                 request_serializer=geocube_dot_pb_dot_operations__pb2.ConfigConsolidationRequest.SerializeToString,
                 response_deserializer=geocube_dot_pb_dot_operations__pb2.ConfigConsolidationResponse.FromString,
                 )
+        self.GetConsolidationParams = channel.unary_unary(
+                '/geocube.Geocube/GetConsolidationParams',
+                request_serializer=geocube_dot_pb_dot_operations__pb2.GetConsolidationParamsRequest.SerializeToString,
+                response_deserializer=geocube_dot_pb_dot_operations__pb2.GetConsolidationParamsResponse.FromString,
+                )
         self.Consolidate = channel.unary_unary(
                 '/geocube.Geocube/Consolidate',
                 request_serializer=geocube_dot_pb_dot_operations__pb2.ConsolidateRequest.SerializeToString,
                 response_deserializer=geocube_dot_pb_dot_operations__pb2.ConsolidateResponse.FromString,
+                )
+        self.ListJobs = channel.unary_unary(
+                '/geocube.Geocube/ListJobs',
+                request_serializer=geocube_dot_pb_dot_operations__pb2.ListJobsRequest.SerializeToString,
+                response_deserializer=geocube_dot_pb_dot_operations__pb2.ListJobsResponse.FromString,
                 )
         self.GetJob = channel.unary_unary(
                 '/geocube.Geocube/GetJob',
@@ -139,6 +146,11 @@ class GeocubeStub(object):
                 request_serializer=geocube_dot_pb_dot_operations__pb2.CancelJobRequest.SerializeToString,
                 response_deserializer=geocube_dot_pb_dot_operations__pb2.CancelJobResponse.FromString,
                 )
+        self.ContinueJob = channel.unary_unary(
+                '/geocube.Geocube/ContinueJob',
+                request_serializer=geocube_dot_pb_dot_operations__pb2.ContinueJobRequest.SerializeToString,
+                response_deserializer=geocube_dot_pb_dot_operations__pb2.ContinueJobResponse.FromString,
+                )
         self.GetCube = channel.unary_stream(
                 '/geocube.Geocube/GetCube',
                 request_serializer=geocube_dot_pb_dot_catalog__pb2.GetCubeRequest.SerializeToString,
@@ -154,10 +166,35 @@ class GeocubeStub(object):
                 request_serializer=geocube_dot_pb_dot_layouts__pb2.CreateLayoutRequest.SerializeToString,
                 response_deserializer=geocube_dot_pb_dot_layouts__pb2.CreateLayoutResponse.FromString,
                 )
+        self.DeleteLayout = channel.unary_unary(
+                '/geocube.Geocube/DeleteLayout',
+                request_serializer=geocube_dot_pb_dot_layouts__pb2.DeleteLayoutRequest.SerializeToString,
+                response_deserializer=geocube_dot_pb_dot_layouts__pb2.DeleteLayoutResponse.FromString,
+                )
+        self.ListLayouts = channel.unary_unary(
+                '/geocube.Geocube/ListLayouts',
+                request_serializer=geocube_dot_pb_dot_layouts__pb2.ListLayoutsRequest.SerializeToString,
+                response_deserializer=geocube_dot_pb_dot_layouts__pb2.ListLayoutsResponse.FromString,
+                )
         self.TileAOI = channel.unary_stream(
                 '/geocube.Geocube/TileAOI',
                 request_serializer=geocube_dot_pb_dot_layouts__pb2.TileAOIRequest.SerializeToString,
                 response_deserializer=geocube_dot_pb_dot_layouts__pb2.TileAOIResponse.FromString,
+                )
+        self.CreateGrid = channel.unary_unary(
+                '/geocube.Geocube/CreateGrid',
+                request_serializer=geocube_dot_pb_dot_layouts__pb2.CreateGridRequest.SerializeToString,
+                response_deserializer=geocube_dot_pb_dot_layouts__pb2.CreateGridResponse.FromString,
+                )
+        self.DeleteGrid = channel.unary_unary(
+                '/geocube.Geocube/DeleteGrid',
+                request_serializer=geocube_dot_pb_dot_layouts__pb2.DeleteGridRequest.SerializeToString,
+                response_deserializer=geocube_dot_pb_dot_layouts__pb2.DeleteGridResponse.FromString,
+                )
+        self.ListGrids = channel.unary_unary(
+                '/geocube.Geocube/ListGrids',
+                request_serializer=geocube_dot_pb_dot_layouts__pb2.ListGridsRequest.SerializeToString,
+                response_deserializer=geocube_dot_pb_dot_layouts__pb2.ListGridsResponse.FromString,
                 )
         self.Version = channel.unary_unary(
                 '/geocube.Geocube/Version',
@@ -167,10 +204,12 @@ class GeocubeStub(object):
 
 
 class GeocubeServicer(object):
-    """Missing associated documentation comment in .proto file."""
+    """*
+    API
+    """
 
     def ListRecords(self, request, context):
-        """Records
+        """@exclude Records
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -213,7 +252,7 @@ class GeocubeServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def CreateVariable(self, request, context):
-        """Variables
+        """@exclude Variables
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -268,14 +307,8 @@ class GeocubeServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def IndexDatasets(self, request, context):
-        """Operations
+        """@exclude Operations
         """
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def IngestDatasets(self, request, context):
-        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -286,7 +319,19 @@ class GeocubeServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetConsolidationParams(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def Consolidate(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ListJobs(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -316,8 +361,14 @@ class GeocubeServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def ContinueJob(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def GetCube(self, request, context):
-        """Catalog
+        """@exclude Catalog
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -330,8 +381,20 @@ class GeocubeServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def CreateLayout(self, request, context):
-        """Layout
+        """@exclude Layout
         """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def DeleteLayout(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ListLayouts(self, request, context):
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -342,8 +405,27 @@ class GeocubeServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def CreateGrid(self, request, context):
+        """@exclude Grid
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def DeleteGrid(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ListGrids(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def Version(self, request, context):
-        """Version
+        """@exclude Version
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -437,20 +519,25 @@ def add_GeocubeServicer_to_server(servicer, server):
                     request_deserializer=geocube_dot_pb_dot_operations__pb2.IndexDatasetsRequest.FromString,
                     response_serializer=geocube_dot_pb_dot_operations__pb2.IndexDatasetsResponse.SerializeToString,
             ),
-            'IngestDatasets': grpc.unary_stream_rpc_method_handler(
-                    servicer.IngestDatasets,
-                    request_deserializer=geocube_dot_pb_dot_operations__pb2.IngestDatasetsRequest.FromString,
-                    response_serializer=geocube_dot_pb_dot_operations__pb2.IngestDatasetsResponse.SerializeToString,
-            ),
             'ConfigConsolidation': grpc.unary_unary_rpc_method_handler(
                     servicer.ConfigConsolidation,
                     request_deserializer=geocube_dot_pb_dot_operations__pb2.ConfigConsolidationRequest.FromString,
                     response_serializer=geocube_dot_pb_dot_operations__pb2.ConfigConsolidationResponse.SerializeToString,
             ),
+            'GetConsolidationParams': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetConsolidationParams,
+                    request_deserializer=geocube_dot_pb_dot_operations__pb2.GetConsolidationParamsRequest.FromString,
+                    response_serializer=geocube_dot_pb_dot_operations__pb2.GetConsolidationParamsResponse.SerializeToString,
+            ),
             'Consolidate': grpc.unary_unary_rpc_method_handler(
                     servicer.Consolidate,
                     request_deserializer=geocube_dot_pb_dot_operations__pb2.ConsolidateRequest.FromString,
                     response_serializer=geocube_dot_pb_dot_operations__pb2.ConsolidateResponse.SerializeToString,
+            ),
+            'ListJobs': grpc.unary_unary_rpc_method_handler(
+                    servicer.ListJobs,
+                    request_deserializer=geocube_dot_pb_dot_operations__pb2.ListJobsRequest.FromString,
+                    response_serializer=geocube_dot_pb_dot_operations__pb2.ListJobsResponse.SerializeToString,
             ),
             'GetJob': grpc.unary_unary_rpc_method_handler(
                     servicer.GetJob,
@@ -472,6 +559,11 @@ def add_GeocubeServicer_to_server(servicer, server):
                     request_deserializer=geocube_dot_pb_dot_operations__pb2.CancelJobRequest.FromString,
                     response_serializer=geocube_dot_pb_dot_operations__pb2.CancelJobResponse.SerializeToString,
             ),
+            'ContinueJob': grpc.unary_unary_rpc_method_handler(
+                    servicer.ContinueJob,
+                    request_deserializer=geocube_dot_pb_dot_operations__pb2.ContinueJobRequest.FromString,
+                    response_serializer=geocube_dot_pb_dot_operations__pb2.ContinueJobResponse.SerializeToString,
+            ),
             'GetCube': grpc.unary_stream_rpc_method_handler(
                     servicer.GetCube,
                     request_deserializer=geocube_dot_pb_dot_catalog__pb2.GetCubeRequest.FromString,
@@ -487,10 +579,35 @@ def add_GeocubeServicer_to_server(servicer, server):
                     request_deserializer=geocube_dot_pb_dot_layouts__pb2.CreateLayoutRequest.FromString,
                     response_serializer=geocube_dot_pb_dot_layouts__pb2.CreateLayoutResponse.SerializeToString,
             ),
+            'DeleteLayout': grpc.unary_unary_rpc_method_handler(
+                    servicer.DeleteLayout,
+                    request_deserializer=geocube_dot_pb_dot_layouts__pb2.DeleteLayoutRequest.FromString,
+                    response_serializer=geocube_dot_pb_dot_layouts__pb2.DeleteLayoutResponse.SerializeToString,
+            ),
+            'ListLayouts': grpc.unary_unary_rpc_method_handler(
+                    servicer.ListLayouts,
+                    request_deserializer=geocube_dot_pb_dot_layouts__pb2.ListLayoutsRequest.FromString,
+                    response_serializer=geocube_dot_pb_dot_layouts__pb2.ListLayoutsResponse.SerializeToString,
+            ),
             'TileAOI': grpc.unary_stream_rpc_method_handler(
                     servicer.TileAOI,
                     request_deserializer=geocube_dot_pb_dot_layouts__pb2.TileAOIRequest.FromString,
                     response_serializer=geocube_dot_pb_dot_layouts__pb2.TileAOIResponse.SerializeToString,
+            ),
+            'CreateGrid': grpc.unary_unary_rpc_method_handler(
+                    servicer.CreateGrid,
+                    request_deserializer=geocube_dot_pb_dot_layouts__pb2.CreateGridRequest.FromString,
+                    response_serializer=geocube_dot_pb_dot_layouts__pb2.CreateGridResponse.SerializeToString,
+            ),
+            'DeleteGrid': grpc.unary_unary_rpc_method_handler(
+                    servicer.DeleteGrid,
+                    request_deserializer=geocube_dot_pb_dot_layouts__pb2.DeleteGridRequest.FromString,
+                    response_serializer=geocube_dot_pb_dot_layouts__pb2.DeleteGridResponse.SerializeToString,
+            ),
+            'ListGrids': grpc.unary_unary_rpc_method_handler(
+                    servicer.ListGrids,
+                    request_deserializer=geocube_dot_pb_dot_layouts__pb2.ListGridsRequest.FromString,
+                    response_serializer=geocube_dot_pb_dot_layouts__pb2.ListGridsResponse.SerializeToString,
             ),
             'Version': grpc.unary_unary_rpc_method_handler(
                     servicer.Version,
@@ -505,7 +622,9 @@ def add_GeocubeServicer_to_server(servicer, server):
 
  # This class is part of an EXPERIMENTAL API.
 class Geocube(object):
-    """Missing associated documentation comment in .proto file."""
+    """*
+    API
+    """
 
     @staticmethod
     def ListRecords(request,
@@ -797,23 +916,6 @@ class Geocube(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def IngestDatasets(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/geocube.Geocube/IngestDatasets',
-            geocube_dot_pb_dot_operations__pb2.IngestDatasetsRequest.SerializeToString,
-            geocube_dot_pb_dot_operations__pb2.IngestDatasetsResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-    @staticmethod
     def ConfigConsolidation(request,
             target,
             options=(),
@@ -831,6 +933,23 @@ class Geocube(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
+    def GetConsolidationParams(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/geocube.Geocube/GetConsolidationParams',
+            geocube_dot_pb_dot_operations__pb2.GetConsolidationParamsRequest.SerializeToString,
+            geocube_dot_pb_dot_operations__pb2.GetConsolidationParamsResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
     def Consolidate(request,
             target,
             options=(),
@@ -844,6 +963,23 @@ class Geocube(object):
         return grpc.experimental.unary_unary(request, target, '/geocube.Geocube/Consolidate',
             geocube_dot_pb_dot_operations__pb2.ConsolidateRequest.SerializeToString,
             geocube_dot_pb_dot_operations__pb2.ConsolidateResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ListJobs(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/geocube.Geocube/ListJobs',
+            geocube_dot_pb_dot_operations__pb2.ListJobsRequest.SerializeToString,
+            geocube_dot_pb_dot_operations__pb2.ListJobsResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -916,6 +1052,23 @@ class Geocube(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
+    def ContinueJob(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/geocube.Geocube/ContinueJob',
+            geocube_dot_pb_dot_operations__pb2.ContinueJobRequest.SerializeToString,
+            geocube_dot_pb_dot_operations__pb2.ContinueJobResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
     def GetCube(request,
             target,
             options=(),
@@ -967,6 +1120,40 @@ class Geocube(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
+    def DeleteLayout(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/geocube.Geocube/DeleteLayout',
+            geocube_dot_pb_dot_layouts__pb2.DeleteLayoutRequest.SerializeToString,
+            geocube_dot_pb_dot_layouts__pb2.DeleteLayoutResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ListLayouts(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/geocube.Geocube/ListLayouts',
+            geocube_dot_pb_dot_layouts__pb2.ListLayoutsRequest.SerializeToString,
+            geocube_dot_pb_dot_layouts__pb2.ListLayoutsResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
     def TileAOI(request,
             target,
             options=(),
@@ -980,6 +1167,57 @@ class Geocube(object):
         return grpc.experimental.unary_stream(request, target, '/geocube.Geocube/TileAOI',
             geocube_dot_pb_dot_layouts__pb2.TileAOIRequest.SerializeToString,
             geocube_dot_pb_dot_layouts__pb2.TileAOIResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def CreateGrid(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/geocube.Geocube/CreateGrid',
+            geocube_dot_pb_dot_layouts__pb2.CreateGridRequest.SerializeToString,
+            geocube_dot_pb_dot_layouts__pb2.CreateGridResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def DeleteGrid(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/geocube.Geocube/DeleteGrid',
+            geocube_dot_pb_dot_layouts__pb2.DeleteGridRequest.SerializeToString,
+            geocube_dot_pb_dot_layouts__pb2.DeleteGridResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ListGrids(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/geocube.Geocube/ListGrids',
+            geocube_dot_pb_dot_layouts__pb2.ListGridsRequest.SerializeToString,
+            geocube_dot_pb_dot_layouts__pb2.ListGridsResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

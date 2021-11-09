@@ -9,7 +9,7 @@ from shapely import geometry
 import pandas as pd
 import geopandas as gpd
 
-from geocube import entities
+from geocube import entities, utils
 from geocube.pb import layouts_pb2
 
 
@@ -137,15 +137,5 @@ class Tile:
 
     @staticmethod
     def plot(tiles: List[Tile], world_path: str = gpd.datasets.get_path('naturalearth_lowres'), ax=None, margin_pc=5):
-        if world_path is not None:
-            base = gpd.read_file(world_path).plot(color='lightgrey', edgecolor='white', ax=ax)
-        else:
-            base = ax
-
         ts = gpd.GeoSeries(pd.concat([t.geoseries().to_crs("epsg:4326") for t in tiles]))
-        ts.plot(ax=base, alpha=0.5, edgecolor='gray')
-        bounds = ts.total_bounds
-        margin = (margin_pc/100)*min(bounds[2] - bounds[0], bounds[3] - bounds[1])
-        base.set_xlim(bounds[0]-margin, bounds[2]+margin)
-        base.set_ylim(bounds[1]-margin, bounds[3]+margin)
-        return base
+        return utils.plot_aoi(ts, world_path, ax, margin_pc)

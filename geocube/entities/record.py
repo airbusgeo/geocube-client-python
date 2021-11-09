@@ -62,7 +62,7 @@ class Record:
     tags:     Dict[str, str]
     aoi_id:   str
 
-    _aoi:      geometry.MultiPolygon
+    _aoi:     geometry.MultiPolygon = geometry.MultiPolygon()
 
     @classmethod
     def from_pb(cls, pb: records_pb2.Record):

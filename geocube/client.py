@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import warnings
 from datetime import datetime
-from typing import Dict, List, Tuple, Union
+from typing import Dict, List, Tuple, Union, Optional
 
 import grpc
 import rasterio
@@ -76,7 +76,7 @@ class Client:
             raise ValueError("One of id_, name or instance_id must be defined")
 
         resp = self.stub.GetVariable(req)
-        v = entities.Variable.from_pb(self, resp.variable)
+        v = entities.Variable.from_pb(self.stub, resp.variable)
         for i in v.instances.values():
             if i.id == instance_id:
                 return v.instance(i.name)
@@ -114,32 +114,6 @@ class Client:
         return self.variable(id_=self.stub.CreateVariable(req).id)
 
     @utils.catch_rpc_error
-    def update_variable(self, variable: Union[entities.Variable, str], name: str = None, unit: str = None,
-                        description: str = None, palette: str = None,
-                        resampling_alg: entities.Resampling = entities.Resampling.undefined):
-        """
-        Some fields of the variable can be updated. All (except the variable) are optional.
-
-        Parameters
-        ----------
-        variable: unique internal identifier of the variable or the variable itself
-        name: new name
-        unit: new unit
-        description: new description
-        palette: new palette
-        resampling_alg: new resampling_alg
-        """
-        req = variables_pb2.UpdateVariableRequest(
-            id=entities.get_id(variable),
-            name=utils.pb_string(name),
-            unit=utils.pb_string(unit),
-            description=utils.pb_string(description),
-            palette=utils.pb_string(palette),
-            resampling_alg=resampling_alg.value-1)
-
-        self.stub.UpdateVariable(req)
-
-    @utils.catch_rpc_error
     def create_palette(self, name: str, colors: List[Tuple[float, int, int, int, int]], replace: bool = False):
         """
         Create a new palette from [0, 1] to RGBA, providing a list of index from 0 to 1.
@@ -173,7 +147,7 @@ class Client:
         a list of variable
         """
         req = variables_pb2.ListVariablesRequest(name=name, limit=limit, page=page)
-        return [entities.Variable.from_pb(self, resp.variable) for resp in self.stub.ListVariables(req)]
+        return [entities.Variable.from_pb(self.stub, resp.variable) for resp in self.stub.ListVariables(req)]
 
     @utils.catch_rpc_error
     def create_aoi(self, aoi: Union[geometry.Polygon, geometry.MultiPolygon]) -> str:
@@ -212,6 +186,7 @@ class Client:
         """
         return self.create_records([aoi_id], [name], [tags], [date])[0]
 
+    @utils.catch_rpc_error
     def create_records(self, aoi_ids: List[str], names: List[str],
                        ltags: List[Dict[str, str]], dates: List[datetime]) -> List[str]:
         """
@@ -418,7 +393,7 @@ class Client:
         max_out = if_defined(max_out, instance.dformat.max_value)
         exponent = if_defined(exponent, 1)
 
-        cs = [entities.Container.new(uri, entities.get_id(record_id), entities.get_id(instance), bands,
+        cs = [entities.Container.new(uri, record_id, instance, bands,
                                      dformat=entities.DataFormat.from_user(dformat),
                                      min_out=min_out, max_out=max_out, exponent=exponent)]
         return self.index(cs)
@@ -537,8 +512,11 @@ class Client:
         return entities.CubeIterator(self.stub.GetCube(req), file_format, file_pattern)
 
     @utils.catch_rpc_error
-    def tile_aoi(self, aoi: geometry.MultiPolygon, crs: str,
-                 resolution: float, shape: Tuple[int, int]) -> List[entities.Tile]:
+    def tile_aoi(self, aoi: geometry.MultiPolygon,
+                 layout_name: Optional[str] = None,
+                 layout: Optional[entities.Layout] = None,
+                 resolution: Optional[float] = None,
+                 crs: Optional[str] = None, shape: Optional[Tuple[int, int]] = None) -> List[entities.Tile]:
         """
         Tile an AOI
 
@@ -548,14 +526,20 @@ class Client:
         crs: CRS of the tile (not the AOI)
         resolution: resolution of the tile
         shape: shape of each tile
+        layout_name: use a defined layout.
+        layout: use a customer defined layout
 
         Returns
         -------
         a list of Tiles covering the AOI in the given CRS at the given resolution
         """
-        req = layouts_pb2.TileAOIRequest(
-            aoi=entities.record.aoi_to_pb(aoi), crs=crs, resolution=resolution,
-            size_px=layouts_pb2.Size(width=shape[0], height=shape[1]))
+        aoi = entities.record.aoi_to_pb(aoi)
+        if layout_name is not None:
+            req = layouts_pb2.TileAOIRequest(aoi=aoi, layout_name=layout_name)
+        else:
+            if layout is None:
+                layout = entities.Layout.regular("", crs, shape, resolution)
+            req = layouts_pb2.TileAOIRequest(aoi=aoi, layout=layout.to_pb())
 
         return [entities.Tile.from_pb(tile) for resp in self.stub.TileAOI(req) for tile in resp.tiles]
 

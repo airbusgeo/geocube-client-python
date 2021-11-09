@@ -12,6 +12,7 @@ _sym_db = _symbol_database.Default()
 
 
 from geocube.pb import dataformat_pb2 as geocube_dot_pb_dot_dataformat__pb2
+from geocube.pb import operations_pb2 as geocube_dot_pb_dot_operations__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
@@ -20,9 +21,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z\014./pb;geocube',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x16geocube/pb/admin.proto\x12\x07geocube\x1a\x1bgeocube/pb/dataformat.proto\"\xb4\x01\n\rTidyDBRequest\x12\x10\n\x08Simulate\x18\x01 \x01(\x08\x12\x13\n\x0bPendingAOIs\x18\x02 \x01(\x08\x12\x16\n\x0ePendingRecords\x18\x03 \x01(\x08\x12\x18\n\x10PendingVariables\x18\x04 \x01(\x08\x12\x18\n\x10PendingInstances\x18\x05 \x01(\x08\x12\x19\n\x11PendingContainers\x18\x06 \x01(\x08\x12\x15\n\rPendingParams\x18\x07 \x01(\x08\"\x85\x01\n\x0eTidyDBResponse\x12\x0e\n\x06NbAOIs\x18\x01 \x01(\x03\x12\x11\n\tNbRecords\x18\x02 \x01(\x03\x12\x13\n\x0bNbVariables\x18\x03 \x01(\x03\x12\x13\n\x0bNbInstances\x18\x04 \x01(\x03\x12\x14\n\x0cNbContainers\x18\x05 \x01(\x03\x12\x10\n\x08NbParams\x18\x06 \x01(\x03\"\xba\x01\n\x15UpdateDatasetsRequest\x12\x10\n\x08simulate\x18\x01 \x01(\x08\x12\x13\n\x0binstance_id\x18\x02 \x01(\t\x12\x12\n\nrecords_id\x18\x03 \x03(\t\x12$\n\x07\x64\x66ormat\x18\x08 \x01(\x0b\x32\x13.geocube.DataFormat\x12\x16\n\x0ereal_min_value\x18\t \x01(\x01\x12\x16\n\x0ereal_max_value\x18\n \x01(\x01\x12\x10\n\x08\x65xponent\x18\x0b \x01(\x01\"\x87\x01\n\x16UpdateDatasetsResponse\x12=\n\x07results\x18\x01 \x03(\x0b\x32,.geocube.UpdateDatasetsResponse.ResultsEntry\x1a.\n\x0cResultsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x03:\x02\x38\x01\"S\n\x15\x44\x65leteDatasetsRequest\x12\x10\n\x08simulate\x18\x01 \x01(\x08\x12\x12\n\nrecords_id\x18\x02 \x03(\t\x12\x14\n\x0cinstances_id\x18\x03 \x03(\t\")\n\x16\x44\x65leteDatasetsResponse\x12\x0f\n\x07results\x18\x01 \x03(\t2\xee\x01\n\x05\x41\x64min\x12;\n\x06TidyDB\x12\x16.geocube.TidyDBRequest\x1a\x17.geocube.TidyDBResponse\"\x00\x12S\n\x0eUpdateDatasets\x12\x1e.geocube.UpdateDatasetsRequest\x1a\x1f.geocube.UpdateDatasetsResponse\"\x00\x12S\n\x0e\x44\x65leteDatasets\x12\x1e.geocube.DeleteDatasetsRequest\x1a\x1f.geocube.DeleteDatasetsResponse\"\x00\x42\x0eZ\x0c./pb;geocubeb\x06proto3'
+  serialized_pb=b'\n\x16geocube/pb/admin.proto\x12\x07geocube\x1a\x1bgeocube/pb/dataformat.proto\x1a\x1bgeocube/pb/operations.proto\"\xb4\x01\n\rTidyDBRequest\x12\x10\n\x08Simulate\x18\x01 \x01(\x08\x12\x13\n\x0bPendingAOIs\x18\x02 \x01(\x08\x12\x16\n\x0ePendingRecords\x18\x03 \x01(\x08\x12\x18\n\x10PendingVariables\x18\x04 \x01(\x08\x12\x18\n\x10PendingInstances\x18\x05 \x01(\x08\x12\x19\n\x11PendingContainers\x18\x06 \x01(\x08\x12\x15\n\rPendingParams\x18\x07 \x01(\x08\"\x85\x01\n\x0eTidyDBResponse\x12\x0e\n\x06NbAOIs\x18\x01 \x01(\x03\x12\x11\n\tNbRecords\x18\x02 \x01(\x03\x12\x13\n\x0bNbVariables\x18\x03 \x01(\x03\x12\x13\n\x0bNbInstances\x18\x04 \x01(\x03\x12\x14\n\x0cNbContainers\x18\x05 \x01(\x03\x12\x10\n\x08NbParams\x18\x06 \x01(\x03\"\xba\x01\n\x15UpdateDatasetsRequest\x12\x10\n\x08simulate\x18\x01 \x01(\x08\x12\x13\n\x0binstance_id\x18\x02 \x01(\t\x12\x12\n\nrecord_ids\x18\x03 \x03(\t\x12$\n\x07\x64\x66ormat\x18\x08 \x01(\x0b\x32\x13.geocube.DataFormat\x12\x16\n\x0ereal_min_value\x18\t \x01(\x01\x12\x16\n\x0ereal_max_value\x18\n \x01(\x01\x12\x10\n\x08\x65xponent\x18\x0b \x01(\x01\"\x87\x01\n\x16UpdateDatasetsResponse\x12=\n\x07results\x18\x01 \x03(\x0b\x32,.geocube.UpdateDatasetsResponse.ResultsEntry\x1a.\n\x0cResultsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x03:\x02\x38\x01\"\x85\x01\n\x15\x44\x65leteDatasetsRequest\x12\x12\n\nrecord_ids\x18\x02 \x03(\t\x12\x14\n\x0cinstance_ids\x18\x03 \x03(\t\x12\x30\n\x0f\x65xecution_level\x18\x04 \x01(\x0e\x32\x17.geocube.ExecutionLevel\x12\x10\n\x08job_name\x18\x05 \x01(\t\"3\n\x16\x44\x65leteDatasetsResponse\x12\x19\n\x03job\x18\x02 \x01(\x0b\x32\x0c.geocube.Job2\xee\x01\n\x05\x41\x64min\x12;\n\x06TidyDB\x12\x16.geocube.TidyDBRequest\x1a\x17.geocube.TidyDBResponse\"\x00\x12S\n\x0eUpdateDatasets\x12\x1e.geocube.UpdateDatasetsRequest\x1a\x1f.geocube.UpdateDatasetsResponse\"\x00\x12S\n\x0e\x44\x65leteDatasets\x12\x1e.geocube.DeleteDatasetsRequest\x1a\x1f.geocube.DeleteDatasetsResponse\"\x00\x42\x0eZ\x0c./pb;geocubeb\x06proto3'
   ,
-  dependencies=[geocube_dot_pb_dot_dataformat__pb2.DESCRIPTOR,])
+  dependencies=[geocube_dot_pb_dot_dataformat__pb2.DESCRIPTOR,geocube_dot_pb_dot_operations__pb2.DESCRIPTOR,])
 
 
 
@@ -96,8 +97,8 @@ _TIDYDBREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=65,
-  serialized_end=245,
+  serialized_start=94,
+  serialized_end=274,
 )
 
 
@@ -163,8 +164,8 @@ _TIDYDBRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=248,
-  serialized_end=381,
+  serialized_start=277,
+  serialized_end=410,
 )
 
 
@@ -191,7 +192,7 @@ _UPDATEDATASETSREQUEST = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='records_id', full_name='geocube.UpdateDatasetsRequest.records_id', index=2,
+      name='record_ids', full_name='geocube.UpdateDatasetsRequest.record_ids', index=2,
       number=3, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -237,8 +238,8 @@ _UPDATEDATASETSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=384,
-  serialized_end=570,
+  serialized_start=413,
+  serialized_end=599,
 )
 
 
@@ -276,8 +277,8 @@ _UPDATEDATASETSRESPONSE_RESULTSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=662,
-  serialized_end=708,
+  serialized_start=691,
+  serialized_end=737,
 )
 
 _UPDATEDATASETSRESPONSE = _descriptor.Descriptor(
@@ -307,8 +308,8 @@ _UPDATEDATASETSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=573,
-  serialized_end=708,
+  serialized_start=602,
+  serialized_end=737,
 )
 
 
@@ -321,23 +322,30 @@ _DELETEDATASETSREQUEST = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='simulate', full_name='geocube.DeleteDatasetsRequest.simulate', index=0,
-      number=1, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='records_id', full_name='geocube.DeleteDatasetsRequest.records_id', index=1,
+      name='record_ids', full_name='geocube.DeleteDatasetsRequest.record_ids', index=0,
       number=2, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='instances_id', full_name='geocube.DeleteDatasetsRequest.instances_id', index=2,
+      name='instance_ids', full_name='geocube.DeleteDatasetsRequest.instance_ids', index=1,
       number=3, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='execution_level', full_name='geocube.DeleteDatasetsRequest.execution_level', index=2,
+      number=4, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='job_name', full_name='geocube.DeleteDatasetsRequest.job_name', index=3,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -353,8 +361,8 @@ _DELETEDATASETSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=710,
-  serialized_end=793,
+  serialized_start=740,
+  serialized_end=873,
 )
 
 
@@ -367,9 +375,9 @@ _DELETEDATASETSRESPONSE = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='results', full_name='geocube.DeleteDatasetsResponse.results', index=0,
-      number=1, type=9, cpp_type=9, label=3,
-      has_default_value=False, default_value=[],
+      name='job', full_name='geocube.DeleteDatasetsResponse.job', index=0,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -385,13 +393,15 @@ _DELETEDATASETSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=795,
-  serialized_end=836,
+  serialized_start=875,
+  serialized_end=926,
 )
 
 _UPDATEDATASETSREQUEST.fields_by_name['dformat'].message_type = geocube_dot_pb_dot_dataformat__pb2._DATAFORMAT
 _UPDATEDATASETSRESPONSE_RESULTSENTRY.containing_type = _UPDATEDATASETSRESPONSE
 _UPDATEDATASETSRESPONSE.fields_by_name['results'].message_type = _UPDATEDATASETSRESPONSE_RESULTSENTRY
+_DELETEDATASETSREQUEST.fields_by_name['execution_level'].enum_type = geocube_dot_pb_dot_operations__pb2._EXECUTIONLEVEL
+_DELETEDATASETSRESPONSE.fields_by_name['job'].message_type = geocube_dot_pb_dot_operations__pb2._JOB
 DESCRIPTOR.message_types_by_name['TidyDBRequest'] = _TIDYDBREQUEST
 DESCRIPTOR.message_types_by_name['TidyDBResponse'] = _TIDYDBRESPONSE
 DESCRIPTOR.message_types_by_name['UpdateDatasetsRequest'] = _UPDATEDATASETSREQUEST
@@ -461,8 +471,8 @@ _ADMIN = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=839,
-  serialized_end=1077,
+  serialized_start=929,
+  serialized_end=1167,
   methods=[
   _descriptor.MethodDescriptor(
     name='TidyDB',

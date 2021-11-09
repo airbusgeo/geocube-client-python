@@ -4,7 +4,7 @@ import geopandas as gpd
 from geocube import entities
 
 
-EntityIdable = Union[str, entities.Record, entities.VariableInstance, gpd.GeoDataFrame]
+EntityIdable = Union[str, entities.Record, entities.VariableInstance, entities.Layout, entities.Job, gpd.GeoDataFrame]
 
 
 def get_ids(ents: Union[EntityIdable, List[EntityIdable]]) -> List[str]:
@@ -21,8 +21,10 @@ def get_id(entity: EntityIdable) -> str:
     """ Returns an id given something that have an id """
     if isinstance(entity, str):
         return entity
-    if isinstance(entity, entities.Record):
+    if isinstance(entity, entities.Record) or isinstance(entity, entities.Job):
         return entity.id
+    if isinstance(entity, entities.Layout):
+        return entity.name
     if isinstance(entity, entities.VariableInstance):
         return entity.instance_id
     if isinstance(entity, gpd.GeoDataFrame) and len(entity.index) == 1:

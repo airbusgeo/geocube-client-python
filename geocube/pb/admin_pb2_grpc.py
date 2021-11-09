@@ -6,7 +6,10 @@ from geocube.pb import admin_pb2 as geocube_dot_pb_dot_admin__pb2
 
 
 class AdminStub(object):
-    """Missing associated documentation comment in .proto file."""
+    """*
+    Service providing some functions to update or clean the database
+    Must be used cautiously because there is no control neither possible rollback
+    """
 
     def __init__(self, channel):
         """Constructor.
@@ -32,7 +35,10 @@ class AdminStub(object):
 
 
 class AdminServicer(object):
-    """Missing associated documentation comment in .proto file."""
+    """*
+    Service providing some functions to update or clean the database
+    Must be used cautiously because there is no control neither possible rollback
+    """
 
     def TidyDB(self, request, context):
         """Missing associated documentation comment in .proto file."""
@@ -78,7 +84,10 @@ def add_AdminServicer_to_server(servicer, server):
 
  # This class is part of an EXPERIMENTAL API.
 class Admin(object):
-    """Missing associated documentation comment in .proto file."""
+    """*
+    Service providing some functions to update or clean the database
+    Must be used cautiously because there is no control neither possible rollback
+    """
 
     @staticmethod
     def TidyDB(request,

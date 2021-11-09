@@ -6,14 +6,13 @@ from typing import Dict, List
 
 import grpc
 
-from geocube.pb import operations_pb2, variables_pb2
-import geocube
+from geocube.pb import operations_pb2, variables_pb2, geocube_pb2_grpc as geocube_grpc
 from geocube import entities, utils
 
 
 @dataclass
 class _BaseVariable:
-    client: geocube.Client
+    stub: geocube_grpc.GeocubeStub
     id: str
     name: str
     unit: str
@@ -30,8 +29,8 @@ class _ProxyVariable:
         self._variable = variable
 
     @property
-    def client(self) -> geocube.Client:
-        return self._variable.client
+    def client(self) -> geocube_grpc.GeocubeStub:
+        return self._variable.stub
 
     @property
     def variable_id(self) -> str:
@@ -76,7 +75,7 @@ class _ProxyVariable:
             req = operations_pb2.GetConsolidationParamsRequest(variable_id=self.variable_id)
             try:
                 self._variable.consolidation_params = entities.ConsolidationParams.from_pb(
-                    self.client.stub.GetConsolidationParams(req).consolidation_params)
+                    self.client.GetConsolidationParams(req).consolidation_params)
             except grpc.RpcError as e:
                 if e.code() == grpc.StatusCode.NOT_FOUND:
                     self._variable.consolidation_params = None
@@ -107,13 +106,37 @@ class _ProxyVariable:
         self._variable.consolidation_params = value
         req = operations_pb2.ConfigConsolidationRequest(variable_id=self.variable_id,
                                                         consolidation_params=self.consolidation_params.to_pb())
-        self.client.stub.ConfigConsolidation(req)
+        self.client.ConfigConsolidation(req)
+
+    @utils.catch_rpc_error
+    def update(self, name: str = None, unit: str = None, description: str = None, palette: str = None,
+               resampling_alg: entities.Resampling = entities.Resampling.undefined):
+        """
+        Some fields of the variable can be updated. All are optional.
+
+        Parameters
+        ----------
+        name: new name
+        unit: new unit
+        description: new description
+        palette: new palette
+        resampling_alg: new resampling_alg
+        """
+        req = variables_pb2.UpdateVariableRequest(
+            id=self.variable_id,
+            name=utils.pb_string(name),
+            unit=utils.pb_string(unit),
+            description=utils.pb_string(description),
+            palette=utils.pb_string(palette),
+            resampling_alg=resampling_alg.value-1)
+
+        self.client.UpdateVariable(req)
 
     def __setter(self, attr, new_value):
         old_value = self._variable.__getattribute__(attr)
         if old_value != new_value:
             if old_value is not None:
-                self.client.update_variable(id_=self.variable_id, **{attr: new_value})
+                self.update(**{attr: new_value})
             self._variable.__setattr__(attr, new_value)
 
     def __repr__(self):
@@ -174,9 +197,9 @@ class Variable(_ProxyVariable):
     True
     """
     @classmethod
-    def from_pb(cls, client, pb):
+    def from_pb(cls, stub: geocube_grpc.GeocubeStub, pb: variables_pb2.Variable):
         return cls(_BaseVariable(
-            client=client,
+            stub=stub,
             id=pb.id,
             name=pb.name,
             unit=pb.unit,
@@ -243,7 +266,7 @@ class Variable(_ProxyVariable):
         else:
             req = variables_pb2.InstantiateVariableRequest(
                 variable_id=self.id, instance_name=name, instance_metadata=metadata)
-            self.instances[name] = Instance.from_pb(self.client.stub.InstantiateVariable(req).instance)
+            self.instances[name] = Instance.from_pb(self.client.InstantiateVariable(req).instance)
 
         return VariableInstance(self, self.instances[name])
 
@@ -252,20 +275,20 @@ class Variable(_ProxyVariable):
         for instance in self.instances.values():
             if instance.name.startswith(prefix):
                 req = variables_pb2.DeleteInstanceRequest(id=instance.id)
-                self.client.stub.DeleteInstance(req)
+                self.client.DeleteInstance(req)
 
     @utils.catch_rpc_error
     def delete(self):
         self.delete_instances('')
         req = variables_pb2.DeleteVariableRequest(id=self.id)
-        self.client.stub.DeleteVariable(req)
+        self.client.DeleteVariable(req)
 
     def config_consolidation(self, dformat: entities.DataFormat, exponent=1., bands_interleave=False,
-                             compression: entities.Compression = entities.Compression.LOSSLESS, create_overviews=True,
-                             downsampling_alg: entities.Resampling = entities.Resampling.near):
+                             compression: entities.Compression = entities.Compression.LOSSLESS, overviews_min_size=-1,
+                             resampling_alg: entities.Resampling = entities.Resampling.near):
         self.consolidation_params = entities.ConsolidationParams(
             dformat=entities.DataFormat.from_user(dformat), exponent=exponent, bands_interleave=bands_interleave,
-            compression=compression, create_overviews=create_overviews, downsampling_alg=downsampling_alg)
+            compression=compression, overviews_min_size=overviews_min_size, resampling_alg=resampling_alg)
 
     def __str__(self):
         return "{}\n" \
@@ -302,21 +325,21 @@ class VariableInstance(_ProxyVariable, Instance):
     def instance_name(self, name):
         if self.instance_name != name:
             req = variables_pb2.UpdateInstanceRequest(id=self.instance_id, name=utils.pb_string(name))
-            self.client.stub.UpdateInstance(req)
+            self.client.UpdateInstance(req)
             self._instance.name = name
 
     @utils.catch_rpc_error
     def add_metadata(self, key: str, value: str):
         if key not in self.metadata or self.metadata[key] != value:
             req = variables_pb2.UpdateInstanceRequest(id=self.instance_id, add_metadata={key: value})
-            self.client.stub.UpdateInstance(req)
+            self.client.UpdateInstance(req)
             self._instance.metadata[key] = value
 
     @utils.catch_rpc_error
     def del_metadata(self, key: str):
         if key not in self.metadata:
             req = variables_pb2.UpdateInstanceRequest(id=self.instance_id, del_metadata_keys=[key])
-            self.client.stub.UpdateInstance(req)
+            self.client.UpdateInstance(req)
             del self._instance.metadata[key]
 
     def __repr__(self):

@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z\014./pb;geocube',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x18geocube/pb/records.proto\x12\x07geocube\x1a\x1fgoogle/protobuf/timestamp.proto\"!\n\x05\x43oord\x12\x0b\n\x03lon\x18\x01 \x01(\x02\x12\x0b\n\x03lat\x18\x02 \x01(\x02\",\n\nLinearRing\x12\x1e\n\x06points\x18\x01 \x03(\x0b\x32\x0e.geocube.Coord\"3\n\x07Polygon\x12(\n\x0blinearrings\x18\x01 \x03(\x0b\x32\x13.geocube.LinearRing\")\n\x03\x41OI\x12\"\n\x08polygons\x18\x01 \x03(\x0b\x32\x10.geocube.Polygon\"\xcd\x01\n\x06Record\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12(\n\x04time\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\'\n\x04tags\x18\x04 \x03(\x0b\x32\x19.geocube.Record.TagsEntry\x12\x0e\n\x06\x61oi_id\x18\x05 \x01(\t\x12\x19\n\x03\x61oi\x18\x06 \x01(\x0b\x32\x0c.geocube.AOI\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xac\x01\n\tNewRecord\x12\x0c\n\x04name\x18\x01 \x01(\t\x12(\n\x04time\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12*\n\x04tags\x18\x03 \x03(\x0b\x32\x1c.geocube.NewRecord.TagsEntry\x12\x0e\n\x06\x61oi_id\x18\x04 \x01(\t\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\";\n\x14\x43reateRecordsRequest\x12#\n\x07records\x18\x01 \x03(\x0b\x32\x12.geocube.NewRecord\"$\n\x15\x43reateRecordsResponse\x12\x0b\n\x03ids\x18\x01 \x03(\t\"#\n\x14\x44\x65leteRecordsRequest\x12\x0b\n\x03ids\x18\x01 \x03(\t\"#\n\x15\x44\x65leteRecordsResponse\x12\n\n\x02nb\x18\x01 \x01(\x03\"\x89\x01\n\x15\x41\x64\x64RecordsTagsRequest\x12\x0b\n\x03ids\x18\x01 \x03(\t\x12\x36\n\x04tags\x18\x02 \x03(\x0b\x32(.geocube.AddRecordsTagsRequest.TagsEntry\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"$\n\x16\x41\x64\x64RecordsTagsResponse\x12\n\n\x02nb\x18\x01 \x01(\x03\"8\n\x18RemoveRecordsTagsRequest\x12\x0b\n\x03ids\x18\x01 \x03(\t\x12\x0f\n\x07tagsKey\x18\x02 \x03(\t\"\'\n\x19RemoveRecordsTagsResponse\x12\n\n\x02nb\x18\x01 \x01(\x03\"-\n\x10\x43reateAOIRequest\x12\x19\n\x03\x61oi\x18\x01 \x01(\x0b\x32\x0c.geocube.AOI\"\x1f\n\x11\x43reateAOIResponse\x12\n\n\x02id\x18\x01 \x01(\t\"\x1b\n\rGetAOIRequest\x12\n\n\x02id\x18\x01 \x01(\t\"+\n\x0eGetAOIResponse\x12\x19\n\x03\x61oi\x18\x01 \x01(\x0b\x32\x0c.geocube.AOI\"\xbe\x02\n\x12ListRecordsRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x12\n\nfull_match\x18\x02 \x01(\x08\x12\x33\n\x04tags\x18\x03 \x03(\x0b\x32%.geocube.ListRecordsRequest.TagsEntry\x12-\n\tfrom_time\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12+\n\x07to_time\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x19\n\x03\x61oi\x18\x08 \x01(\x0b\x32\x0c.geocube.AOI\x12\r\n\x05limit\x18\x06 \x01(\x05\x12\x0c\n\x04page\x18\x07 \x01(\x05\x12\x10\n\x08with_aoi\x18\t \x01(\x08\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\":\n\x17ListRecordsResponseItem\x12\x1f\n\x06record\x18\x01 \x01(\x0b\x32\x0f.geocube.Record\"\xc8\x01\n\rRecordFilters\x12.\n\x04tags\x18\x01 \x03(\x0b\x32 .geocube.RecordFilters.TagsEntry\x12-\n\tfrom_time\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12+\n\x07to_time\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\x19\n\nRecordList\x12\x0b\n\x03ids\x18\x01 \x03(\t\":\n\x12GroupedRecordsList\x12$\n\x07records\x18\x01 \x03(\x0b\x32\x13.geocube.RecordListB\x0eZ\x0c./pb;geocubeb\x06proto3'
+  serialized_pb=b'\n\x18geocube/pb/records.proto\x12\x07geocube\x1a\x1fgoogle/protobuf/timestamp.proto\"!\n\x05\x43oord\x12\x0b\n\x03lon\x18\x01 \x01(\x02\x12\x0b\n\x03lat\x18\x02 \x01(\x02\",\n\nLinearRing\x12\x1e\n\x06points\x18\x01 \x03(\x0b\x32\x0e.geocube.Coord\"3\n\x07Polygon\x12(\n\x0blinearrings\x18\x01 \x03(\x0b\x32\x13.geocube.LinearRing\")\n\x03\x41OI\x12\"\n\x08polygons\x18\x01 \x03(\x0b\x32\x10.geocube.Polygon\"\xcd\x01\n\x06Record\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12(\n\x04time\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\'\n\x04tags\x18\x04 \x03(\x0b\x32\x19.geocube.Record.TagsEntry\x12\x0e\n\x06\x61oi_id\x18\x05 \x01(\t\x12\x19\n\x03\x61oi\x18\x06 \x01(\x0b\x32\x0c.geocube.AOI\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xac\x01\n\tNewRecord\x12\x0c\n\x04name\x18\x01 \x01(\t\x12(\n\x04time\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12*\n\x04tags\x18\x03 \x03(\x0b\x32\x1c.geocube.NewRecord.TagsEntry\x12\x0e\n\x06\x61oi_id\x18\x04 \x01(\t\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\";\n\x14\x43reateRecordsRequest\x12#\n\x07records\x18\x01 \x03(\x0b\x32\x12.geocube.NewRecord\"$\n\x15\x43reateRecordsResponse\x12\x0b\n\x03ids\x18\x01 \x03(\t\"#\n\x14\x44\x65leteRecordsRequest\x12\x0b\n\x03ids\x18\x01 \x03(\t\"#\n\x15\x44\x65leteRecordsResponse\x12\n\n\x02nb\x18\x01 \x01(\x03\"\x89\x01\n\x15\x41\x64\x64RecordsTagsRequest\x12\x0b\n\x03ids\x18\x01 \x03(\t\x12\x36\n\x04tags\x18\x02 \x03(\x0b\x32(.geocube.AddRecordsTagsRequest.TagsEntry\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"$\n\x16\x41\x64\x64RecordsTagsResponse\x12\n\n\x02nb\x18\x01 \x01(\x03\"8\n\x18RemoveRecordsTagsRequest\x12\x0b\n\x03ids\x18\x01 \x03(\t\x12\x0f\n\x07tagsKey\x18\x02 \x03(\t\"\'\n\x19RemoveRecordsTagsResponse\x12\n\n\x02nb\x18\x01 \x01(\x03\"-\n\x10\x43reateAOIRequest\x12\x19\n\x03\x61oi\x18\x01 \x01(\x0b\x32\x0c.geocube.AOI\"\x1f\n\x11\x43reateAOIResponse\x12\n\n\x02id\x18\x01 \x01(\t\"\x1b\n\rGetAOIRequest\x12\n\n\x02id\x18\x01 \x01(\t\"+\n\x0eGetAOIResponse\x12\x19\n\x03\x61oi\x18\x01 \x01(\x0b\x32\x0c.geocube.AOI\"\xaa\x02\n\x12ListRecordsRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x33\n\x04tags\x18\x03 \x03(\x0b\x32%.geocube.ListRecordsRequest.TagsEntry\x12-\n\tfrom_time\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12+\n\x07to_time\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x19\n\x03\x61oi\x18\x08 \x01(\x0b\x32\x0c.geocube.AOI\x12\r\n\x05limit\x18\x06 \x01(\x05\x12\x0c\n\x04page\x18\x07 \x01(\x05\x12\x10\n\x08with_aoi\x18\t \x01(\x08\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\":\n\x17ListRecordsResponseItem\x12\x1f\n\x06record\x18\x01 \x01(\x0b\x32\x0f.geocube.Record\"\xc8\x01\n\rRecordFilters\x12.\n\x04tags\x18\x01 \x03(\x0b\x32 .geocube.RecordFilters.TagsEntry\x12-\n\tfrom_time\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12+\n\x07to_time\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\x19\n\nRecordList\x12\x0b\n\x03ids\x18\x01 \x03(\t\":\n\x12GroupedRecordsList\x12$\n\x07records\x18\x01 \x03(\x0b\x32\x13.geocube.RecordListB\x0eZ\x0c./pb;geocubeb\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
@@ -848,56 +848,49 @@ _LISTRECORDSREQUEST = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='full_match', full_name='geocube.ListRecordsRequest.full_match', index=1,
-      number=2, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='tags', full_name='geocube.ListRecordsRequest.tags', index=2,
+      name='tags', full_name='geocube.ListRecordsRequest.tags', index=1,
       number=3, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='from_time', full_name='geocube.ListRecordsRequest.from_time', index=3,
+      name='from_time', full_name='geocube.ListRecordsRequest.from_time', index=2,
       number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='to_time', full_name='geocube.ListRecordsRequest.to_time', index=4,
+      name='to_time', full_name='geocube.ListRecordsRequest.to_time', index=3,
       number=5, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='aoi', full_name='geocube.ListRecordsRequest.aoi', index=5,
+      name='aoi', full_name='geocube.ListRecordsRequest.aoi', index=4,
       number=8, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='limit', full_name='geocube.ListRecordsRequest.limit', index=6,
+      name='limit', full_name='geocube.ListRecordsRequest.limit', index=5,
       number=6, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='page', full_name='geocube.ListRecordsRequest.page', index=7,
+      name='page', full_name='geocube.ListRecordsRequest.page', index=6,
       number=7, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='with_aoi', full_name='geocube.ListRecordsRequest.with_aoi', index=8,
+      name='with_aoi', full_name='geocube.ListRecordsRequest.with_aoi', index=7,
       number=9, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
@@ -916,7 +909,7 @@ _LISTRECORDSREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=1235,
-  serialized_end=1553,
+  serialized_end=1533,
 )
 
 
@@ -947,8 +940,8 @@ _LISTRECORDSRESPONSEITEM = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1555,
-  serialized_end=1613,
+  serialized_start=1535,
+  serialized_end=1593,
 )
 
 
@@ -1031,8 +1024,8 @@ _RECORDFILTERS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1616,
-  serialized_end=1816,
+  serialized_start=1596,
+  serialized_end=1796,
 )
 
 
@@ -1063,8 +1056,8 @@ _RECORDLIST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1818,
-  serialized_end=1843,
+  serialized_start=1798,
+  serialized_end=1823,
 )
 
 
@@ -1095,8 +1088,8 @@ _GROUPEDRECORDSLIST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1845,
-  serialized_end=1903,
+  serialized_start=1825,
+  serialized_end=1883,
 )
 
 _LINEARRING.fields_by_name['points'].message_type = _COORD
