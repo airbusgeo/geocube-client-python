@@ -18,7 +18,7 @@ def get_ids(ents: Union[EntityIdable, List[EntityIdable]]) -> List[str]:
 
 
 def get_id(entity: EntityIdable) -> str:
-    """ Returns a id given something that have an id """
+    """ Returns an id given something that have an id """
     if isinstance(entity, str):
         return entity
     if isinstance(entity, entities.Record):

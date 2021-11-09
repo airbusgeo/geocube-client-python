@@ -179,7 +179,7 @@ class Client:
     def create_aoi(self, aoi: Union[geometry.Polygon, geometry.MultiPolygon]) -> str:
         """
         Create a new AOI. Raise an error if an AOI with the same coordinates already exists.
-        The id of the AOI is returned in the details of the error.
+        The id of the AOI can be retrieved from the details of the error.
 
         Parameters
         ----------
@@ -376,7 +376,7 @@ class Client:
          to create the record on the fly
         instance: describing the data
         dformat: describing the internal format (see entities.DataFormat.from_user())
-        bands: subset of bands' file (start at 1) that maps to variable.bands (by default, all the bands)
+        bands: subset of bands' file (start at 1) that maps to `variable.bands` (by default, all the bands)
         min_out: (optional, default: instance.dformat.min_value, instance.dformat.dtype)
          maps dformat.min_value
         max_out: (optional, default: instance.dformat.max_value, instance.dformat.dtype)
@@ -432,7 +432,7 @@ class Client:
         Parameters
         ----------
         params: CubeParams (see entities.CubeParams)
-        headers_only: Only returns the header of each images (gives an overview of the query)
+        headers_only: Only returns the header of each image (gives an overview of the query)
         compression: define a level of compression to speed up the transfer.
         (0: no compression, 1 fastest to 9 best, -2: huffman-only)
         The data is compressed by the server and decompressed by the Client.
@@ -445,7 +445,7 @@ class Client:
         (several records can be returned for each image when they are grouped together, by date or something else.
         See entities.Record.group_by)
         """
-        cube = self.get_cube_it(params, headers_only=headers_only, compression=compression)
+        cube = self._get_cube_it(params, headers_only=headers_only, compression=compression)
         images, grecords = [], []
         if verbose:
             print("GetCube returns {} images from {} datasets".format(cube.count, cube.nb_datasets))
@@ -480,7 +480,7 @@ class Client:
         Compression=0 or -2 is advised if the bandwidth is not limited
         file_format: (optional) currently supported geocube.FileFormatRaw & geocube.FileFormatGTiff
         file_pattern: (optional) iif file_format != Raw, pattern of the file name.
-        {#} will be replace by the number of image, {date} and {id} by the value of the record
+        {#} will be replaced by the number of image, {date} and {id} by the value of the record
 
         Returns
         -------
@@ -490,7 +490,7 @@ class Client:
         ...     entities.geo_transform(366162, 4833123, 30), (512, 512),
         ...     client.variable(name="test/rgb").instance("master"), records=client.list_records('france'))
         affine.Affine.translation(366162, 4833123)*affine.Affine.scale(30, -30))
-        >>> cube_it = client.get_cube_it(cube_params)
+        >>> cube_it = client._get_cube_it(cube_params)
         >>> from matplotlib import pyplot as plt
         >>> for image, _, err, _ in cube_it:
         ...     if not err:
@@ -505,6 +505,10 @@ class Client:
         file_format
         file_pattern
         """
+        return self._get_cube_it(params, headers_only, compression, file_format, file_pattern)
+
+    def _get_cube_it(self, params: entities.CubeParams, headers_only: bool = False, compression: int = 1,
+                     file_format=FileFormatRaw, file_pattern: str = None) -> entities.CubeIterator:
         common = {
             "instances_id":      [params.instance],
             "crs":               params.crs,
@@ -541,7 +545,7 @@ class Client:
         Parameters
         ----------
         aoi: AOI to be tiled in **geographic coordinates**
-        crs: CRS of the tile (an not the AOI)
+        crs: CRS of the tile (not the AOI)
         resolution: resolution of the tile
         shape: shape of each tile
 

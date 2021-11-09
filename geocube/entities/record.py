@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import collections
 import pprint
 from datetime import datetime
 
@@ -127,15 +126,15 @@ class Record:
         return r.datetime.date()
 
     @staticmethod
-    def group_by(records: Union[List[Record], List[List[Record]]], func_key) -> List[List[Record]]:
+    def group_by(records: List[Union[Record, List[Record]]], func_key) -> List[List[Record]]:
         """
         group_by groups the records of the list by the key provided by the func_key(Record)
-        Returns a list of list of records
+        Returns a list of lists of records
 
         Parameters
         ----------
-        records: list of records to group. If records is a list of list, records is flatten.
-        func_key: function taking a record and returning a key (eg. entities.Record.key_date, lambda r:r.datetime)
+        records: list of records to group. If records is a list of list, records is flattened.
+        func_key: function taking a record and returning a key (e.g. entities.Record.key_date, lambda r:r.datetime)
 
         Returns
         -------

@@ -230,7 +230,7 @@ class Variable(_ProxyVariable):
         Parameters
         ----------
         name: of the instance
-        metadata: of the instance (eg. processing parameters, version...) can be empty
+        metadata: of the instance (e.g. processing parameters, version...) can be empty
 
         Returns
         -------

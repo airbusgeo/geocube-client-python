@@ -43,7 +43,7 @@ class CubeParams:
 
         Returns
         -------
-        A CubeParams that can be set as a parameter of a get_cube request
+        A CubeParams to be passed as a parameter of a get_cube request
         """
         return cls.from_tile(entities.Tile.from_geotransform(transform, crs, shape), instance,
                              tags=tags, from_time=from_time, to_time=to_time)
@@ -66,7 +66,7 @@ class CubeParams:
 
         Returns
         -------
-        A CubeParams that can be set as a parameter of a get_cube request
+        A CubeParams to be passed as a parameter of a get_cube request
 
         """
         return cls.from_tile(entities.Tile.from_geotransform(transform, crs, shape), instance, records=records)
@@ -89,7 +89,7 @@ class CubeParams:
 
         Returns
         -------
-        A CubeParams that can be set as a parameter of a get_cube request
+        A CubeParams to be passed as a parameter of a get_cube request
 
         """
         return cls(_instance_id=entities.get_id(instance) if instance else None,

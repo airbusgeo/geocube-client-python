@@ -20,10 +20,10 @@ def geo_transform(offset_x, offset_y, scale) -> affine.Affine:
 
 def crs_to_str(crs: Union[str, int]) -> str:
     """
-    Return an string representation of a crs
+    Return a string representation of a crs
     Parameters
     ----------
-    crs: an epsg number, a string or a class that support __str__() (eg pyproj.CRS)
+    crs: an epsg number, a string or a class that support __str__() (e.g. pyproj.CRS)
 
     Returns
     -------
@@ -54,7 +54,7 @@ class Tile:
         Create a tile from a geotransform, a crs and a shape
         Parameters
         ----------
-        transform: geotransform from pixel coordinates to CRS
+        transform: geotransform from pixel coordinates to CRS.
         crs: Coordinate Reference System of the tile
         shape: shape of the tile (in pixel)
 
@@ -68,8 +68,8 @@ class Tile:
     def from_record(cls, record: entities.Record, crs: Union[str, int], resolution: float) -> Tile:
         """ Create a tile that cover the record in the crs at a given resolution
         Warning: record.aoi must be loaded (with client.load_aoi())
-        Warning: Check the result.shape as the size might be really big !
-        Warning: the aoi is converted to the crs but it might be imprecise at the borders
+        Warning: Check the `result.shape` as the size might be huge !
+        Warning: the aoi is converted to the crs, but it might be imprecise at the borders
 
         Parameters
         ----------

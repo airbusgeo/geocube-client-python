@@ -5,9 +5,9 @@ from functools import wraps
 import grpc
 
 
-def my_exception_handler(type, value, traceback):
+def my_exception_handler(type_, value, traceback):
     if type.__name__ != 'GeocubeError':
-        sys.__excepthook__(type, value, traceback)
+        sys.__excepthook__(type_, value, traceback)
     else:
         logging.error(value)
 
