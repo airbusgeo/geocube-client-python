@@ -425,7 +425,7 @@ class Client:
 
     @utils.catch_rpc_error
     def get_cube(self, params: entities.CubeParams,
-                 headers_only: bool = False, compression: int = 1, verbose: bool = True):
+                 headers_only: bool = False, compression: int = 0, verbose: bool = True):
         """
         Get a cube given a CubeParameters
 
@@ -434,7 +434,9 @@ class Client:
         params: CubeParams (see entities.CubeParams)
         headers_only: Only returns the header of each images (gives an overview of the query)
         compression: define a level of compression to speed up the transfer.
+        (0: no compression, 1 fastest to 9 best, -2: huffman-only)
         The data is compressed by the server and decompressed by the Client.
+        Compression=0 or -2 is advised if the bandwidth is not limited
         verbose: add information during the transfer
 
         Returns
@@ -463,7 +465,7 @@ class Client:
         return images, grecords
 
     @utils.catch_rpc_error
-    def get_cube_it(self, params: entities.CubeParams, headers_only: bool = False, compression: int = 1,
+    def get_cube_it(self, params: entities.CubeParams, headers_only: bool = False, compression: int = 0,
                     file_format=FileFormatRaw, file_pattern: str = None) -> entities.CubeIterator:
         """
         Returns a cube iterator over the requested images
@@ -472,8 +474,10 @@ class Client:
         ----------
         params: CubeParams (see entities.CubeParams)
         headers_only: returns only the header of the dataset (use this option to control the output of get_cube)
-        compression: define a level of compression to speed up the transfer.
+        compression: define a level of compression to speed up the transfer
+        (0: no compression, 1 fastest to 9 best, -2: huffman-only)
         The data is compressed by the server and decompressed by the Client.
+        Compression=0 or -2 is advised if the bandwidth is not limited
         file_format: (optional) currently supported geocube.FileFormatRaw & geocube.FileFormatGTiff
         file_pattern: (optional) iif file_format != Raw, pattern of the file name.
         {#} will be replace by the number of image, {date} and {id} by the value of the record
