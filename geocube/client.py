@@ -5,6 +5,7 @@ from datetime import datetime
 from typing import Dict, List, Tuple, Union, Optional
 
 import grpc
+import numpy as np
 import rasterio
 from shapely import geometry
 
@@ -400,7 +401,8 @@ class Client:
 
     @utils.catch_rpc_error
     def get_cube(self, params: entities.CubeParams,
-                 headers_only: bool = False, compression: int = 0, verbose: bool = True):
+                 headers_only: bool = False, compression: int = 0, verbose: bool = True) \
+            -> Tuple[List[np.array], List[entities.GroupedRecords]]:
         """
         Get a cube given a CubeParameters
 
@@ -496,8 +498,8 @@ class Client:
             "format":            file_format,
         }
         if params.records is not None:
-            req = catalog_pb2.GetCubeRequest(**common, grecords=records_pb2.GroupedRecordsList(
-                records=[records_pb2.RecordList(ids=rs) for rs in params.records]
+            req = catalog_pb2.GetCubeRequest(**common, grouped_records=records_pb2.GroupedRecordIdsList(
+                records=[records_pb2.GroupedRecordIds(ids=rs) for rs in params.records]
             ))
         else:
             from_time_pb = utils.pb_null_timestamp()
@@ -559,7 +561,7 @@ class Client:
         file: output PNG file
         """
         req = catalog_pb2.GetTileRequest(
-            records=records_pb2.RecordList(ids=entities.get_ids(records)),
+            records=records_pb2.RecordIdList(ids=entities.get_ids(records)),
             instance_id=entities.get_id(instance),
             x=x, y=y, z=z)
         resp = self.stub.GetXYZTile(req)

@@ -71,7 +71,7 @@ class Admin(Client):
         """
         res = self.admin_stub.UpdateDatasets(admin_pb2.UpdateDatasetsRequest(
             simulate=simulate, instance_id=entities.get_id(instance),
-            records_id=entities.get_ids(records),
+            record_ids=entities.get_ids(records),
             dformat=entities.DataFormat.from_user(dformat).to_pb(),
             real_min_value=min_out, real_max_value=max_out, exponent=exponent))
         if simulate:
@@ -97,6 +97,6 @@ class Admin(Client):
         """
         res = self.admin_stub.DeleteDatasets(admin_pb2.DeleteDatasetsRequest(
             execution_level=execution_level.value,
-            instance_ids=entities.get_ids(instances), records_id=entities.get_ids(records)))
+            instance_ids=entities.get_ids(instances), record_ids=entities.get_ids(records)))
 
         return entities.Job.from_pb(self.stub, res.job)

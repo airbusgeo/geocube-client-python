@@ -24,7 +24,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z\014./pb;geocube',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x1bgeocube/pb/operations.proto\x12\x07geocube\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1bgeocube/pb/dataformat.proto\x1a\x1ageocube/pb/variables.proto\x1a\x18geocube/pb/records.proto\"\xc2\x01\n\x07\x44\x61taset\x12\x11\n\trecord_id\x18\x02 \x01(\t\x12\x13\n\x0binstance_id\x18\x03 \x01(\t\x12\x18\n\x10\x63ontainer_subdir\x18\x06 \x01(\t\x12\r\n\x05\x62\x61nds\x18\x07 \x03(\x03\x12$\n\x07\x64\x66ormat\x18\x08 \x01(\x0b\x32\x13.geocube.DataFormat\x12\x16\n\x0ereal_min_value\x18\t \x01(\x01\x12\x16\n\x0ereal_max_value\x18\n \x01(\x01\x12\x10\n\x08\x65xponent\x18\x0b \x01(\x01\"M\n\tContainer\x12\x0b\n\x03uri\x18\x01 \x01(\t\x12\x0f\n\x07managed\x18\x02 \x01(\x08\x12\"\n\x08\x64\x61tasets\x18\x03 \x03(\x0b\x32\x10.geocube.Dataset\"\xa2\x02\n\x03Job\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0c\n\x04type\x18\x03 \x01(\t\x12\r\n\x05state\x18\x04 \x01(\t\x12\x31\n\rcreation_time\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x34\n\x10last_update_time\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0c\n\x04logs\x18\x07 \x03(\t\x12\x14\n\x0c\x61\x63tive_tasks\x18\x08 \x01(\x05\x12\x14\n\x0c\x66\x61iled_tasks\x18\t \x01(\x05\x12\x30\n\x0f\x65xecution_level\x18\n \x01(\x0e\x32\x17.geocube.ExecutionLevel\x12\x0f\n\x07waiting\x18\x0b \x01(\x08\"=\n\x14IndexDatasetsRequest\x12%\n\tcontainer\x18\x01 \x01(\x0b\x32\x12.geocube.Container\"\x17\n\x15IndexDatasetsResponse\"\xcd\x02\n\x13\x43onsolidationParams\x12$\n\x07\x64\x66ormat\x18\x01 \x01(\x0b\x32\x13.geocube.DataFormat\x12\x10\n\x08\x65xponent\x18\x02 \x01(\x01\x12+\n\x0eresampling_alg\x18\x04 \x01(\x0e\x32\x13.geocube.Resampling\x12=\n\x0b\x63ompression\x18\x05 \x01(\x0e\x32(.geocube.ConsolidationParams.Compression\x12\x18\n\x10\x62\x61nds_interleave\x18\x06 \x01(\x08\x12,\n\rstorage_class\x18\x07 \x01(\x0e\x32\x15.geocube.StorageClass\x12\x1a\n\x12overviews_min_size\x18\x08 \x01(\x05\".\n\x0b\x43ompression\x12\x06\n\x02NO\x10\x00\x12\x0c\n\x08LOSSLESS\x10\x01\x12\t\n\x05LOSSY\x10\x02\"m\n\x1a\x43onfigConsolidationRequest\x12\x13\n\x0bvariable_id\x18\x01 \x01(\t\x12:\n\x14\x63onsolidation_params\x18\x02 \x01(\x0b\x32\x1c.geocube.ConsolidationParams\"\x1d\n\x1b\x43onfigConsolidationResponse\"4\n\x1dGetConsolidationParamsRequest\x12\x13\n\x0bvariable_id\x18\x01 \x01(\t\"\\\n\x1eGetConsolidationParamsResponse\x12:\n\x14\x63onsolidation_params\x18\x02 \x01(\x0b\x32\x1c.geocube.ConsolidationParams\"\xe7\x01\n\x12\x43onsolidateRequest\x12\x10\n\x08job_name\x18\x01 \x01(\t\x12\x13\n\x0binstance_id\x18\x02 \x01(\t\x12\x13\n\x0blayout_name\x18\x07 \x01(\t\x12\x30\n\x0f\x65xecution_level\x18\x06 \x01(\x0e\x32\x17.geocube.ExecutionLevel\x12&\n\x07records\x18\x04 \x01(\x0b\x32\x13.geocube.RecordListH\x00\x12)\n\x07\x66ilters\x18\x05 \x01(\x0b\x32\x16.geocube.RecordFiltersH\x00\x42\x10\n\x0erecords_lister\"%\n\x13\x43onsolidateResponse\x12\x0e\n\x06job_id\x18\x01 \x01(\t\"$\n\x0fListJobsRequest\x12\x11\n\tname_like\x18\x01 \x01(\t\".\n\x10ListJobsResponse\x12\x1a\n\x04jobs\x18\x01 \x03(\x0b\x32\x0c.geocube.Job\"\x1b\n\rGetJobRequest\x12\n\n\x02id\x18\x01 \x01(\t\"+\n\x0eGetJobResponse\x12\x19\n\x03job\x18\x01 \x01(\x0b\x32\x0c.geocube.Job\"4\n\x10\x43leanJobsRequest\x12\x11\n\tname_like\x18\x01 \x01(\t\x12\r\n\x05state\x18\x02 \x01(\t\"\"\n\x11\x43leanJobsResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\"7\n\x10\x43\x61ncelJobRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\x17\n\x0f\x66orce_any_state\x18\x02 \x01(\x08\"\x13\n\x11\x43\x61ncelJobResponse\"6\n\x0fRetryJobRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\x17\n\x0f\x66orce_any_state\x18\x02 \x01(\x08\"\x12\n\x10RetryJobResponse\" \n\x12\x43ontinueJobRequest\x12\n\n\x02id\x18\x01 \x01(\t\"\x15\n\x13\x43ontinueJobResponse*J\n\x0cStorageClass\x12\x0c\n\x08STANDARD\x10\x00\x12\x0e\n\nINFREQUENT\x10\x01\x12\x0b\n\x07\x41RCHIVE\x10\x02\x12\x0f\n\x0b\x44\x45\x45PARCHIVE\x10\x03*\x85\x01\n\x0e\x45xecutionLevel\x12\x18\n\x14\x45xecutionSynchronous\x10\x00\x12\x19\n\x15\x45xecutionAsynchronous\x10\x01\x12\x16\n\x12StepByStepCritical\x10\x02\x12\x13\n\x0fStepByStepMajor\x10\x03\x12\x11\n\rStepByStepAll\x10\x04\x42\x0eZ\x0c./pb;geocubeb\x06proto3'
+  serialized_pb=b'\n\x1bgeocube/pb/operations.proto\x12\x07geocube\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1bgeocube/pb/dataformat.proto\x1a\x1ageocube/pb/variables.proto\x1a\x18geocube/pb/records.proto\"\xc2\x01\n\x07\x44\x61taset\x12\x11\n\trecord_id\x18\x02 \x01(\t\x12\x13\n\x0binstance_id\x18\x03 \x01(\t\x12\x18\n\x10\x63ontainer_subdir\x18\x06 \x01(\t\x12\r\n\x05\x62\x61nds\x18\x07 \x03(\x03\x12$\n\x07\x64\x66ormat\x18\x08 \x01(\x0b\x32\x13.geocube.DataFormat\x12\x16\n\x0ereal_min_value\x18\t \x01(\x01\x12\x16\n\x0ereal_max_value\x18\n \x01(\x01\x12\x10\n\x08\x65xponent\x18\x0b \x01(\x01\"M\n\tContainer\x12\x0b\n\x03uri\x18\x01 \x01(\t\x12\x0f\n\x07managed\x18\x02 \x01(\x08\x12\"\n\x08\x64\x61tasets\x18\x03 \x03(\x0b\x32\x10.geocube.Dataset\"\xa2\x02\n\x03Job\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0c\n\x04type\x18\x03 \x01(\t\x12\r\n\x05state\x18\x04 \x01(\t\x12\x31\n\rcreation_time\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x34\n\x10last_update_time\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0c\n\x04logs\x18\x07 \x03(\t\x12\x14\n\x0c\x61\x63tive_tasks\x18\x08 \x01(\x05\x12\x14\n\x0c\x66\x61iled_tasks\x18\t \x01(\x05\x12\x30\n\x0f\x65xecution_level\x18\n \x01(\x0e\x32\x17.geocube.ExecutionLevel\x12\x0f\n\x07waiting\x18\x0b \x01(\x08\"=\n\x14IndexDatasetsRequest\x12%\n\tcontainer\x18\x01 \x01(\x0b\x32\x12.geocube.Container\"\x17\n\x15IndexDatasetsResponse\"\xcd\x02\n\x13\x43onsolidationParams\x12$\n\x07\x64\x66ormat\x18\x01 \x01(\x0b\x32\x13.geocube.DataFormat\x12\x10\n\x08\x65xponent\x18\x02 \x01(\x01\x12+\n\x0eresampling_alg\x18\x04 \x01(\x0e\x32\x13.geocube.Resampling\x12=\n\x0b\x63ompression\x18\x05 \x01(\x0e\x32(.geocube.ConsolidationParams.Compression\x12\x18\n\x10\x62\x61nds_interleave\x18\x06 \x01(\x08\x12,\n\rstorage_class\x18\x07 \x01(\x0e\x32\x15.geocube.StorageClass\x12\x1a\n\x12overviews_min_size\x18\x08 \x01(\x05\".\n\x0b\x43ompression\x12\x06\n\x02NO\x10\x00\x12\x0c\n\x08LOSSLESS\x10\x01\x12\t\n\x05LOSSY\x10\x02\"m\n\x1a\x43onfigConsolidationRequest\x12\x13\n\x0bvariable_id\x18\x01 \x01(\t\x12:\n\x14\x63onsolidation_params\x18\x02 \x01(\x0b\x32\x1c.geocube.ConsolidationParams\"\x1d\n\x1b\x43onfigConsolidationResponse\"4\n\x1dGetConsolidationParamsRequest\x12\x13\n\x0bvariable_id\x18\x01 \x01(\t\"\\\n\x1eGetConsolidationParamsResponse\x12:\n\x14\x63onsolidation_params\x18\x02 \x01(\x0b\x32\x1c.geocube.ConsolidationParams\"\xe9\x01\n\x12\x43onsolidateRequest\x12\x10\n\x08job_name\x18\x01 \x01(\t\x12\x13\n\x0binstance_id\x18\x02 \x01(\t\x12\x13\n\x0blayout_name\x18\x07 \x01(\t\x12\x30\n\x0f\x65xecution_level\x18\x06 \x01(\x0e\x32\x17.geocube.ExecutionLevel\x12(\n\x07records\x18\x08 \x01(\x0b\x32\x15.geocube.RecordIdListH\x00\x12)\n\x07\x66ilters\x18\x05 \x01(\x0b\x32\x16.geocube.RecordFiltersH\x00\x42\x10\n\x0erecords_lister\"%\n\x13\x43onsolidateResponse\x12\x0e\n\x06job_id\x18\x01 \x01(\t\"$\n\x0fListJobsRequest\x12\x11\n\tname_like\x18\x01 \x01(\t\".\n\x10ListJobsResponse\x12\x1a\n\x04jobs\x18\x01 \x03(\x0b\x32\x0c.geocube.Job\"\x1b\n\rGetJobRequest\x12\n\n\x02id\x18\x01 \x01(\t\"+\n\x0eGetJobResponse\x12\x19\n\x03job\x18\x01 \x01(\x0b\x32\x0c.geocube.Job\"4\n\x10\x43leanJobsRequest\x12\x11\n\tname_like\x18\x01 \x01(\t\x12\r\n\x05state\x18\x02 \x01(\t\"\"\n\x11\x43leanJobsResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\"7\n\x10\x43\x61ncelJobRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\x17\n\x0f\x66orce_any_state\x18\x02 \x01(\x08\"\x13\n\x11\x43\x61ncelJobResponse\"6\n\x0fRetryJobRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\x17\n\x0f\x66orce_any_state\x18\x02 \x01(\x08\"\x12\n\x10RetryJobResponse\" \n\x12\x43ontinueJobRequest\x12\n\n\x02id\x18\x01 \x01(\t\"\x15\n\x13\x43ontinueJobResponse*J\n\x0cStorageClass\x12\x0c\n\x08STANDARD\x10\x00\x12\x0e\n\nINFREQUENT\x10\x01\x12\x0b\n\x07\x41RCHIVE\x10\x02\x12\x0f\n\x0b\x44\x45\x45PARCHIVE\x10\x03*\x85\x01\n\x0e\x45xecutionLevel\x12\x18\n\x14\x45xecutionSynchronous\x10\x00\x12\x19\n\x15\x45xecutionAsynchronous\x10\x01\x12\x16\n\x12StepByStepCritical\x10\x02\x12\x13\n\x0fStepByStepMajor\x10\x03\x12\x11\n\rStepByStepAll\x10\x04\x42\x0eZ\x0c./pb;geocubeb\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,geocube_dot_pb_dot_dataformat__pb2.DESCRIPTOR,geocube_dot_pb_dot_variables__pb2.DESCRIPTOR,geocube_dot_pb_dot_records__pb2.DESCRIPTOR,])
 
@@ -58,8 +58,8 @@ _STORAGECLASS = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=2173,
-  serialized_end=2247,
+  serialized_start=2175,
+  serialized_end=2249,
 )
 _sym_db.RegisterEnumDescriptor(_STORAGECLASS)
 
@@ -99,8 +99,8 @@ _EXECUTIONLEVEL = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=2250,
-  serialized_end=2383,
+  serialized_start=2252,
+  serialized_end=2385,
 )
 _sym_db.RegisterEnumDescriptor(_EXECUTIONLEVEL)
 
@@ -674,7 +674,7 @@ _CONSOLIDATEREQUEST = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='records', full_name='geocube.ConsolidateRequest.records', index=4,
-      number=4, type=11, cpp_type=10, label=1,
+      number=8, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -704,7 +704,7 @@ _CONSOLIDATEREQUEST = _descriptor.Descriptor(
     fields=[]),
   ],
   serialized_start=1440,
-  serialized_end=1671,
+  serialized_end=1673,
 )
 
 
@@ -735,8 +735,8 @@ _CONSOLIDATERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1673,
-  serialized_end=1710,
+  serialized_start=1675,
+  serialized_end=1712,
 )
 
 
@@ -767,8 +767,8 @@ _LISTJOBSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1712,
-  serialized_end=1748,
+  serialized_start=1714,
+  serialized_end=1750,
 )
 
 
@@ -799,8 +799,8 @@ _LISTJOBSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1750,
-  serialized_end=1796,
+  serialized_start=1752,
+  serialized_end=1798,
 )
 
 
@@ -831,8 +831,8 @@ _GETJOBREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1798,
-  serialized_end=1825,
+  serialized_start=1800,
+  serialized_end=1827,
 )
 
 
@@ -863,8 +863,8 @@ _GETJOBRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1827,
-  serialized_end=1870,
+  serialized_start=1829,
+  serialized_end=1872,
 )
 
 
@@ -902,8 +902,8 @@ _CLEANJOBSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1872,
-  serialized_end=1924,
+  serialized_start=1874,
+  serialized_end=1926,
 )
 
 
@@ -934,8 +934,8 @@ _CLEANJOBSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1926,
-  serialized_end=1960,
+  serialized_start=1928,
+  serialized_end=1962,
 )
 
 
@@ -973,8 +973,8 @@ _CANCELJOBREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1962,
-  serialized_end=2017,
+  serialized_start=1964,
+  serialized_end=2019,
 )
 
 
@@ -998,8 +998,8 @@ _CANCELJOBRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2019,
-  serialized_end=2038,
+  serialized_start=2021,
+  serialized_end=2040,
 )
 
 
@@ -1037,8 +1037,8 @@ _RETRYJOBREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2040,
-  serialized_end=2094,
+  serialized_start=2042,
+  serialized_end=2096,
 )
 
 
@@ -1062,8 +1062,8 @@ _RETRYJOBRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2096,
-  serialized_end=2114,
+  serialized_start=2098,
+  serialized_end=2116,
 )
 
 
@@ -1094,8 +1094,8 @@ _CONTINUEJOBREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2116,
-  serialized_end=2148,
+  serialized_start=2118,
+  serialized_end=2150,
 )
 
 
@@ -1119,8 +1119,8 @@ _CONTINUEJOBRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2150,
-  serialized_end=2171,
+  serialized_start=2152,
+  serialized_end=2173,
 )
 
 _DATASET.fields_by_name['dformat'].message_type = geocube_dot_pb_dot_dataformat__pb2._DATAFORMAT
@@ -1137,7 +1137,7 @@ _CONSOLIDATIONPARAMS_COMPRESSION.containing_type = _CONSOLIDATIONPARAMS
 _CONFIGCONSOLIDATIONREQUEST.fields_by_name['consolidation_params'].message_type = _CONSOLIDATIONPARAMS
 _GETCONSOLIDATIONPARAMSRESPONSE.fields_by_name['consolidation_params'].message_type = _CONSOLIDATIONPARAMS
 _CONSOLIDATEREQUEST.fields_by_name['execution_level'].enum_type = _EXECUTIONLEVEL
-_CONSOLIDATEREQUEST.fields_by_name['records'].message_type = geocube_dot_pb_dot_records__pb2._RECORDLIST
+_CONSOLIDATEREQUEST.fields_by_name['records'].message_type = geocube_dot_pb_dot_records__pb2._RECORDIDLIST
 _CONSOLIDATEREQUEST.fields_by_name['filters'].message_type = geocube_dot_pb_dot_records__pb2._RECORDFILTERS
 _CONSOLIDATEREQUEST.oneofs_by_name['records_lister'].fields.append(
   _CONSOLIDATEREQUEST.fields_by_name['records'])

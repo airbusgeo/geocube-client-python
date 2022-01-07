@@ -126,7 +126,7 @@ class Record:
         return r.datetime.date()
 
     @staticmethod
-    def group_by(records: List[Union[Record, List[Record]]], func_key) -> List[List[Record]]:
+    def group_by(records: List[Union[Record, GroupedRecords]], func_key) -> List[GroupedRecords]:
         """
         group_by groups the records of the list by the key provided by the func_key(Record)
         Returns a list of lists of records
@@ -175,5 +175,6 @@ class Record:
         return True
 
 
-RecordIdentifiers = Union[str, Record, List[str], List[Record], gpd.GeoDataFrame]
-GroupedRecordIds = List[List[str]]
+GroupedRecords = List[Record]
+GroupedRecordIds = List[str]
+RecordIdentifiers = Union[str, Record, GroupedRecordIds, GroupedRecords, gpd.GeoDataFrame]

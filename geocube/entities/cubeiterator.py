@@ -67,7 +67,7 @@ class CubeIterator:
 
         image.dtype.newbyteorder('>' if header.order == catalog_pb2.BigEndian else '<')
         records = []
-        for r in header.records:
+        for r in header.grouped_records.records:
             records.append(entities.Record.from_pb(r))
 
         if nb_parts == 0:

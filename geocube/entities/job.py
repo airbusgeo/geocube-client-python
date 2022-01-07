@@ -73,9 +73,11 @@ class Job:
         self._stub.RetryJob(operations_pb2.RetryJobRequest(id=self.id, force_any_state=force))
 
     @utils.catch_rpc_error
-    def cancel(self):
-        """ Cancel the job if possible """
-        self._stub.CancelJob(operations_pb2.CancelJobRequest(id=self.id))
+    def cancel(self, force: bool = False):
+        """ Cancel the job if possible
+        force: TO BE USED CAUTIOUSLY: cancel the current state of the job, whatever the state.
+        It can be unpredictable. Should only be used if the job is stuck in a pending state."""
+        self._stub.CancelJob(operations_pb2.CancelJobRequest(id=self.id, force_any_state=force))
 
     @utils.catch_rpc_error
     def next(self):

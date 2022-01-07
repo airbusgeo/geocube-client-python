@@ -84,7 +84,7 @@ class Consolidater(Client):
 
         if records is not None:
             req = operations_pb2.ConsolidateRequest(
-                **common, records=records_pb2.RecordList(ids=entities.get_ids(records)))
+                **common, records=records_pb2.RecordIdList(ids=entities.get_ids(records)))
         else:
             from_time_pb = utils.pb_null_timestamp()
             if from_time is not None:

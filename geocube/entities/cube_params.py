@@ -13,7 +13,7 @@ Tuple6Float = Tuple[float, float, float, float, float, float]
 @dataclass
 class CubeParams:
     _instance_id: str
-    _records_id: Union[entities.GroupedRecordIds, None]
+    _records_id: Union[List[entities.GroupedRecordIds], None]
 
     tags: Union[Dict[str, str], None]
     from_time: Union[datetime, None]
@@ -49,10 +49,10 @@ class CubeParams:
                              tags=tags, from_time=from_time, to_time=to_time)
 
     @classmethod
-    def from_records(cls, crs: str, transform: Union[affine.Affine, Tuple6Float],
+    def from_records(cls, records: List[entities.RecordIdentifiers],
+                     crs: str, transform: Union[affine.Affine, Tuple6Float],
                      shape: Tuple[int, int],
-                     instance: Union[str, entities.VariableInstance, None],
-                     records: List[entities.RecordIdentifiers]):
+                     instance: Union[str, entities.VariableInstance, None]):
         """
         Create a set of parameters to get a cube from a list of records
 
@@ -97,7 +97,7 @@ class CubeParams:
                    crs=tile.crs, transform=tile.transform, shape=tile.shape)
 
     @property
-    def records(self) -> entities.GroupedRecordIds:
+    def records(self) -> List[entities.GroupedRecordIds]:
         return self._records_id
 
     @records.setter
@@ -113,7 +113,7 @@ class CubeParams:
         self._instance_id = entities.get_id(instance)
 
     @staticmethod
-    def _parse_grecords_id(records: List[entities.RecordIdentifiers]) -> Union[entities.GroupedRecordIds, None]:
+    def _parse_grecords_id(records: List[entities.RecordIdentifiers]) -> Union[List[entities.GroupedRecordIds], None]:
         return [CubeParams._parse_records_id(rs) for rs in records] if records else None
 
     @staticmethod
