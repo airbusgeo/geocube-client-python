@@ -86,6 +86,16 @@ class Record:
             _aoi=gdf.geometry.iloc[0]
         )
 
+    def to_pb(self) -> records_pb2.Record:
+        pb = records_pb2.Record(
+            id=self.id,
+            name=self.name,
+            tags={key: value for key, value in self.tags.items()},
+            aoi_id=self.aoi_id
+        )
+        pb.time.FromDatetime(self.datetime)
+        return pb
+
     def geodataframe(self) -> gpd.GeoDataFrame:
         self._check_aoi()
         return gpd.GeoDataFrame(

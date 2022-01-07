@@ -189,17 +189,17 @@ class Client:
 
     @utils.catch_rpc_error
     def create_records(self, aoi_ids: List[str], names: List[str],
-                       ltags: List[Dict[str, str]], dates: List[datetime]) -> List[str]:
+                       tags: List[Dict[str, str]], dates: List[datetime]) -> List[str]:
         """
         Create a list of records. All inputs must have the same length.
         (see create_record for the description of the parameters)
         """
-        if len(names) != len(aoi_ids) or len(names) != len(dates) or len(names) != len(ltags):
+        if len(names) != len(aoi_ids) or len(names) != len(dates) or len(names) != len(tags):
             raise ValueError("All fields must have the same length")
 
         records = []
         for i in range(len(names)):
-            record = records_pb2.NewRecord(aoi_id=aoi_ids[i], name=names[i], tags=ltags[i])
+            record = records_pb2.NewRecord(aoi_id=aoi_ids[i], name=names[i], tags=tags[i])
             record.time.FromDatetime(dates[i])
             records.append(record)
 
@@ -423,23 +423,25 @@ class Client:
         See entities.Record.group_by)
         """
         cube = self._get_cube_it(params, headers_only=headers_only, compression=compression)
-        images, grecords = [], []
+        images, grouped_records = [], []
         if verbose:
             print("GetCube returns {} images from {} datasets".format(cube.count, cube.nb_datasets))
-        for image, records, err, size in cube:
+        for image, metadata, err in cube:
             if err is not None:
                 if verbose:
                     print(err)
                 continue
             if verbose:
-                min_date = min(r.datetime for r in records).strftime("%Y-%m-%d_%H:%M:%S")
-                max_date = max(r.datetime for r in records).strftime("%Y-%m-%d_%H:%M:%S")
+                min_date = metadata.min_date.strftime("%Y-%m-%d_%H:%M:%S")
+                max_date = metadata.max_date.strftime("%Y-%m-%d_%H:%M:%S")
                 print("Image {} received ({}{}kbytes) RecordTime:{} RecordName:{} Shape:{}".format(
-                    cube.num, '<' if headers_only else '', size//1024,
-                    min_date if min_date == max_date else min_date + " to " + max_date, records[0].name, image.shape))
+                    cube.index+1, '<' if headers_only else '', metadata.bytes//1024,
+                    min_date if min_date == max_date else min_date + " to " + max_date,
+                    metadata.grouped_records[0].name, image.shape))
             images.append(image)
-            grecords.append(records)
-        return images, grecords
+            grouped_records.append(metadata.grouped_records)
+
+        return images, grouped_records
 
     @utils.catch_rpc_error
     def get_cube_it(self, params: entities.CubeParams, headers_only: bool = False, compression: int = 0,
@@ -469,18 +471,10 @@ class Client:
         affine.Affine.translation(366162, 4833123)*affine.Affine.scale(30, -30))
         >>> cube_it = client._get_cube_it(cube_params)
         >>> from matplotlib import pyplot as plt
-        >>> for image, _, err, _ in cube_it:
+        >>> for image, _, _, err in cube_it:
         ...     if not err:
-        ...         plt.figure(cube_it.num)
+        ...         plt.figure(cube_it.index+1)
         ...         plt.imshow(image)
-
-        Parameters
-        ----------
-        params
-        headers_only
-        compression
-        file_format
-        file_pattern
         """
         return self._get_cube_it(params, headers_only, compression, file_format, file_pattern)
 
