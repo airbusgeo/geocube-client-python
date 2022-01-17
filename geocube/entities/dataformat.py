@@ -82,7 +82,7 @@ class DataFormat:
                 nan_, min_, max_ = info.min, info.min, info.max
             elif dtype.kind in 'fc':
                 info = np.finfo(dtype)
-                nan_, min_, max_ = None, info.min, info.max
+                nan_, min_, max_ = np.nan, info.min, info.max
             else:
                 nan_, min_, max_ = 0, 0, 1
 
