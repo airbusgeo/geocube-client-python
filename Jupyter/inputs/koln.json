@@ -1,0 +1,42 @@
+{
+"type": "Feature",
+"name": "Koln",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"geometry": { "type": "MultiPolygon", "coordinates": [ [ [
+  [6.714, 51.175],
+  [7.170,51.168],
+  [7.250,50.662],
+  [6.655,50.597],
+  [6.714,51.175]
+ ] ] ] },
+"start_time":"2020-01-01T00:00:00.000Z",
+"end_time":"2021-07-31T00:00:00.000Z",
+"scene_type":{
+    "constellation":"sentinel1",
+    "parameters": {
+        "producttype": "SLC",
+        "polarisationmode": "VV VH",
+        "sensoroperationalmode": "IW",
+        "relativeorbitnumber": "37"
+    }
+},
+"scene_graph_name":"S1Preprocessing",
+"tile_graph_name":"S1BackscatterCoherence",
+"graph_config":{
+    "projection":"EPSG:32631",
+    "snap_cpu_parallelism":"8",
+    "bkg_resampling": "BISINC_5_POINT_INTERPOLATION",
+    "resolution": "20"
+},
+"layers":{
+"sigma0_VV": {"variable":"BackscatterSigma0VV", "instance":"RNKell"},
+"sigma0_VH": {"variable":"BackscatterSigma0VH", "instance":"RNKell"},
+"coh_VV": {"variable":"CoherenceVV", "instance":"master"},
+"coh_VH": {"variable":"CoherenceVH", "instance":"master"}
+},
+"record_tags":{
+    "source": "tutorial",
+"provider": "geocube-ingester",
+"area":"Koln"
+}
+}

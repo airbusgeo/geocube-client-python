@@ -15,13 +15,13 @@ def parse_requirements(file):
 
 setuptools.setup(
     name="geocube_client",
-    version="0.3.0",
+    version="0.4.0",
     author="Varoquaux Vincent",
     author_email="vincent.varoquaux[at]]airbus.com",
     description="Geocube Python Client library",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://code.webfactory.intelligence-airbusds.com/geocube/geocube-client-python",
+    url="https://www.github.com/airbusgeo/geocube-client-python",
     packages=['geocube', 'geocube.utils', 'geocube.pb', 'geocube.entities', 'geocube.sdk'],
     install_requires=parse_requirements('requirements.txt'),
     classifiers=[
