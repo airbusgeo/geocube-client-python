@@ -86,7 +86,8 @@ class Client:
     @utils.catch_rpc_error
     def create_variable(self, name: str, dformat: entities.DataFormat, bands: List[str], unit: str = "",
                         description: str = "", palette: str = "",
-                        resampling_alg: entities.Resampling = entities.Resampling.bilinear) -> entities.Variable:
+                        resampling_alg: entities.Resampling = entities.Resampling.bilinear, exist_ok: bool = False)\
+            -> entities.Variable:
         """ Create a single Variable
 
         Parameters
@@ -98,6 +99,8 @@ class Client:
         description: of the data (for user information only)
         palette: for rendering in png (TileServer). Must be created using create_palette.
         resampling_alg: when reprojection is needed (see entities.Resampling)
+        exist_ok: (optional, see warning): if already exists, do not raise an error. !!! WARNING: it does not mean that
+        the variable in the geocube is the same !!!
 
         Returns
         -------
@@ -112,7 +115,13 @@ class Client:
             palette=palette,
             resampling_alg=resampling_alg.value-1))
 
-        return self.variable(id_=self.stub.CreateVariable(req).id)
+        try:
+            return self.variable(id_=self.stub.CreateVariable(req).id)
+        except grpc.RpcError as e:
+            e = utils.GeocubeError.from_rpc(e)
+            if e.is_already_exists() and exist_ok:
+                return self.variable(name)
+            raise
 
     @utils.catch_rpc_error
     def create_palette(self, name: str, colors: List[Tuple[float, int, int, int, int]], replace: bool = False):
@@ -151,7 +160,7 @@ class Client:
         return [entities.Variable.from_pb(self.stub, resp.variable) for resp in self.stub.ListVariables(req)]
 
     @utils.catch_rpc_error
-    def create_aoi(self, aoi: Union[geometry.Polygon, geometry.MultiPolygon]) -> str:
+    def create_aoi(self, aoi: Union[geometry.Polygon, geometry.MultiPolygon], exist_ok: bool = False) -> str:
         """
         Create a new AOI. Raise an error if an AOI with the same coordinates already exists.
         The id of the AOI can be retrieved from the details of the error.
@@ -159,33 +168,49 @@ class Client:
         Parameters
         ----------
         aoi: in geographic coordinates
+        exist_ok: (optional): if already exists, do not raise an error and return the aoi_id
 
         Returns
         -------
         the id of the AOI
         """
-        # Convert Multipolygon to pb
-        req = records_pb2.CreateAOIRequest(aoi=entities.record.aoi_to_pb(aoi))
-        return self.stub.CreateAOI(req).id
+        try:
+            req = records_pb2.CreateAOIRequest(aoi=entities.record.aoi_to_pb(aoi))
+            return self.stub.CreateAOI(req).id
+        except grpc.RpcError as e:
+            e = utils.GeocubeError.from_rpc(e)
+            if e.is_already_exists() and exist_ok:
+                return e.details[e.details.rindex(' ') + 1:]
+            raise
 
-    @utils.catch_rpc_error
-    def create_record(self, aoi_id: str, name: str, tags: Dict[str, str], date: datetime) -> str:
+    def create_record(self, aoi_id: str, name: str, tags: Dict[str, str], date: datetime, exist_ok: bool = False)\
+            -> str:
         """
         Create a new record. A record is uniquely identified with the tuple (name, tags, date)
         Raise an error if a record with the same Name, Tags and Date already exists.
 
         Parameters
         ----------
-        aoi_id: uuid4 of the AOI
-        name: of the records
-        tags: user-defined tags associated to the record
-        date: date of the data referenced by the record
+        aoi_id: uuid4 of the AOI.
+        name: of the records.
+        tags: user-defined tags associated to the record.
+        date: date of the data referenced by the record.
+        exist_ok: (optional, see warning): if already exists, do not raise an error !!! WARNING: it does not mean that
+        the record in the geocube is the same: its aoi may be different !!!
 
         Returns
         -------
         the ID of the record
         """
-        return self.create_records([aoi_id], [name], [tags], [date])[0]
+        try:
+            return self.create_records([aoi_id], [name], [tags], [date])[0]
+        except utils.GeocubeError as e:
+            if e.is_already_exists() and exist_ok:
+                record = self.list_records(name, tags=tags, from_time=date, to_time=date)[0]
+                if record.aoi_id != aoi_id:
+                    warnings.warn("Record already exists in the Geocube but the aoi_id is different")
+                return record.id
+            raise
 
     @utils.catch_rpc_error
     def create_records(self, aoi_ids: List[str], names: List[str],
@@ -372,16 +397,11 @@ class Client:
                       f'some information reading the file {uri}, but it encountered the following error :{e}.'
 
         if isinstance(record, tuple):
-            try:
-                aoi_id = self.create_aoi(tile.geometry(4326))
-            except utils.GeocubeError as e:
-                aoi_id = e.details[e.details.rindex(' ') + 1:]
+            aoi_id = self.create_aoi(tile.geometry(4326), exist_ok=True)
 
             r_name, r_tags, r_date = record
-            try:
-                record_id = self.create_record(aoi_id, name=r_name, tags=r_tags, date=r_date)
-            except utils.GeocubeError:
-                record_id = self.list_records(r_name, tags=r_tags, from_time=r_date, to_time=r_date)[0]
+            record_id = self.create_record(aoi_id, name=r_name, tags=r_tags, date=r_date, exist_ok=True)
+
         else:
             record_id = entities.get_id(record)
 

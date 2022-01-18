@@ -89,10 +89,11 @@ class _ProxyVariable:
                 self._variable.consolidation_params = entities.ConsolidationParams.from_pb(
                     self.client.GetConsolidationParams(req).consolidation_params)
             except grpc.RpcError as e:
-                if e.code() == grpc.StatusCode.NOT_FOUND:
+                e = utils.GeocubeError.from_rpc(e)
+                if e.is_not_found():
                     self._variable.consolidation_params = None
                 else:
-                    raise e
+                    raise
 
         return self._variable.consolidation_params
 

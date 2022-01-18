@@ -22,11 +22,26 @@ class GeocubeError(Exception):
         self.details = details
         super().__init__(self.__str__())
 
+    @classmethod
+    def from_rpc(cls, e: grpc.RpcError, func_name: str = ""):
+        if isinstance(e, grpc.Call):
+            return cls(func_name, e.code().name, e.details())
+        return cls(func_name, grpc.StatusCode.INTERNAL.name, f"{e}")
+
     def __str__(self):
         return "Error {} [{}]: {}".format(self.func, self.codename, self.details)
 
     def __reduce__(self):
         return GeocubeError, (self.func, self.codename, self.details)
+
+    def is_already_exists(self) -> bool:
+        return self.codename == grpc.StatusCode.ALREADY_EXISTS.name
+
+    def is_not_found(self) -> bool:
+        return self.codename == grpc.StatusCode.NOT_FOUND.name
+
+    def is_not_valid(self) -> bool:
+        return self.codename == grpc.StatusCode.INVALID_ARGUMENT.name
 
 
 def catch_rpc_error(func):
@@ -35,5 +50,5 @@ def catch_rpc_error(func):
         try:
             return func(*args, **kwargs)
         except grpc.RpcError as e:
-            raise GeocubeError(func.__name__, e.code().name, e.details())
+            raise GeocubeError.from_rpc(e, func.__name__)
     return wrapper
