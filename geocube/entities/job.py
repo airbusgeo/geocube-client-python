@@ -1,3 +1,4 @@
+import warnings
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
@@ -12,11 +13,11 @@ from geocube.pb import operations_pb2, geocube_pb2_grpc as geocube_grpc
 
 
 class ExecutionLevel(Enum):
-    SYNCHRONOUS = 0           # Job is done synchronously
-    ASYNCHRONOUS = 1          # Job is done asynchronously, but without any pause
-    STEP_BY_STEP_CRITICAL = 2 # Job is done asynchronously, step-by-step, pausing at every critical steps
-    STEP_BY_STEP_MAJOR = 3    # Job is done asynchronously, step-by-step, pausing at every major steps
-    STEP_BY_STEP_ALL = 4      # Job is done asynchronously, step-by-step, pausing at every steps
+    SYNCHRONOUS = 0            # Job is done synchronously
+    ASYNCHRONOUS = 1           # Job is done asynchronously, but without any pause
+    STEP_BY_STEP_CRITICAL = 2  # Job is done asynchronously, step-by-step, pausing at every critical steps
+    STEP_BY_STEP_MAJOR = 3     # Job is done asynchronously, step-by-step, pausing at every major steps
+    STEP_BY_STEP_ALL = 4       # Job is done asynchronously, step-by-step, pausing at every steps
 
 
 @dataclass
@@ -86,12 +87,21 @@ class Job:
             raise Exception("Job must be in waiting state")
         self._stub.ContinueJob(operations_pb2.ContinueJobRequest(id=self.id))
 
+    @utils.catch_rpc_error
+    def refresh(self, log_page=0, log_limit=1000):
+        """ Reload a job from server (inplace operation) """
+        res = self._stub.GetJob(operations_pb2.GetJobRequest(id=self.id, log_page=log_page, log_limit=log_limit))
+        self.__dict__ = Job.from_pb(self._stub, res.job).__dict__
+        return self
+
     def tasks_from_logs(self) -> List[Task]:
         tasks = []
-        for log in self.logs:
+        for i, log in enumerate(self.logs):
             log_task = parse.search("Prepare {container:d} container(s) with {records:d} record(s) "
                                     "and {datasets:d} dataset(s) (geographic: {coordinates})", log)
             if log_task is not None:
+                if i < 3:
+                    warnings.warn("tasks_from_logs might have missed tasks. Please, reload job with more logs")
                 # Parse coordinates
                 coordinates = parse.findall("{lon:f} {lat:f}", log_task['coordinates'])
                 coordinates = geometry.LinearRing([[p['lon'], p['lat']] for p in coordinates])
@@ -115,7 +125,7 @@ class Job:
             center = task.coordinates.centroid
             base.text(center.x, center.y, f"{task.nb_records} rec\n{task.nb_datasets} ds", ha='center', va='center')
         base.set_title(f"Job '{self.name}'\n"
-                       f"{len(tasks)} tasks ({self.active_tasks} actives - {self.failed_tasks} failed)")
+                       f"{len(tasks)} cells ({self.active_tasks} active tasks - {self.failed_tasks} failed)")
         return base
 
     def __repr__(self):

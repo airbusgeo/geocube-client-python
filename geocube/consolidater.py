@@ -9,60 +9,93 @@ from geocube.pb import layouts_pb2, operations_pb2, records_pb2
 class Consolidater(Client):
     @utils.catch_rpc_error
     def create_layout(self, layout: entities.Layout):
+        """ Create a layout in the Geocube"""
         return self.stub.CreateLayout(layouts_pb2.CreateLayoutRequest(layout=layout.to_pb()))
 
     @utils.catch_rpc_error
     def list_layouts(self, name_like: str = "") -> List[entities.Layout]:
+        """
+        List available layouts by name
+        name_like: pattern of the name. * and ? are supported to match all or any character.
+        """
         res = self.stub.ListLayouts(layouts_pb2.ListLayoutsRequest(name_like=name_like))
         return [entities.Layout.from_pb(layout) for layout in res.layouts]
 
     @utils.catch_rpc_error
     def delete_layout(self, name: str = ""):
+        """ Delete a layout from the Geocube """
         self.stub.DeleteLayout(layouts_pb2.DeleteLayoutRequest(name=name))
 
     @utils.catch_rpc_error
     def create_grid(self, grid: entities.Grid):
+        """ Create a grid in the Geocube"""
         return self.stub.CreateGrid(layouts_pb2.CreateGridRequest(grid=grid.to_pb()))
 
     @utils.catch_rpc_error
     def list_grids(self, name_like: str = "") -> List[entities.Grid]:
+        """
+        List grids by name
+        name_like: pattern of the name. * and ? are supported to match all or any character.
+        """
         res = self.stub.ListGrids(layouts_pb2.ListGridsRequest(name_like=name_like))
         return [entities.Grid.from_pb(grid) for grid in res.grids]
 
     @utils.catch_rpc_error
     def delete_grid(self, name: str = ""):
+        """ Delete a grid by its name """
         self.stub.DeleteGrid(layouts_pb2.DeleteGridRequest(name=name))
 
     @utils.catch_rpc_error
     def list_jobs(self, name_like: str = ""):
+        """
+        List jobs by name
+        name_like: pattern of the name. * and ? are supported to match all or any character.
+        """
         res = self.stub.ListJobs(operations_pb2.ListJobsRequest(name_like=name_like))
         return [entities.Job.from_pb(self.stub, r) for r in res.jobs]
 
     @utils.catch_rpc_error
-    def job(self, name: str = ""):
+    def job(self, name: str):
+        """ Get job by name. Shortcut for ListJobs(name)[0]. Only few logs are loaded. """
         res = self.stub.ListJobs(operations_pb2.ListJobsRequest(name_like=name))
         if len(res.jobs) == 0:
             raise utils.GeocubeError("job", "NOT_FOUND", "with name: " + name)
         return entities.Job.from_pb(self.stub, res.jobs[0])
 
     @utils.catch_rpc_error
-    def get_job(self, job_id):
-        res = self.stub.GetJob(operations_pb2.GetJobRequest(id=job_id))
+    def get_job(self, job_id: Union[str, entities.Job], log_page=0, log_limit=1000):
+        """
+        Get job by id.
+        Logs are loaded by pages, because some big jobs have too many logs to fit in a gRPC response.
+        """
+        res = self.stub.GetJob(operations_pb2.GetJobRequest(id=entities.get_id(job_id),
+                                                            log_page=log_page, log_limit=log_limit))
         return entities.Job.from_pb(self.stub, res.job)
 
-    def block_until_finish(self, job: entities.Job, wait_secs=15):
+    def wait_job(self, job: entities.Job, wait_secs=15, verbose=True):
+        """
+        Wait for the job to finish or fail.
+        If the execution level is step-by-step, it will automatically continue.
+        If verbose=True, the last log is printed every time a state change is detected.
+        """
         prev_state = job.state
         while job.state not in ['DONE', 'FAILED', 'DONEBUTUNTIDY']:
             time.sleep(wait_secs)
             job = self.job(job.name)
             if job.state != prev_state:
                 prev_state = job.state
-                print(job.logs[-1])
+                if verbose:
+                    print(job.logs[-1])
             if job.waiting:
                 job.next()
 
     @utils.catch_rpc_error
-    def clean_terminated_jobs(self, name_like: str = "", state: str = ""):
+    def remove_terminated_jobs(self, name_like: str = "", state: str = ""):
+        """
+        Remove all the jobs from the Geocube given a name pattern (by default, all terminated jobs)
+        name_like: pattern of the name. * and ? are supported to match all or any character.
+        state: state of the jobs to be removed.
+        """
         self.stub.CleanJobs(operations_pb2.CleanJobsRequest(name_like=name_like, state=state))
 
     @utils.catch_rpc_error
