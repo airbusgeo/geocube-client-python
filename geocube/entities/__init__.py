@@ -2,7 +2,8 @@ from geocube.entities.enums import Compression, pb_compression, Resampling, pb_r
 from geocube.entities.dataformat import DataFormat
 from geocube.entities.consolidation_params import ConsolidationParams
 from geocube.entities.variable import Variable, VariableInstance, Palette
-from geocube.entities.record import aoi_from_pb, Record, RecordIdentifiers, GroupedRecords, GroupedRecordIds
+from geocube.entities.record import aoi_from_pb, Record,\
+    GroupByKeyFunc, RecordIdentifiers, GroupedRecords, GroupedRecordIds
 from geocube.entities.container import Container, Dataset
 from geocube.entities.tile import Tile, geo_transform
 from geocube.entities.cube_metadata import SliceMetadata

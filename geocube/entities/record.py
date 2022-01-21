@@ -3,7 +3,7 @@ from __future__ import annotations
 import pprint
 from datetime import datetime
 
-from typing import Dict, List, Union
+from typing import Dict, List, Union, Callable, Any
 from dataclasses import dataclass
 
 import geopandas as gpd
@@ -133,10 +133,18 @@ class Record:
 
     @staticmethod
     def key_date(r: Record):
+        """ Returns the date of the record (without time).
+         It's a GroupByKeyFunc, thus it can be used to group_by."""
         return r.datetime.date()
 
     @staticmethod
-    def group_by(records: List[Union[Record, GroupedRecords]], func_key) -> List[GroupedRecords]:
+    def key_datetime(r: Record):
+        """ Returns the datetime of the record (without time).
+        It's a GroupByKeyFunc, thus it can be used to group_by."""
+        return r.datetime
+
+    @staticmethod
+    def group_by(records: List[Union[Record, GroupedRecords]], func_key: GroupByKeyFunc) -> List[GroupedRecords]:
         """
         group_by groups the records of the list by the key provided by the func_key(Record)
         Returns a list of lists of records
@@ -188,3 +196,4 @@ class Record:
 GroupedRecords = List[Record]
 GroupedRecordIds = List[str]
 RecordIdentifiers = Union[str, Record, GroupedRecordIds, GroupedRecords, gpd.GeoDataFrame]
+GroupByKeyFunc = Callable[[Record], Any]
