@@ -15,13 +15,10 @@ class CubeParams:
     _instance_id: str
     _records_id: Union[List[entities.GroupedRecordIds], None]
 
+    tile: entities.Tile
     tags: Union[Dict[str, str], None]
     from_time: Union[datetime, None]
     to_time: Union[datetime, None]
-
-    crs: str
-    transform: affine.Affine
-    shape: Tuple[int, int]
 
     @classmethod
     def from_tags(cls, crs: str, transform: Union[affine.Affine, Tuple6Float],
@@ -35,7 +32,7 @@ class CubeParams:
         ----------
         crs: of the output images (images will be reprojected on the fly if necessary)
         transform: of the requested cube (images will be rescaled on the fly if necessary)
-        shape: of the requested cube
+        shape: of the requested cube (@warning shape is the transpose of numpy shape)
         instance: of the requested data
         tags: of the records to be requested
         from_time: (optional) to filter the records
@@ -60,7 +57,7 @@ class CubeParams:
         ----------
         crs: of the output images (images will be reprojected on the fly if necessary)
         transform: of the requested cube (images will be rescaled on the fly if necessary)
-        shape: of the requested cube
+        shape: of the requested cube (@warning shape is the transpose of numpy shape)
         instance: of the requested data
         records: to be retrieved
 
@@ -92,9 +89,22 @@ class CubeParams:
         A CubeParams to be passed as a parameter of a get_cube request
 
         """
-        return cls(_instance_id=entities.get_id(instance) if instance else None,
-                   _records_id=CubeParams._parse_grecords_id(records), tags=tags, from_time=from_time, to_time=to_time,
-                   crs=tile.crs, transform=tile.transform, shape=tile.shape)
+        return cls(tile=tile,
+                   _instance_id=entities.get_id(instance) if instance else None,
+                   _records_id=CubeParams._parse_grouped_record_ids(records),
+                   tags=tags, from_time=from_time, to_time=to_time)
+
+    @property
+    def crs(self) -> str:
+        return self.tile.crs
+
+    @property
+    def transform(self) -> affine.Affine:
+        return self.tile.transform
+
+    @property
+    def shape(self) -> Tuple[int, int]:
+        return self.tile.shape
 
     @property
     def records(self) -> List[entities.GroupedRecordIds]:
@@ -102,7 +112,7 @@ class CubeParams:
 
     @records.setter
     def records(self, records: List[entities.RecordIdentifiers]):
-        self._records_id = CubeParams._parse_grecords_id(records)
+        self._records_id = CubeParams._parse_grouped_record_ids(records)
 
     @property
     def instance(self) -> str:
@@ -113,11 +123,12 @@ class CubeParams:
         self._instance_id = entities.get_id(instance)
 
     @staticmethod
-    def _parse_grecords_id(records: List[entities.RecordIdentifiers]) -> Union[List[entities.GroupedRecordIds], None]:
-        return [CubeParams._parse_records_id(rs) for rs in records] if records else None
+    def _parse_grouped_record_ids(records: List[entities.RecordIdentifiers])\
+            -> Union[List[entities.GroupedRecordIds], None]:
+        return [CubeParams._parse_record_ids(rs) for rs in records] if records else None
 
     @staticmethod
-    def _parse_records_id(records: entities.RecordIdentifiers) -> List[str]:
+    def _parse_record_ids(records: entities.RecordIdentifiers) -> List[str]:
         if isinstance(records, gpd.GeoDataFrame):
             return list(records['id'])
         return entities.get_ids(records)

@@ -13,8 +13,10 @@ from geocube import entities, utils
 from geocube.pb import layouts_pb2
 
 
-def geo_transform(offset_x, offset_y, scale) -> affine.Affine:
-    """ Return a geo_transform """
+def geo_transform(offset_x: float, offset_y: float, scale: Union[float, Tuple[float, float]]) -> affine.Affine:
+    """ Return a geo_transform (if scale is a float: north-up convention)"""
+    if isinstance(scale, tuple):
+        return affine.Affine.translation(offset_x, offset_y) * affine.Affine.scale(scale[0], scale[1])
     return affine.Affine.translation(offset_x, offset_y) * affine.Affine.scale(scale, -scale)
 
 
@@ -56,7 +58,7 @@ class Tile:
         ----------
         transform: geotransform from pixel coordinates to CRS.
         crs: Coordinate Reference System of the tile
-        shape: shape of the tile (in pixel)
+        shape: shape of the tile (in pixel) (@warning shape is the transpose of numpy shape)
 
         Returns
         -------
@@ -81,16 +83,16 @@ class Tile:
         -------
         A new tile
         """
-        bounds = record.geodataframe().to_crs(crs).total_bounds
-        return Tile.from_bbox(bounds, crs, resolution)
+        return Tile.from_aoi(record.aoi, crs, resolution)
 
     @classmethod
-    def from_bbox(cls, bbox: Tuple[float, float, float, float], crs: Union[str, int], resolution: float) -> Tile:
+    def from_bbox(cls, bbox: Tuple[float, float, float, float], crs: Union[str, int],
+                  resolution: Union[float, Tuple[float, float]]) -> Tile:
         """
         Create a tile from a bbox, a crs and a resolution
         Parameters
         ----------
-        bbox in crs coordinates
+        bbox (x1, y1, x2, y2) in crs coordinates
         crs (Coordinate Reference System) of the tile
         resolution of the pixel in the CRS
 
@@ -98,9 +100,32 @@ class Tile:
         -------
         A new tile
         """
-        transform = geo_transform(bbox[0], bbox[3], resolution)
-        sx, sy = (~transform) * (bbox[2], bbox[1])
+        rx, ry = resolution if isinstance(resolution, tuple) else (resolution, -resolution)
+        x1, y1, x2, y2 = bbox
+        if math.copysign(1, rx)*(x2-x1) < 0:
+            x1, x2 = x2, x1
+        if math.copysign(1, ry)*(y2-y1) < 0:
+            y1, y2 = y2, y1
+        transform = geo_transform(x1, y1, resolution)
+        sx, sy = (~transform) * (x2, y2)
         return cls(crs_to_str(crs), transform, (math.ceil(sx), math.ceil(sy)))
+
+    @classmethod
+    def from_aoi(cls, aoi: geometry.MultiPolygon, crs: Union[str, int],
+                 resolution: Union[float, Tuple[float, float]]) -> Tile:
+        """
+
+        Parameters
+        ----------
+        aoi multipolygon in 4326 coordinates
+        crs (Coordinate Reference System) of the tile
+        resolution of the pixel in the CRS
+
+        Returns
+        -------
+        A new tile
+        """
+        return Tile.from_bbox(gpd.GeoSeries(aoi, crs=4326).to_crs(crs).total_bounds, crs=crs, resolution=resolution)
 
     def __str__(self):
         return "Tile {}\n" \
@@ -127,6 +152,12 @@ class Tile:
         if to_crs is not None:
             gs = gs.to_crs(crs_to_str(to_crs))
         return gs.iloc[0]
+
+    def reshape(self, i1, j1, i2, j2) -> entities.Tile:
+        """ Create a new Tile using the coordinate pixels
+         @warning inverse of numpy coordinates """
+        return Tile.from_bbox(self.transform*(i1, j1) + self.transform*(i2, j2),
+                              self.crs, resolution=(self.transform.a, self.transform.e))
 
     @staticmethod
     def _parse_geotransform(transform: Union[affine.Affine, Tuple[float, float, float, float, float, float]]) \
