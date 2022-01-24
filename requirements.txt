@@ -14,3 +14,7 @@ pandas
 tqdm
 pebble
 retrying
+xarray
+parse
+dask
+distributed
