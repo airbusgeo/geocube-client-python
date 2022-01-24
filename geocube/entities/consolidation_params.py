@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Union
 
 from geocube.pb import operations_pb2
 from geocube import entities
@@ -22,6 +23,19 @@ class ConsolidationParams:
             overviews_min_size=pb.overviews_min_size,
             resampling_alg=entities.pb_resampling[pb.resampling_alg],
             bands_interleave=pb.bands_interleave,
+        )
+
+    @classmethod
+    def from_dict(cls, d: Union[dict, None]):
+        if d is None:
+            return None
+        return cls(
+            dformat=entities.DataFormat.from_dict(d["dformat"]),
+            exponent=d["exponent"],
+            compression=d["compression"],
+            overviews_min_size=d["overviews_min_size"],
+            resampling_alg=d["resampling_alg"],
+            bands_interleave=d["bands_interleave"],
         )
 
     def to_pb(self):

@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 import pprint
-from dataclasses import dataclass
-from typing import Dict, List
+from dataclasses import dataclass, field, asdict
+from typing import Dict, List, Union
 
 import grpc
 
@@ -12,7 +12,7 @@ from geocube import entities, utils
 
 @dataclass
 class _BaseVariable:
-    stub: geocube_grpc.GeocubeStub
+    stub: Union[geocube_grpc.GeocubeStub, None] = field(hash=False, compare=False)
     id: str
     name: str
     unit: str
@@ -22,6 +22,18 @@ class _BaseVariable:
     palette: str
     resampling_alg: entities.Resampling = None
     consolidation_params: entities.ConsolidationParams = None
+
+    def __getstate__(self):
+        stub, self.stub = self.stub, None
+        d = asdict(self)
+        self.stub = stub
+        return d
+
+    def __setstate__(self, d):
+        self.__dict__ = d
+        self.dformat = entities.DataFormat.from_dict(d["dformat"])
+        self.resampling_alg = self.resampling_alg
+        self.consolidation_params = entities.ConsolidationParams.from_dict(d["consolidation_params"])
 
 
 class _ProxyVariable:
@@ -71,7 +83,7 @@ class _ProxyVariable:
     @property
     @utils.catch_rpc_error
     def consolidation_params(self) -> entities.ConsolidationParams:
-        if self._variable.consolidation_params is None:
+        if self._variable.consolidation_params is None and self.client is not None:
             req = operations_pb2.GetConsolidationParamsRequest(variable_id=self.variable_id)
             try:
                 self._variable.consolidation_params = entities.ConsolidationParams.from_pb(
@@ -205,7 +217,7 @@ class Variable(_ProxyVariable):
             unit=pb.unit,
             description=pb.description,
             dformat=entities.DataFormat.from_pb(pb.dformat),
-            bands=pb.bands,
+            bands=[b for b in pb.bands],
             palette=pb.palette,
             resampling_alg=entities.pb_resampling[pb.resampling_alg],
         ), {pbi.name: Instance.from_pb(pbi) for pbi in pb.instances})
