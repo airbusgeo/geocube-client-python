@@ -32,6 +32,14 @@ Please follow the [Data Indexation Jupyter notebook](https://github.com/airbusge
 
 Please follow the [Data Access Jupyter notebook](https://github.com/airbusgeo/geocube-client-python/Jupyter/Geocube-Client-DataAccess.ipynb)
 
+### Optimize the dataformat (Consolidation)
+
+Please follow the [Consolidation Jupyter notebook](https://github.com/airbusgeo/geocube-client-python/Jupyter/Geocube-Client-Consolidation.ipynb)
+
+### Scale-up
+
+Please follow the [SDK Jupyter notebook](https://github.com/airbusgeo/geocube-client-python/Jupyter/Geocube-Client-SDK.ipynb)
+
 ## Documentation
 
 Available as docstrings in source code.

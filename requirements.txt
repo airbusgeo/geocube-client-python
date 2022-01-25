@@ -3,8 +3,8 @@ affine
 numpy
 Shapely
 rasterio
-grpcio
-grpcio-tools
+grpcio>=1.32.0,!=1.44.0
+grpcio-tools>=1.32.0,!=1.44.0
 google-api-core
 matplotlib
 setuptools
@@ -12,3 +12,5 @@ imageio
 geopandas
 pandas
 tqdm
+pebble
+retrying

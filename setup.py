@@ -22,7 +22,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://code.webfactory.intelligence-airbusds.com/geocube/geocube-client-python",
-    packages=['geocube', 'geocube.utils', 'geocube.pb', 'geocube.entities'],
+    packages=['geocube', 'geocube.utils', 'geocube.pb', 'geocube.entities', 'geocube.sdk'],
     install_requires=parse_requirements('requirements.txt'),
     classifiers=[
         "Programming Language :: Python :: 3",
