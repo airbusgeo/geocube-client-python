@@ -83,7 +83,8 @@ class Admin(Client):
     @utils.catch_rpc_error
     def admin_delete_datasets(self, instances: List[Union[str, entities.VariableInstance]],
                               records: List[Union[str, entities.Record]],
-                              execution_level: entities.ExecutionLevel = entities.ExecutionLevel.SYNCHRONOUS) -> entities.Job:
+                              execution_level: entities.ExecutionLevel = entities.ExecutionLevel.SYNCHRONOUS)\
+            -> entities.Job:
         """
         Admin function to delete datasets that are referenced by a list of instances and a list of records.
         This function is provided without any guaranties of service continuity.
@@ -91,9 +92,9 @@ class Admin(Client):
 
         Parameters
         ----------
-        instances: select all the datasets referenced by these instances
-        records:select all the datasets referenced by these records
-        execution_level: see entities.ExecutionLevel
+        instances: select all the datasets referenced by these instances.
+        records:select all the datasets referenced by these records.
+        execution_level: see entities.ExecutionLevel.
         """
         res = self.admin_stub.DeleteDatasets(admin_pb2.DeleteDatasetsRequest(
             execution_level=execution_level.value,

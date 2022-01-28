@@ -9,6 +9,8 @@ pb_types = ["undefined", "uint8", "uint16", "uint32", "int8", "int16", "int32", 
 @dataclass(frozen=True)
 class DataFormat:
     """
+    >>> DataFormat("int16", min_value=0, max_value=10000, no_data=-10000)
+    int16 [0 10000] nodata=-10000
     >>> DataFormat.from_user("u1")
     uint8 [0 255] nodata=0
     >>> DataFormat.from_user(('f4', np.nan, -1, 1))

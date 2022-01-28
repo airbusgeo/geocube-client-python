@@ -6,7 +6,7 @@ import numpy as np
 os.environ["GDAL_DISABLE_READDIR_ON_OPEN"] = "EMPTY_DIR"
 
 
-def timeserie_to_animation(images: List[np.array], gif_name: str, duration=0.2, legend: List[str] = None):
+def timeseries_to_animation(images: List[np.array], gif_name: str, duration=0.2, legend: List[str] = None):
     """
     image = (np.clip(image, 0, 1)*255).astype("uint8")
     """
