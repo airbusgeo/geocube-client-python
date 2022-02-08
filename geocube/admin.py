@@ -1,10 +1,11 @@
+from datetime import datetime
 from typing import List, Union, Dict, Tuple
 
-from geocube import Client, utils, entities
+from geocube import utils, entities, Consolidater
 from geocube.pb import admin_pb2, admin_pb2_grpc
 
 
-class Admin(Client):
+class Admin(Consolidater):
     def __init__(self, uri: str, secure: bool = False, api_key: str = "", verbose: bool = True):
         """
         Initialise the connexion to the Geocube Server
@@ -83,8 +84,8 @@ class Admin(Client):
     @utils.catch_rpc_error
     def admin_delete_datasets(self, instances: List[Union[str, entities.VariableInstance]],
                               records: List[Union[str, entities.Record]],
-                              execution_level: entities.ExecutionLevel = entities.ExecutionLevel.SYNCHRONOUS)\
-            -> entities.Job:
+                              execution_level: entities.ExecutionLevel = entities.ExecutionLevel.SYNCHRONOUS,
+                              job_name: str = None) -> entities.Job:
         """
         Admin function to delete datasets that are referenced by a list of instances and a list of records.
         This function is provided without any guaranties of service continuity.
@@ -97,6 +98,7 @@ class Admin(Client):
         execution_level: see entities.ExecutionLevel.
         """
         res = self.admin_stub.DeleteDatasets(admin_pb2.DeleteDatasetsRequest(
+            job_name=job_name if job_name is not None else f"Deletion_{datetime.now()}_{len(records)}_records",
             execution_level=execution_level.value,
             instance_ids=entities.get_ids(instances), record_ids=entities.get_ids(records)))
 
