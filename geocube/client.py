@@ -28,7 +28,7 @@ class Client:
         uri: of the Geocube Server
         secure: True to use a TLS Connexion
         api_key: (optional) API Key if Geocube Server is secured using a bearer authentication
-        verbose: display the version of the Geocube Server
+        verbose: set the default verbose mode
         """
         if secure:
             credentials = grpc.ssl_channel_credentials()
@@ -39,6 +39,7 @@ class Client:
         else:
             self._channel = grpc.insecure_channel(uri)
         self.stub = geocube_grpc.GeocubeStub(self._channel)
+        self.verbose = verbose
         if verbose:
             print("Connected to Geocube v" + self.version())
         self.downloader = None
@@ -430,7 +431,7 @@ class Client:
 
     @utils.catch_rpc_error
     def get_cube(self, params: entities.CubeParams,
-                 headers_only: bool = False, compression: int = 0, verbose: bool = True) \
+                 headers_only: bool = False, compression: int = 0, verbose: bool = None) \
             -> Tuple[List[np.array], List[entities.GroupedRecords]]:
         """
         Get a cube given a CubeParameters
@@ -443,7 +444,7 @@ class Client:
         (0: no compression, 1 fastest to 9 best, -2: huffman-only)
         The data is compressed by the server and decompressed by the Client.
         Compression=0 or -2 is advised if the bandwidth is not limited
-        verbose: add information during the transfer
+        verbose: display information during the transfer (if None, use the default verbose mode)
 
         Returns
         -------
@@ -453,6 +454,7 @@ class Client:
         """
         cube = self._get_cube_it(params, headers_only=headers_only, compression=compression)
         images, grouped_records = [], []
+        verbose = self.verbose if verbose is None else verbose
         if verbose:
             print("GetCube returns {} images from {} datasets".format(cube.count, cube.nb_datasets))
         for image, metadata, err in cube:
