@@ -390,13 +390,11 @@ class Client:
          maps dformat.max_value
         exponent: (optional, default: 1) non-linear scaling between dformat.min_max_value to min_max_out.
         """
-        ds_bands = None
         ds_dtype = "u1"
-        if isinstance(record, tuple) or bands is None or dformat is None:
+        if isinstance(record, tuple) or dformat is None:
             try:
                 with rasterio.open(uri) as ds:
                     tile = entities.Tile.from_geotransform(ds.transform, ds.crs, ds.shape)
-                    ds_bands = list(range(1, ds.count+1))
                     ds_dtype = ds.dtypes[0]
             except Exception as e:
                 raise f'if "record" is a tuple or "bands" or "dformat" is not defined, geocube-client tries to deduce'\
@@ -406,23 +404,16 @@ class Client:
             aoi_id = self.create_aoi(tile.geometry(4326), exist_ok=True)
 
             r_name, r_tags, r_date = record
-            record_id = self.create_record(aoi_id, name=r_name, tags=r_tags, date=r_date, exist_ok=True)
+            record = self.create_record(aoi_id, name=r_name, tags=r_tags, date=r_date, exist_ok=True)
 
-        else:
-            record_id = entities.get_id(record)
+        if dformat is None:
+            dformat = entities.DataFormat.from_user(ds_dtype)
 
-        def if_defined(value, default):
-            return value if value is not None else default
-
-        bands = if_defined(bands, ds_bands)
-        dformat = if_defined(dformat, entities.DataFormat.from_user(ds_dtype))
-        min_out = if_defined(min_out, instance.dformat.min_value)
-        max_out = if_defined(max_out, instance.dformat.max_value)
-        exponent = if_defined(exponent, 1)
-
-        cs = [entities.Container.new(uri, record_id, instance, bands,
-                                     dformat=entities.DataFormat.from_user(dformat),
-                                     min_out=min_out, max_out=max_out, exponent=exponent)]
+        cs = [entities.Container(uri,
+                                 managed=False,
+                                 datasets=[entities.Dataset(record, instance, bands=bands,
+                                                            dformat=entities.DataFormat.from_user(dformat),
+                                                            min_out=min_out, max_out=max_out, exponent=exponent)])]
         return self.index(cs)
 
     def get_cube_metadata(self, params: entities.CubeParams) -> entities.CubeMetadata:
