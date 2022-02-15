@@ -11,8 +11,8 @@ import rasterio
 from shapely import geometry
 
 from geocube.pb import records_pb2, operations_pb2, catalog_pb2, layouts_pb2, \
-    geocube_pb2, geocube_pb2_grpc as geocube_grpc, variables_pb2
-from geocube import entities, utils
+    geocube_pb2_grpc as geocube_grpc, variables_pb2, version_pb2
+from geocube import entities, utils, Downloader
 
 FileFormatRaw = catalog_pb2.Raw
 FileFormatGTiff = catalog_pb2.GTiff
@@ -41,6 +41,10 @@ class Client:
         self.stub = geocube_grpc.GeocubeStub(self._channel)
         if verbose:
             print("Connected to Geocube v" + self.version())
+        self.downloader = None
+
+    def use_downloader(self, downloader: Downloader):
+        self.downloader = downloader
 
     @utils.catch_rpc_error
     def version(self) -> str:
@@ -50,7 +54,7 @@ class Client:
         -------
         The version of the Geocube Server
         """
-        return self.stub.Version(geocube_pb2.GetVersionRequest()).Version
+        return self.stub.Version(version_pb2.GetVersionRequest()).Version
 
     @utils.catch_rpc_error
     def variable(self, name: str = None, id_: str = None, instance_id: str = None)\
@@ -420,6 +424,10 @@ class Client:
                                      min_out=min_out, max_out=max_out, exponent=exponent)]
         return self.index(cs)
 
+    def get_cube_metadata(self, params: entities.CubeParams) -> entities.CubeMetadata:
+        cube_it = self._get_cube_it(params, headers_only=True)
+        return cube_it.metadata()
+
     @utils.catch_rpc_error
     def get_cube(self, params: entities.CubeParams,
                  headers_only: bool = False, compression: int = 0, verbose: bool = True) \
@@ -455,7 +463,7 @@ class Client:
             if verbose:
                 min_date = metadata.min_date.strftime("%Y-%m-%d_%H:%M:%S")
                 max_date = metadata.max_date.strftime("%Y-%m-%d_%H:%M:%S")
-                print("Image {} received ({}{}kbytes) RecordTime:{} RecordName:{} Shape:{}".format(
+                print("Image {} received ({}{}kb) RecordTime:{} RecordName:{} Shape:{}".format(
                     cube.index+1, '<' if headers_only else '', metadata.bytes//1024,
                     min_date if min_date == max_date else min_date + " to " + max_date,
                     metadata.grouped_records[0].name, image.shape))
@@ -501,6 +509,10 @@ class Client:
 
     def _get_cube_it(self, params: entities.CubeParams, headers_only: bool = False, compression: int = 1,
                      file_format=FileFormatRaw, file_pattern: str = None) -> entities.CubeIterator:
+        if self.downloader is not None and not headers_only:
+            metadata = self._get_cube_it(params, headers_only=True).metadata()
+            return self.downloader.get_cube_it(metadata, file_format, file_pattern)
+
         common = {
             "instances_id":      [params.instance],
             "crs":               params.crs,

@@ -3,15 +3,17 @@
 import grpc
 
 from geocube.pb import catalog_pb2 as geocube_dot_pb_dot_catalog__pb2
-from geocube.pb import geocube_pb2 as geocube_dot_pb_dot_geocube__pb2
 from geocube.pb import layouts_pb2 as geocube_dot_pb_dot_layouts__pb2
 from geocube.pb import operations_pb2 as geocube_dot_pb_dot_operations__pb2
 from geocube.pb import records_pb2 as geocube_dot_pb_dot_records__pb2
 from geocube.pb import variables_pb2 as geocube_dot_pb_dot_variables__pb2
+from geocube.pb import version_pb2 as geocube_dot_pb_dot_version__pb2
 
 
 class GeocubeStub(object):
-    """*
+    """ApiGW https://cloud.google.com/endpoints/docs/grpc-service-config/reference/rpc/google.api
+
+    *
     API
     """
 
@@ -198,13 +200,15 @@ class GeocubeStub(object):
                 )
         self.Version = channel.unary_unary(
                 '/geocube.Geocube/Version',
-                request_serializer=geocube_dot_pb_dot_geocube__pb2.GetVersionRequest.SerializeToString,
-                response_deserializer=geocube_dot_pb_dot_geocube__pb2.GetVersionResponse.FromString,
+                request_serializer=geocube_dot_pb_dot_version__pb2.GetVersionRequest.SerializeToString,
+                response_deserializer=geocube_dot_pb_dot_version__pb2.GetVersionResponse.FromString,
                 )
 
 
 class GeocubeServicer(object):
-    """*
+    """ApiGW https://cloud.google.com/endpoints/docs/grpc-service-config/reference/rpc/google.api
+
+    *
     API
     """
 
@@ -425,7 +429,7 @@ class GeocubeServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def Version(self, request, context):
-        """@exclude Version
+        """Version of the GeocubeServer
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -611,8 +615,8 @@ def add_GeocubeServicer_to_server(servicer, server):
             ),
             'Version': grpc.unary_unary_rpc_method_handler(
                     servicer.Version,
-                    request_deserializer=geocube_dot_pb_dot_geocube__pb2.GetVersionRequest.FromString,
-                    response_serializer=geocube_dot_pb_dot_geocube__pb2.GetVersionResponse.SerializeToString,
+                    request_deserializer=geocube_dot_pb_dot_version__pb2.GetVersionRequest.FromString,
+                    response_serializer=geocube_dot_pb_dot_version__pb2.GetVersionResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -622,7 +626,9 @@ def add_GeocubeServicer_to_server(servicer, server):
 
  # This class is part of an EXPERIMENTAL API.
 class Geocube(object):
-    """*
+    """ApiGW https://cloud.google.com/endpoints/docs/grpc-service-config/reference/rpc/google.api
+
+    *
     API
     """
 
@@ -1233,7 +1239,7 @@ class Geocube(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/geocube.Geocube/Version',
-            geocube_dot_pb_dot_geocube__pb2.GetVersionRequest.SerializeToString,
-            geocube_dot_pb_dot_geocube__pb2.GetVersionResponse.FromString,
+            geocube_dot_pb_dot_version__pb2.GetVersionRequest.SerializeToString,
+            geocube_dot_pb_dot_version__pb2.GetVersionResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

@@ -6,7 +6,7 @@ from geocube.entities.record import aoi_from_pb, Record,\
     GroupByKeyFunc, RecordIdentifiers, GroupedRecords, GroupedRecordIds
 from geocube.entities.container import Container, Dataset
 from geocube.entities.tile import Tile, geo_transform
-from geocube.entities.cube_metadata import SliceMetadata
+from geocube.entities.cube_metadata import CubeMetadata, SliceMetadata
 from geocube.entities.cube_params import CubeParams
 from geocube.entities.cubeiterator import CubeIterator
 from geocube.entities.job import ExecutionLevel, Job

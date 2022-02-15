@@ -25,7 +25,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z\014./pb;geocube',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x18geocube/pb/catalog.proto\x12\x07geocube\x1a\x1bgeocube/pb/dataformat.proto\x1a\x18geocube/pb/records.proto\x1a\x18geocube/pb/layouts.proto\x1a\x1cgeocube/pb/datasetMeta.proto\x1a\x1ageocube/pb/variables.proto\"1\n\x05Shape\x12\x0c\n\x04\x64im1\x18\x01 \x01(\x05\x12\x0c\n\x04\x64im2\x18\x02 \x01(\x05\x12\x0c\n\x04\x64im3\x18\x03 \x01(\x05\"\xa9\x02\n\x0bImageHeader\x12\x1d\n\x05shape\x18\x01 \x01(\x0b\x32\x0e.geocube.Shape\x12(\n\x05\x64type\x18\x02 \x01(\x0e\x32\x19.geocube.DataFormat.Dtype\x12\x10\n\x08nb_parts\x18\x04 \x01(\x05\x12\x0c\n\x04\x64\x61ta\x18\x03 \x01(\x0c\x12\x0c\n\x04size\x18\x05 \x01(\x03\x12!\n\x05order\x18\x06 \x01(\x0e\x32\x12.geocube.ByteOrder\x12\x13\n\x0b\x63ompression\x18\x07 \x01(\x08\x12\x30\n\x0fgrouped_records\x18\x0b \x01(\x0b\x32\x17.geocube.GroupedRecords\x12*\n\x0c\x64\x61taset_meta\x18\n \x01(\x0b\x32\x14.geocube.DatasetMeta\x12\r\n\x05\x65rror\x18\t \x01(\t\"(\n\nImageChunk\x12\x0c\n\x04part\x18\x01 \x01(\x05\x12\x0c\n\x04\x64\x61ta\x18\x02 \x01(\x0c\"\x19\n\tImageFile\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\x0c\"\xf2\x02\n\x0eGetCubeRequest\x12(\n\x07records\x18\x0b \x01(\x0b\x32\x15.geocube.RecordIdListH\x00\x12)\n\x07\x66ilters\x18\x02 \x01(\x0b\x32\x16.geocube.RecordFiltersH\x00\x12\x38\n\x0fgrouped_records\x18\x0c \x01(\x0b\x32\x1d.geocube.GroupedRecordIdsListH\x00\x12\x14\n\x0cinstances_id\x18\x03 \x03(\t\x12\x0b\n\x03\x63rs\x18\x04 \x01(\t\x12)\n\npix_to_crs\x18\x05 \x01(\x0b\x32\x15.geocube.GeoTransform\x12\x1b\n\x04size\x18\x06 \x01(\x0b\x32\r.geocube.Size\x12\x19\n\x11\x63ompression_level\x18\x07 \x01(\x05\x12\x14\n\x0cheaders_only\x18\x08 \x01(\x08\x12#\n\x06\x66ormat\x18\t \x01(\x0e\x32\x13.geocube.FileFormatB\x10\n\x0erecords_lister\"\x92\x01\n\x15GetCubeResponseHeader\x12\r\n\x05\x63ount\x18\x01 \x01(\x03\x12\x13\n\x0bnb_datasets\x18\x02 \x01(\x03\x12(\n\x0bref_dformat\x18\x03 \x01(\x0b\x32\x13.geocube.DataFormat\x12+\n\x0eresampling_alg\x18\x04 \x01(\x0e\x32\x13.geocube.Resampling\"\xa4\x01\n\x0fGetCubeResponse\x12\x37\n\rglobal_header\x18\x03 \x01(\x0b\x32\x1e.geocube.GetCubeResponseHeaderH\x00\x12&\n\x06header\x18\x01 \x01(\x0b\x32\x14.geocube.ImageHeaderH\x00\x12$\n\x05\x63hunk\x18\x02 \x01(\x0b\x32\x13.geocube.ImageChunkH\x00\x42\n\n\x08response\"\x86\x01\n\x0eGetTileRequest\x12\x13\n\x0binstance_id\x18\x01 \x01(\t\x12\t\n\x01x\x18\x02 \x01(\x05\x12\t\n\x01y\x18\x03 \x01(\x05\x12\t\n\x01z\x18\x04 \x01(\x05\x12,\n\x07records\x18\x06 \x01(\x0b\x32\x19.geocube.GroupedRecordIdsH\x00\x42\x10\n\x0erecords_lister\"4\n\x0fGetTileResponse\x12!\n\x05image\x18\x01 \x01(\x0b\x32\x12.geocube.ImageFile*,\n\tByteOrder\x12\x10\n\x0cLittleEndian\x10\x00\x12\r\n\tBigEndian\x10\x01* \n\nFileFormat\x12\x07\n\x03Raw\x10\x00\x12\t\n\x05GTiff\x10\x01\x42\x0eZ\x0c./pb;geocubeb\x06proto3'
+  serialized_pb=b'\n\x18geocube/pb/catalog.proto\x12\x07geocube\x1a\x1bgeocube/pb/dataformat.proto\x1a\x18geocube/pb/records.proto\x1a\x18geocube/pb/layouts.proto\x1a\x1cgeocube/pb/datasetMeta.proto\x1a\x1ageocube/pb/variables.proto\"1\n\x05Shape\x12\x0c\n\x04\x64im1\x18\x01 \x01(\x05\x12\x0c\n\x04\x64im2\x18\x02 \x01(\x05\x12\x0c\n\x04\x64im3\x18\x03 \x01(\x05\"\xa9\x02\n\x0bImageHeader\x12\x1d\n\x05shape\x18\x01 \x01(\x0b\x32\x0e.geocube.Shape\x12(\n\x05\x64type\x18\x02 \x01(\x0e\x32\x19.geocube.DataFormat.Dtype\x12\x10\n\x08nb_parts\x18\x04 \x01(\x05\x12\x0c\n\x04\x64\x61ta\x18\x03 \x01(\x0c\x12\x0c\n\x04size\x18\x05 \x01(\x03\x12!\n\x05order\x18\x06 \x01(\x0e\x32\x12.geocube.ByteOrder\x12\x13\n\x0b\x63ompression\x18\x07 \x01(\x08\x12\x30\n\x0fgrouped_records\x18\x0b \x01(\x0b\x32\x17.geocube.GroupedRecords\x12*\n\x0c\x64\x61taset_meta\x18\n \x01(\x0b\x32\x14.geocube.DatasetMeta\x12\r\n\x05\x65rror\x18\t \x01(\t\"(\n\nImageChunk\x12\x0c\n\x04part\x18\x01 \x01(\x05\x12\x0c\n\x04\x64\x61ta\x18\x02 \x01(\x0c\"\x19\n\tImageFile\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\x0c\"\xf2\x02\n\x0eGetCubeRequest\x12(\n\x07records\x18\x0b \x01(\x0b\x32\x15.geocube.RecordIdListH\x00\x12)\n\x07\x66ilters\x18\x02 \x01(\x0b\x32\x16.geocube.RecordFiltersH\x00\x12\x38\n\x0fgrouped_records\x18\x0c \x01(\x0b\x32\x1d.geocube.GroupedRecordIdsListH\x00\x12\x14\n\x0cinstances_id\x18\x03 \x03(\t\x12\x0b\n\x03\x63rs\x18\x04 \x01(\t\x12)\n\npix_to_crs\x18\x05 \x01(\x0b\x32\x15.geocube.GeoTransform\x12\x1b\n\x04size\x18\x06 \x01(\x0b\x32\r.geocube.Size\x12\x19\n\x11\x63ompression_level\x18\x07 \x01(\x05\x12\x14\n\x0cheaders_only\x18\x08 \x01(\x08\x12#\n\x06\x66ormat\x18\t \x01(\x0e\x32\x13.geocube.FileFormatB\x10\n\x0erecords_lister\"\xcc\x01\n\x15GetCubeResponseHeader\x12\r\n\x05\x63ount\x18\x01 \x01(\x03\x12\x13\n\x0bnb_datasets\x18\x02 \x01(\x03\x12(\n\x0bref_dformat\x18\x03 \x01(\x0b\x32\x13.geocube.DataFormat\x12+\n\x0eresampling_alg\x18\x04 \x01(\x0e\x32\x13.geocube.Resampling\x12+\n\x0cgeotransform\x18\x05 \x01(\x0b\x32\x15.geocube.GeoTransform\x12\x0b\n\x03\x63rs\x18\x06 \x01(\t\"\xa4\x01\n\x0fGetCubeResponse\x12\x37\n\rglobal_header\x18\x03 \x01(\x0b\x32\x1e.geocube.GetCubeResponseHeaderH\x00\x12&\n\x06header\x18\x01 \x01(\x0b\x32\x14.geocube.ImageHeaderH\x00\x12$\n\x05\x63hunk\x18\x02 \x01(\x0b\x32\x13.geocube.ImageChunkH\x00\x42\n\n\x08response\"\xc8\x02\n\x16GetCubeMetadataRequest\x12+\n\rdatasets_meta\x18\x01 \x03(\x0b\x32\x14.geocube.DatasetMeta\x12\x30\n\x0fgrouped_records\x18\x02 \x03(\x0b\x32\x17.geocube.GroupedRecords\x12(\n\x0bref_dformat\x18\x03 \x01(\x0b\x32\x13.geocube.DataFormat\x12+\n\x0eresampling_alg\x18\x04 \x01(\x0e\x32\x13.geocube.Resampling\x12)\n\npix_to_crs\x18\x05 \x01(\x0b\x32\x15.geocube.GeoTransform\x12\x0b\n\x03\x63rs\x18\x06 \x01(\t\x12\x1b\n\x04size\x18\x07 \x01(\x0b\x32\r.geocube.Size\x12#\n\x06\x66ormat\x18\x08 \x01(\x0e\x32\x13.geocube.FileFormat\"\xac\x01\n\x17GetCubeMetadataResponse\x12\x37\n\rglobal_header\x18\x03 \x01(\x0b\x32\x1e.geocube.GetCubeResponseHeaderH\x00\x12&\n\x06header\x18\x01 \x01(\x0b\x32\x14.geocube.ImageHeaderH\x00\x12$\n\x05\x63hunk\x18\x02 \x01(\x0b\x32\x13.geocube.ImageChunkH\x00\x42\n\n\x08response\"\x86\x01\n\x0eGetTileRequest\x12\x13\n\x0binstance_id\x18\x01 \x01(\t\x12\t\n\x01x\x18\x02 \x01(\x05\x12\t\n\x01y\x18\x03 \x01(\x05\x12\t\n\x01z\x18\x04 \x01(\x05\x12,\n\x07records\x18\x06 \x01(\x0b\x32\x19.geocube.GroupedRecordIdsH\x00\x42\x10\n\x0erecords_lister\"4\n\x0fGetTileResponse\x12!\n\x05image\x18\x01 \x01(\x0b\x32\x12.geocube.ImageFile*,\n\tByteOrder\x12\x10\n\x0cLittleEndian\x10\x00\x12\r\n\tBigEndian\x10\x01* \n\nFileFormat\x12\x07\n\x03Raw\x10\x00\x12\t\n\x05GTiff\x10\x01\x42\x0eZ\x0c./pb;geocubeb\x06proto3'
   ,
   dependencies=[geocube_dot_pb_dot_dataformat__pb2.DESCRIPTOR,geocube_dot_pb_dot_records__pb2.DESCRIPTOR,geocube_dot_pb_dot_layouts__pb2.DESCRIPTOR,geocube_dot_pb_dot_datasetMeta__pb2.DESCRIPTOR,geocube_dot_pb_dot_variables__pb2.DESCRIPTOR,])
 
@@ -49,8 +49,8 @@ _BYTEORDER = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1476,
-  serialized_end=1520,
+  serialized_start=2040,
+  serialized_end=2084,
 )
 _sym_db.RegisterEnumDescriptor(_BYTEORDER)
 
@@ -75,8 +75,8 @@ _FILEFORMAT = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1522,
-  serialized_end=1554,
+  serialized_start=2086,
+  serialized_end=2118,
 )
 _sym_db.RegisterEnumDescriptor(_FILEFORMAT)
 
@@ -436,6 +436,20 @@ _GETCUBERESPONSEHEADER = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='geotransform', full_name='geocube.GetCubeResponseHeader.geotransform', index=4,
+      number=5, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='crs', full_name='geocube.GetCubeResponseHeader.crs', index=5,
+      number=6, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -449,7 +463,7 @@ _GETCUBERESPONSEHEADER = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=970,
-  serialized_end=1116,
+  serialized_end=1174,
 )
 
 
@@ -499,8 +513,140 @@ _GETCUBERESPONSE = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=1119,
-  serialized_end=1283,
+  serialized_start=1177,
+  serialized_end=1341,
+)
+
+
+_GETCUBEMETADATAREQUEST = _descriptor.Descriptor(
+  name='GetCubeMetadataRequest',
+  full_name='geocube.GetCubeMetadataRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='datasets_meta', full_name='geocube.GetCubeMetadataRequest.datasets_meta', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='grouped_records', full_name='geocube.GetCubeMetadataRequest.grouped_records', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='ref_dformat', full_name='geocube.GetCubeMetadataRequest.ref_dformat', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='resampling_alg', full_name='geocube.GetCubeMetadataRequest.resampling_alg', index=3,
+      number=4, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='pix_to_crs', full_name='geocube.GetCubeMetadataRequest.pix_to_crs', index=4,
+      number=5, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='crs', full_name='geocube.GetCubeMetadataRequest.crs', index=5,
+      number=6, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='size', full_name='geocube.GetCubeMetadataRequest.size', index=6,
+      number=7, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='format', full_name='geocube.GetCubeMetadataRequest.format', index=7,
+      number=8, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1344,
+  serialized_end=1672,
+)
+
+
+_GETCUBEMETADATARESPONSE = _descriptor.Descriptor(
+  name='GetCubeMetadataResponse',
+  full_name='geocube.GetCubeMetadataResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='global_header', full_name='geocube.GetCubeMetadataResponse.global_header', index=0,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='header', full_name='geocube.GetCubeMetadataResponse.header', index=1,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='chunk', full_name='geocube.GetCubeMetadataResponse.chunk', index=2,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+    _descriptor.OneofDescriptor(
+      name='response', full_name='geocube.GetCubeMetadataResponse.response',
+      index=0, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
+  ],
+  serialized_start=1675,
+  serialized_end=1847,
 )
 
 
@@ -564,8 +710,8 @@ _GETTILEREQUEST = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=1286,
-  serialized_end=1420,
+  serialized_start=1850,
+  serialized_end=1984,
 )
 
 
@@ -596,8 +742,8 @@ _GETTILERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1422,
-  serialized_end=1474,
+  serialized_start=1986,
+  serialized_end=2038,
 )
 
 _IMAGEHEADER.fields_by_name['shape'].message_type = _SHAPE
@@ -622,6 +768,7 @@ _GETCUBEREQUEST.oneofs_by_name['records_lister'].fields.append(
 _GETCUBEREQUEST.fields_by_name['grouped_records'].containing_oneof = _GETCUBEREQUEST.oneofs_by_name['records_lister']
 _GETCUBERESPONSEHEADER.fields_by_name['ref_dformat'].message_type = geocube_dot_pb_dot_dataformat__pb2._DATAFORMAT
 _GETCUBERESPONSEHEADER.fields_by_name['resampling_alg'].enum_type = geocube_dot_pb_dot_variables__pb2._RESAMPLING
+_GETCUBERESPONSEHEADER.fields_by_name['geotransform'].message_type = geocube_dot_pb_dot_layouts__pb2._GEOTRANSFORM
 _GETCUBERESPONSE.fields_by_name['global_header'].message_type = _GETCUBERESPONSEHEADER
 _GETCUBERESPONSE.fields_by_name['header'].message_type = _IMAGEHEADER
 _GETCUBERESPONSE.fields_by_name['chunk'].message_type = _IMAGECHUNK
@@ -634,6 +781,25 @@ _GETCUBERESPONSE.fields_by_name['header'].containing_oneof = _GETCUBERESPONSE.on
 _GETCUBERESPONSE.oneofs_by_name['response'].fields.append(
   _GETCUBERESPONSE.fields_by_name['chunk'])
 _GETCUBERESPONSE.fields_by_name['chunk'].containing_oneof = _GETCUBERESPONSE.oneofs_by_name['response']
+_GETCUBEMETADATAREQUEST.fields_by_name['datasets_meta'].message_type = geocube_dot_pb_dot_datasetMeta__pb2._DATASETMETA
+_GETCUBEMETADATAREQUEST.fields_by_name['grouped_records'].message_type = geocube_dot_pb_dot_records__pb2._GROUPEDRECORDS
+_GETCUBEMETADATAREQUEST.fields_by_name['ref_dformat'].message_type = geocube_dot_pb_dot_dataformat__pb2._DATAFORMAT
+_GETCUBEMETADATAREQUEST.fields_by_name['resampling_alg'].enum_type = geocube_dot_pb_dot_variables__pb2._RESAMPLING
+_GETCUBEMETADATAREQUEST.fields_by_name['pix_to_crs'].message_type = geocube_dot_pb_dot_layouts__pb2._GEOTRANSFORM
+_GETCUBEMETADATAREQUEST.fields_by_name['size'].message_type = geocube_dot_pb_dot_layouts__pb2._SIZE
+_GETCUBEMETADATAREQUEST.fields_by_name['format'].enum_type = _FILEFORMAT
+_GETCUBEMETADATARESPONSE.fields_by_name['global_header'].message_type = _GETCUBERESPONSEHEADER
+_GETCUBEMETADATARESPONSE.fields_by_name['header'].message_type = _IMAGEHEADER
+_GETCUBEMETADATARESPONSE.fields_by_name['chunk'].message_type = _IMAGECHUNK
+_GETCUBEMETADATARESPONSE.oneofs_by_name['response'].fields.append(
+  _GETCUBEMETADATARESPONSE.fields_by_name['global_header'])
+_GETCUBEMETADATARESPONSE.fields_by_name['global_header'].containing_oneof = _GETCUBEMETADATARESPONSE.oneofs_by_name['response']
+_GETCUBEMETADATARESPONSE.oneofs_by_name['response'].fields.append(
+  _GETCUBEMETADATARESPONSE.fields_by_name['header'])
+_GETCUBEMETADATARESPONSE.fields_by_name['header'].containing_oneof = _GETCUBEMETADATARESPONSE.oneofs_by_name['response']
+_GETCUBEMETADATARESPONSE.oneofs_by_name['response'].fields.append(
+  _GETCUBEMETADATARESPONSE.fields_by_name['chunk'])
+_GETCUBEMETADATARESPONSE.fields_by_name['chunk'].containing_oneof = _GETCUBEMETADATARESPONSE.oneofs_by_name['response']
 _GETTILEREQUEST.fields_by_name['records'].message_type = geocube_dot_pb_dot_records__pb2._GROUPEDRECORDIDS
 _GETTILEREQUEST.oneofs_by_name['records_lister'].fields.append(
   _GETTILEREQUEST.fields_by_name['records'])
@@ -646,6 +812,8 @@ DESCRIPTOR.message_types_by_name['ImageFile'] = _IMAGEFILE
 DESCRIPTOR.message_types_by_name['GetCubeRequest'] = _GETCUBEREQUEST
 DESCRIPTOR.message_types_by_name['GetCubeResponseHeader'] = _GETCUBERESPONSEHEADER
 DESCRIPTOR.message_types_by_name['GetCubeResponse'] = _GETCUBERESPONSE
+DESCRIPTOR.message_types_by_name['GetCubeMetadataRequest'] = _GETCUBEMETADATAREQUEST
+DESCRIPTOR.message_types_by_name['GetCubeMetadataResponse'] = _GETCUBEMETADATARESPONSE
 DESCRIPTOR.message_types_by_name['GetTileRequest'] = _GETTILEREQUEST
 DESCRIPTOR.message_types_by_name['GetTileResponse'] = _GETTILERESPONSE
 DESCRIPTOR.enum_types_by_name['ByteOrder'] = _BYTEORDER
@@ -700,6 +868,20 @@ GetCubeResponse = _reflection.GeneratedProtocolMessageType('GetCubeResponse', (_
   # @@protoc_insertion_point(class_scope:geocube.GetCubeResponse)
   })
 _sym_db.RegisterMessage(GetCubeResponse)
+
+GetCubeMetadataRequest = _reflection.GeneratedProtocolMessageType('GetCubeMetadataRequest', (_message.Message,), {
+  'DESCRIPTOR' : _GETCUBEMETADATAREQUEST,
+  '__module__' : 'geocube.pb.catalog_pb2'
+  # @@protoc_insertion_point(class_scope:geocube.GetCubeMetadataRequest)
+  })
+_sym_db.RegisterMessage(GetCubeMetadataRequest)
+
+GetCubeMetadataResponse = _reflection.GeneratedProtocolMessageType('GetCubeMetadataResponse', (_message.Message,), {
+  'DESCRIPTOR' : _GETCUBEMETADATARESPONSE,
+  '__module__' : 'geocube.pb.catalog_pb2'
+  # @@protoc_insertion_point(class_scope:geocube.GetCubeMetadataResponse)
+  })
+_sym_db.RegisterMessage(GetCubeMetadataResponse)
 
 GetTileRequest = _reflection.GeneratedProtocolMessageType('GetTileRequest', (_message.Message,), {
   'DESCRIPTOR' : _GETTILEREQUEST,

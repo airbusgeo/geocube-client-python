@@ -16,7 +16,9 @@ class CubeIterator:
 
     Yields
     -------
-    - ndarray, ArrayLike or filename depending on options
+    - ndarray, ArrayLike or filename depending on options.
+    @warning CubeIterator might not own the returned ndarray.
+    To update the returned image, check ndarray.flags.writeable and use ndarray.copy() if necessary.
     - metadata, including a list of records composing the image
     - error or None
     """
@@ -24,7 +26,6 @@ class CubeIterator:
     class ArrayLike:
         dtype: np.dtype
         shape: Tuple[float, float, float]
-        pass
 
     def __init__(self, get_cube_stream, file_format, file_pattern: str):
         self.stream = iter(get_cube_stream)
@@ -38,6 +39,7 @@ class CubeIterator:
             raise ValueError("Expecting global header")
         self.count = resp.global_header.count
         self.nb_datasets = resp.global_header.nb_datasets
+        self._cube_metadata = entities.CubeMetadata.from_pb(resp.global_header)
 
     def __len__(self):
         return self.count
@@ -66,8 +68,10 @@ class CubeIterator:
         metadata = entities.SliceMetadata(
             grouped_records=[entities.Record.from_pb(r) for r in header.grouped_records.records],
             metadata=header.dataset_meta.internalsMeta,
-            bytes=image.shape[0]*image.shape[1]*image.shape[2]*image.dtype.itemsize
+            bytes=np.prod(image.shape)*image.dtype.itemsize
         )
+        self._cube_metadata.shape = (header.shape.dim2, header.shape.dim3)
+        self._cube_metadata.slices.append(metadata)
 
         if header.nb_parts == 0:
             return image, metadata, None
@@ -83,10 +87,11 @@ class CubeIterator:
 
         # Inflate data
         # (-15: window size logarithm. The input must be a raw stream with no header or trailer)
-        data = zlib.decompress(data, -15, np.prod(image.shape)*image.dtype.itemsize)
+        if header.compression:
+            data = zlib.decompress(data, -15, np.prod(image.shape)*image.dtype.itemsize)
 
         if self.file_format == catalog_pb2.Raw:
-            return np.frombuffer(data, dtype=image.dtype).reshape(image.shape), metadata, None
+            return np.ndarray(image.shape, image.dtype, data), metadata, None
 
         if self.file_format == catalog_pb2.GTiff:
             filename = self.file_pattern.replace('{#}', str(self.index+1))
@@ -106,3 +111,8 @@ class CubeIterator:
             f.write(data)
             f.close()
             return filename, metadata, None
+
+    def metadata(self) -> entities.CubeMetadata:
+        for _, _, _ in self:
+            pass
+        return self._cube_metadata
