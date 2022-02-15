@@ -181,7 +181,7 @@ class GeocubeStub(object):
                 request_serializer=geocube_dot_pb_dot_layouts__pb2.TileAOIRequest.SerializeToString,
                 response_deserializer=geocube_dot_pb_dot_layouts__pb2.TileAOIResponse.FromString,
                 )
-        self.CreateGrid = channel.unary_unary(
+        self.CreateGrid = channel.stream_unary(
                 '/geocube.Geocube/CreateGrid',
                 request_serializer=geocube_dot_pb_dot_layouts__pb2.CreateGridRequest.SerializeToString,
                 response_deserializer=geocube_dot_pb_dot_layouts__pb2.CreateGridResponse.FromString,
@@ -405,7 +405,7 @@ class GeocubeServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def CreateGrid(self, request, context):
+    def CreateGrid(self, request_iterator, context):
         """@exclude Grid
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -594,7 +594,7 @@ def add_GeocubeServicer_to_server(servicer, server):
                     request_deserializer=geocube_dot_pb_dot_layouts__pb2.TileAOIRequest.FromString,
                     response_serializer=geocube_dot_pb_dot_layouts__pb2.TileAOIResponse.SerializeToString,
             ),
-            'CreateGrid': grpc.unary_unary_rpc_method_handler(
+            'CreateGrid': grpc.stream_unary_rpc_method_handler(
                     servicer.CreateGrid,
                     request_deserializer=geocube_dot_pb_dot_layouts__pb2.CreateGridRequest.FromString,
                     response_serializer=geocube_dot_pb_dot_layouts__pb2.CreateGridResponse.SerializeToString,
@@ -1171,7 +1171,7 @@ class Geocube(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def CreateGrid(request,
+    def CreateGrid(request_iterator,
             target,
             options=(),
             channel_credentials=None,
@@ -1181,7 +1181,7 @@ class Geocube(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/geocube.Geocube/CreateGrid',
+        return grpc.experimental.stream_unary(request_iterator, target, '/geocube.Geocube/CreateGrid',
             geocube_dot_pb_dot_layouts__pb2.CreateGridRequest.SerializeToString,
             geocube_dot_pb_dot_layouts__pb2.CreateGridResponse.FromString,
             options, channel_credentials,

@@ -34,11 +34,11 @@ class Grid:
     description: str
     cells:       List[Cell]
 
-    def to_pb(self):
+    def to_pb(self, from_cell=None, to_cell=None):
         return layouts_pb2.Grid(
             name=self.name,
             description=self.description,
-            cells=[cell.to_pb() for cell in self.cells]
+            cells=[cell.to_pb() for cell in self.cells[slice(from_cell, to_cell)]]
         )
 
     @classmethod

@@ -3,47 +3,10 @@ from datetime import datetime
 from typing import Union, Dict, List
 
 from geocube import Client, utils, entities
-from geocube.pb import layouts_pb2, operations_pb2, records_pb2
+from geocube.pb import operations_pb2, records_pb2
 
 
 class Consolidater(Client):
-    @utils.catch_rpc_error
-    def create_layout(self, layout: entities.Layout):
-        """ Create a layout in the Geocube"""
-        return self.stub.CreateLayout(layouts_pb2.CreateLayoutRequest(layout=layout.to_pb()))
-
-    @utils.catch_rpc_error
-    def list_layouts(self, name_like: str = "") -> List[entities.Layout]:
-        """
-        List available layouts by name
-        name_like: pattern of the name. * and ? are supported to match all or any character.
-        """
-        res = self.stub.ListLayouts(layouts_pb2.ListLayoutsRequest(name_like=name_like))
-        return [entities.Layout.from_pb(layout) for layout in res.layouts]
-
-    @utils.catch_rpc_error
-    def delete_layout(self, name: str = ""):
-        """ Delete a layout from the Geocube """
-        self.stub.DeleteLayout(layouts_pb2.DeleteLayoutRequest(name=name))
-
-    @utils.catch_rpc_error
-    def create_grid(self, grid: entities.Grid):
-        """ Create a grid in the Geocube"""
-        return self.stub.CreateGrid(layouts_pb2.CreateGridRequest(grid=grid.to_pb()))
-
-    @utils.catch_rpc_error
-    def list_grids(self, name_like: str = "") -> List[entities.Grid]:
-        """
-        List grids by name
-        name_like: pattern of the name. * and ? are supported to match all or any character.
-        """
-        res = self.stub.ListGrids(layouts_pb2.ListGridsRequest(name_like=name_like))
-        return [entities.Grid.from_pb(grid) for grid in res.grids]
-
-    @utils.catch_rpc_error
-    def delete_grid(self, name: str = ""):
-        """ Delete a grid by its name """
-        self.stub.DeleteGrid(layouts_pb2.DeleteGridRequest(name=name))
 
     @utils.catch_rpc_error
     def list_jobs(self, name_like: str = ""):

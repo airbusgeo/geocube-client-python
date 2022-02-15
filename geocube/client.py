@@ -6,6 +6,7 @@ from typing import Dict, List, Tuple, Union, Optional
 
 import grpc
 import numpy as np
+import parse
 import rasterio
 from shapely import geometry
 
@@ -582,3 +583,52 @@ class Client:
         f = open(file, "wb")
         f.write(resp.image.data)
         f.close()
+
+    @utils.catch_rpc_error
+    def create_layout(self, layout: entities.Layout):
+        """ Create a layout in the Geocube"""
+        self.stub.CreateLayout(layouts_pb2.CreateLayoutRequest(layout=layout.to_pb()))
+
+    @utils.catch_rpc_error
+    def list_layouts(self, name_like: str = "") -> List[entities.Layout]:
+        """
+        List available layouts by name
+        name_like: pattern of the name. * and ? are supported to match all or any character.
+        """
+        res = self.stub.ListLayouts(layouts_pb2.ListLayoutsRequest(name_like=name_like))
+        return [entities.Layout.from_pb(layout) for layout in res.layouts]
+
+    @utils.catch_rpc_error
+    def delete_layout(self, name: str = ""):
+        """ Delete a layout from the Geocube """
+        self.stub.DeleteLayout(layouts_pb2.DeleteLayoutRequest(name=name))
+
+    @utils.catch_rpc_error
+    def create_grid(self, grid: entities.Grid):
+        """ Create a grid in the Geocube"""
+        max_cells = min(len(grid.cells), 10000000)
+        while True:
+            try:
+                req = [layouts_pb2.CreateGridRequest(grid=grid.to_pb(max_cells*i, max_cells*(i+1)))
+                       for i in range((len(grid.cells)-1)//max_cells+1)]
+                return self.stub.CreateGrid(iter(req))
+            except grpc.RpcError as e:
+                e = utils.GeocubeError.from_rpc(e)
+                if e.codename != "RESOURCE_EXHAUSTED":
+                    raise
+                r = parse.search("({volume:d} vs. {max:d})", e.details)
+                max_cells //= max(r["volume"] // r["max"], 2)
+
+    @utils.catch_rpc_error
+    def list_grids(self, name_like: str = "") -> List[entities.Grid]:
+        """
+        List grids by name
+        name_like: pattern of the name. * and ? are supported to match all or any character.
+        """
+        res = self.stub.ListGrids(layouts_pb2.ListGridsRequest(name_like=name_like))
+        return [entities.Grid.from_pb(grid) for grid in res.grids]
+
+    @utils.catch_rpc_error
+    def delete_grid(self, name: str = ""):
+        """ Delete a grid by its name """
+        self.stub.DeleteGrid(layouts_pb2.DeleteGridRequest(name=name))
