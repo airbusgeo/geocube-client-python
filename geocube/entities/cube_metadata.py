@@ -58,7 +58,7 @@ class CubeMetadata:
             resampling_alg=entities.pb_resampling[pb.resampling_alg]
         )
 
-    def info(self):
+    def info(self, verbose=True):
         files = set()
         datasets = 0
         for s in self.slices:
@@ -66,8 +66,14 @@ class CubeMetadata:
             datasets += len(s.metadata)
         containers = len(files)
         images = len(self.slices)
-        temporal_fragmentation = 0 if datasets <= 1 else (containers-1)/(datasets-1)
+        temporal_fragmentation = 0 if images <= 1 else (containers-1)/(datasets-1)
         spatial_fragmentation = 0 if datasets <= 1 else 1-images/datasets
-        print(f"{datasets} datasets in {containers} containers for {images} images\n"
-              f" - temporal fragmentation: {100*temporal_fragmentation:.0f}%\n"
-              f" - spatial fragmentation: {100*spatial_fragmentation:.0f}%\n")
+        if verbose:
+            print(f"{datasets} dataset(s) in {containers} container(s) for {images} image(s)\n"
+                  f" - temporal fragmentation: {100*temporal_fragmentation:.0f}%\n"
+                  f" - spatial fragmentation: {100*spatial_fragmentation:.0f}%\n")
+        return {"datasets": datasets,
+                "containers": containers,
+                "images": images,
+                "temporal_fragmentation": temporal_fragmentation,
+                "spatial_fragmentation": spatial_fragmentation}
