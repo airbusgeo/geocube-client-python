@@ -2,26 +2,15 @@
 
 Geocube Python Client Library is delivered as an example of Geocube Client.
 
-## Manual installation
-
-### Ubuntu/Debian Linux (using pip)
-
-Install as a global package (for all users, admin rights needed):
+## Installation
 
 ```bash
-sudo pip install git+https://github.com/airbusgeo/geocube-client-python.git
+pip install git+https://github.com/airbusgeo/geocube-client-python.git
 ```
-
-or as a local package within your home folder (no admin rights needed):
-
-```bash
-pip install --user git+https://github.com/airbusgeo/geocube-client-python.git
-```
-
 ## Quickstart
 
 ### Requirements
-- Python 3.7
+- Python >= 3.7
 - An instance of the Geocube Server, its url and, depending on the configuration, its ApiKey
 
 ### Feed the Geocube - Indexation
