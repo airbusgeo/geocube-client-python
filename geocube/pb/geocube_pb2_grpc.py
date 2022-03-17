@@ -178,6 +178,11 @@ class GeocubeStub(object):
                 request_serializer=geocube_dot_pb_dot_layouts__pb2.ListLayoutsRequest.SerializeToString,
                 response_deserializer=geocube_dot_pb_dot_layouts__pb2.ListLayoutsResponse.FromString,
                 )
+        self.FindContainerLayouts = channel.unary_stream(
+                '/geocube.Geocube/FindContainerLayouts',
+                request_serializer=geocube_dot_pb_dot_layouts__pb2.FindContainerLayoutsRequest.SerializeToString,
+                response_deserializer=geocube_dot_pb_dot_layouts__pb2.FindContainerLayoutsResponse.FromString,
+                )
         self.TileAOI = channel.unary_stream(
                 '/geocube.Geocube/TileAOI',
                 request_serializer=geocube_dot_pb_dot_layouts__pb2.TileAOIRequest.SerializeToString,
@@ -403,6 +408,12 @@ class GeocubeServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def FindContainerLayouts(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def TileAOI(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -592,6 +603,11 @@ def add_GeocubeServicer_to_server(servicer, server):
                     servicer.ListLayouts,
                     request_deserializer=geocube_dot_pb_dot_layouts__pb2.ListLayoutsRequest.FromString,
                     response_serializer=geocube_dot_pb_dot_layouts__pb2.ListLayoutsResponse.SerializeToString,
+            ),
+            'FindContainerLayouts': grpc.unary_stream_rpc_method_handler(
+                    servicer.FindContainerLayouts,
+                    request_deserializer=geocube_dot_pb_dot_layouts__pb2.FindContainerLayoutsRequest.FromString,
+                    response_serializer=geocube_dot_pb_dot_layouts__pb2.FindContainerLayoutsResponse.SerializeToString,
             ),
             'TileAOI': grpc.unary_stream_rpc_method_handler(
                     servicer.TileAOI,
@@ -1156,6 +1172,23 @@ class Geocube(object):
         return grpc.experimental.unary_unary(request, target, '/geocube.Geocube/ListLayouts',
             geocube_dot_pb_dot_layouts__pb2.ListLayoutsRequest.SerializeToString,
             geocube_dot_pb_dot_layouts__pb2.ListLayoutsResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def FindContainerLayouts(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/geocube.Geocube/FindContainerLayouts',
+            geocube_dot_pb_dot_layouts__pb2.FindContainerLayoutsRequest.SerializeToString,
+            geocube_dot_pb_dot_layouts__pb2.FindContainerLayoutsResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

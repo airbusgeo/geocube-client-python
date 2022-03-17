@@ -26,7 +26,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z\014./pb;geocube',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x18geocube/pb/geocube.proto\x12\x07geocube\x1a\x1cgoogle/api/annotations.proto\x1a\x18geocube/pb/version.proto\x1a\x18geocube/pb/catalog.proto\x1a\x18geocube/pb/records.proto\x1a\x1ageocube/pb/variables.proto\x1a\x18geocube/pb/layouts.proto\x1a\x1bgeocube/pb/operations.proto2\xd8\x16\n\x07Geocube\x12P\n\x0bListRecords\x12\x1b.geocube.ListRecordsRequest\x1a .geocube.ListRecordsResponseItem\"\x00\x30\x01\x12P\n\rCreateRecords\x12\x1d.geocube.CreateRecordsRequest\x1a\x1e.geocube.CreateRecordsResponse\"\x00\x12P\n\rDeleteRecords\x12\x1d.geocube.DeleteRecordsRequest\x1a\x1e.geocube.DeleteRecordsResponse\"\x00\x12S\n\x0e\x41\x64\x64RecordsTags\x12\x1e.geocube.AddRecordsTagsRequest\x1a\x1f.geocube.AddRecordsTagsResponse\"\x00\x12\\\n\x11RemoveRecordsTags\x12!.geocube.RemoveRecordsTagsRequest\x1a\".geocube.RemoveRecordsTagsResponse\"\x00\x12\x44\n\tCreateAOI\x12\x19.geocube.CreateAOIRequest\x1a\x1a.geocube.CreateAOIResponse\"\x00\x12;\n\x06GetAOI\x12\x16.geocube.GetAOIRequest\x1a\x17.geocube.GetAOIResponse\"\x00\x12S\n\x0e\x43reateVariable\x12\x1e.geocube.CreateVariableRequest\x1a\x1f.geocube.CreateVariableResponse\"\x00\x12\x62\n\x13InstantiateVariable\x12#.geocube.InstantiateVariableRequest\x1a$.geocube.InstantiateVariableResponse\"\x00\x12J\n\x0bGetVariable\x12\x1b.geocube.GetVariableRequest\x1a\x1c.geocube.GetVariableResponse\"\x00\x12V\n\rListVariables\x12\x1d.geocube.ListVariablesRequest\x1a\".geocube.ListVariablesResponseItem\"\x00\x30\x01\x12S\n\x0eUpdateVariable\x12\x1e.geocube.UpdateVariableRequest\x1a\x1f.geocube.UpdateVariableResponse\"\x00\x12S\n\x0eUpdateInstance\x12\x1e.geocube.UpdateInstanceRequest\x1a\x1f.geocube.UpdateInstanceResponse\"\x00\x12S\n\x0e\x44\x65leteVariable\x12\x1e.geocube.DeleteVariableRequest\x1a\x1f.geocube.DeleteVariableResponse\"\x00\x12S\n\x0e\x44\x65leteInstance\x12\x1e.geocube.DeleteInstanceRequest\x1a\x1f.geocube.DeleteInstanceResponse\"\x00\x12P\n\rCreatePalette\x12\x1d.geocube.CreatePaletteRequest\x1a\x1e.geocube.CreatePaletteResponse\"\x00\x12P\n\rIndexDatasets\x12\x1d.geocube.IndexDatasetsRequest\x1a\x1e.geocube.IndexDatasetsResponse\"\x00\x12\x62\n\x13\x43onfigConsolidation\x12#.geocube.ConfigConsolidationRequest\x1a$.geocube.ConfigConsolidationResponse\"\x00\x12k\n\x16GetConsolidationParams\x12&.geocube.GetConsolidationParamsRequest\x1a\'.geocube.GetConsolidationParamsResponse\"\x00\x12J\n\x0b\x43onsolidate\x12\x1b.geocube.ConsolidateRequest\x1a\x1c.geocube.ConsolidateResponse\"\x00\x12\x41\n\x08ListJobs\x12\x18.geocube.ListJobsRequest\x1a\x19.geocube.ListJobsResponse\"\x00\x12;\n\x06GetJob\x12\x16.geocube.GetJobRequest\x1a\x17.geocube.GetJobResponse\"\x00\x12\x44\n\tCleanJobs\x12\x19.geocube.CleanJobsRequest\x1a\x1a.geocube.CleanJobsResponse\"\x00\x12\x41\n\x08RetryJob\x12\x18.geocube.RetryJobRequest\x1a\x19.geocube.RetryJobResponse\"\x00\x12\x44\n\tCancelJob\x12\x19.geocube.CancelJobRequest\x1a\x1a.geocube.CancelJobResponse\"\x00\x12J\n\x0b\x43ontinueJob\x12\x1b.geocube.ContinueJobRequest\x1a\x1c.geocube.ContinueJobResponse\"\x00\x12@\n\x07GetCube\x12\x17.geocube.GetCubeRequest\x1a\x18.geocube.GetCubeResponse\"\x00\x30\x01\x12\x85\x01\n\nGetXYZTile\x12\x17.geocube.GetTileRequest\x1a\x18.geocube.GetTileResponse\"D\x82\xd3\xe4\x93\x02>\x12\x30/v1/catalog/mosaic/{instance_id}/{x}/{y}/{z}/pngb\nimage.data\x12M\n\x0c\x43reateLayout\x12\x1c.geocube.CreateLayoutRequest\x1a\x1d.geocube.CreateLayoutResponse\"\x00\x12M\n\x0c\x44\x65leteLayout\x12\x1c.geocube.DeleteLayoutRequest\x1a\x1d.geocube.DeleteLayoutResponse\"\x00\x12J\n\x0bListLayouts\x12\x1b.geocube.ListLayoutsRequest\x1a\x1c.geocube.ListLayoutsResponse\"\x00\x12@\n\x07TileAOI\x12\x17.geocube.TileAOIRequest\x1a\x18.geocube.TileAOIResponse\"\x00\x30\x01\x12I\n\nCreateGrid\x12\x1a.geocube.CreateGridRequest\x1a\x1b.geocube.CreateGridResponse\"\x00(\x01\x12G\n\nDeleteGrid\x12\x1a.geocube.DeleteGridRequest\x1a\x1b.geocube.DeleteGridResponse\"\x00\x12\x44\n\tListGrids\x12\x19.geocube.ListGridsRequest\x1a\x1a.geocube.ListGridsResponse\"\x00\x12\x44\n\x07Version\x12\x1a.geocube.GetVersionRequest\x1a\x1b.geocube.GetVersionResponse\"\x00\x42\x0eZ\x0c./pb;geocubeb\x06proto3'
+  serialized_pb=b'\n\x18geocube/pb/geocube.proto\x12\x07geocube\x1a\x1cgoogle/api/annotations.proto\x1a\x18geocube/pb/version.proto\x1a\x18geocube/pb/catalog.proto\x1a\x18geocube/pb/records.proto\x1a\x1ageocube/pb/variables.proto\x1a\x18geocube/pb/layouts.proto\x1a\x1bgeocube/pb/operations.proto2\xc1\x17\n\x07Geocube\x12P\n\x0bListRecords\x12\x1b.geocube.ListRecordsRequest\x1a .geocube.ListRecordsResponseItem\"\x00\x30\x01\x12P\n\rCreateRecords\x12\x1d.geocube.CreateRecordsRequest\x1a\x1e.geocube.CreateRecordsResponse\"\x00\x12P\n\rDeleteRecords\x12\x1d.geocube.DeleteRecordsRequest\x1a\x1e.geocube.DeleteRecordsResponse\"\x00\x12S\n\x0e\x41\x64\x64RecordsTags\x12\x1e.geocube.AddRecordsTagsRequest\x1a\x1f.geocube.AddRecordsTagsResponse\"\x00\x12\\\n\x11RemoveRecordsTags\x12!.geocube.RemoveRecordsTagsRequest\x1a\".geocube.RemoveRecordsTagsResponse\"\x00\x12\x44\n\tCreateAOI\x12\x19.geocube.CreateAOIRequest\x1a\x1a.geocube.CreateAOIResponse\"\x00\x12;\n\x06GetAOI\x12\x16.geocube.GetAOIRequest\x1a\x17.geocube.GetAOIResponse\"\x00\x12S\n\x0e\x43reateVariable\x12\x1e.geocube.CreateVariableRequest\x1a\x1f.geocube.CreateVariableResponse\"\x00\x12\x62\n\x13InstantiateVariable\x12#.geocube.InstantiateVariableRequest\x1a$.geocube.InstantiateVariableResponse\"\x00\x12J\n\x0bGetVariable\x12\x1b.geocube.GetVariableRequest\x1a\x1c.geocube.GetVariableResponse\"\x00\x12V\n\rListVariables\x12\x1d.geocube.ListVariablesRequest\x1a\".geocube.ListVariablesResponseItem\"\x00\x30\x01\x12S\n\x0eUpdateVariable\x12\x1e.geocube.UpdateVariableRequest\x1a\x1f.geocube.UpdateVariableResponse\"\x00\x12S\n\x0eUpdateInstance\x12\x1e.geocube.UpdateInstanceRequest\x1a\x1f.geocube.UpdateInstanceResponse\"\x00\x12S\n\x0e\x44\x65leteVariable\x12\x1e.geocube.DeleteVariableRequest\x1a\x1f.geocube.DeleteVariableResponse\"\x00\x12S\n\x0e\x44\x65leteInstance\x12\x1e.geocube.DeleteInstanceRequest\x1a\x1f.geocube.DeleteInstanceResponse\"\x00\x12P\n\rCreatePalette\x12\x1d.geocube.CreatePaletteRequest\x1a\x1e.geocube.CreatePaletteResponse\"\x00\x12P\n\rIndexDatasets\x12\x1d.geocube.IndexDatasetsRequest\x1a\x1e.geocube.IndexDatasetsResponse\"\x00\x12\x62\n\x13\x43onfigConsolidation\x12#.geocube.ConfigConsolidationRequest\x1a$.geocube.ConfigConsolidationResponse\"\x00\x12k\n\x16GetConsolidationParams\x12&.geocube.GetConsolidationParamsRequest\x1a\'.geocube.GetConsolidationParamsResponse\"\x00\x12J\n\x0b\x43onsolidate\x12\x1b.geocube.ConsolidateRequest\x1a\x1c.geocube.ConsolidateResponse\"\x00\x12\x41\n\x08ListJobs\x12\x18.geocube.ListJobsRequest\x1a\x19.geocube.ListJobsResponse\"\x00\x12;\n\x06GetJob\x12\x16.geocube.GetJobRequest\x1a\x17.geocube.GetJobResponse\"\x00\x12\x44\n\tCleanJobs\x12\x19.geocube.CleanJobsRequest\x1a\x1a.geocube.CleanJobsResponse\"\x00\x12\x41\n\x08RetryJob\x12\x18.geocube.RetryJobRequest\x1a\x19.geocube.RetryJobResponse\"\x00\x12\x44\n\tCancelJob\x12\x19.geocube.CancelJobRequest\x1a\x1a.geocube.CancelJobResponse\"\x00\x12J\n\x0b\x43ontinueJob\x12\x1b.geocube.ContinueJobRequest\x1a\x1c.geocube.ContinueJobResponse\"\x00\x12@\n\x07GetCube\x12\x17.geocube.GetCubeRequest\x1a\x18.geocube.GetCubeResponse\"\x00\x30\x01\x12\x85\x01\n\nGetXYZTile\x12\x17.geocube.GetTileRequest\x1a\x18.geocube.GetTileResponse\"D\x82\xd3\xe4\x93\x02>\x12\x30/v1/catalog/mosaic/{instance_id}/{x}/{y}/{z}/pngb\nimage.data\x12M\n\x0c\x43reateLayout\x12\x1c.geocube.CreateLayoutRequest\x1a\x1d.geocube.CreateLayoutResponse\"\x00\x12M\n\x0c\x44\x65leteLayout\x12\x1c.geocube.DeleteLayoutRequest\x1a\x1d.geocube.DeleteLayoutResponse\"\x00\x12J\n\x0bListLayouts\x12\x1b.geocube.ListLayoutsRequest\x1a\x1c.geocube.ListLayoutsResponse\"\x00\x12g\n\x14\x46indContainerLayouts\x12$.geocube.FindContainerLayoutsRequest\x1a%.geocube.FindContainerLayoutsResponse\"\x00\x30\x01\x12@\n\x07TileAOI\x12\x17.geocube.TileAOIRequest\x1a\x18.geocube.TileAOIResponse\"\x00\x30\x01\x12I\n\nCreateGrid\x12\x1a.geocube.CreateGridRequest\x1a\x1b.geocube.CreateGridResponse\"\x00(\x01\x12G\n\nDeleteGrid\x12\x1a.geocube.DeleteGridRequest\x1a\x1b.geocube.DeleteGridResponse\"\x00\x12\x44\n\tListGrids\x12\x19.geocube.ListGridsRequest\x1a\x1a.geocube.ListGridsResponse\"\x00\x12\x44\n\x07Version\x12\x1a.geocube.GetVersionRequest\x1a\x1b.geocube.GetVersionResponse\"\x00\x42\x0eZ\x0c./pb;geocubeb\x06proto3'
   ,
   dependencies=[google_dot_api_dot_annotations__pb2.DESCRIPTOR,geocube_dot_pb_dot_version__pb2.DESCRIPTOR,geocube_dot_pb_dot_catalog__pb2.DESCRIPTOR,geocube_dot_pb_dot_records__pb2.DESCRIPTOR,geocube_dot_pb_dot_variables__pb2.DESCRIPTOR,geocube_dot_pb_dot_layouts__pb2.DESCRIPTOR,geocube_dot_pb_dot_operations__pb2.DESCRIPTOR,])
 
@@ -45,7 +45,7 @@ _GEOCUBE = _descriptor.ServiceDescriptor(
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
   serialized_start=229,
-  serialized_end=3133,
+  serialized_end=3238,
   methods=[
   _descriptor.MethodDescriptor(
     name='ListRecords',
@@ -358,9 +358,19 @@ _GEOCUBE = _descriptor.ServiceDescriptor(
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
+    name='FindContainerLayouts',
+    full_name='geocube.Geocube.FindContainerLayouts',
+    index=31,
+    containing_service=None,
+    input_type=geocube_dot_pb_dot_layouts__pb2._FINDCONTAINERLAYOUTSREQUEST,
+    output_type=geocube_dot_pb_dot_layouts__pb2._FINDCONTAINERLAYOUTSRESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
     name='TileAOI',
     full_name='geocube.Geocube.TileAOI',
-    index=31,
+    index=32,
     containing_service=None,
     input_type=geocube_dot_pb_dot_layouts__pb2._TILEAOIREQUEST,
     output_type=geocube_dot_pb_dot_layouts__pb2._TILEAOIRESPONSE,
@@ -370,7 +380,7 @@ _GEOCUBE = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='CreateGrid',
     full_name='geocube.Geocube.CreateGrid',
-    index=32,
+    index=33,
     containing_service=None,
     input_type=geocube_dot_pb_dot_layouts__pb2._CREATEGRIDREQUEST,
     output_type=geocube_dot_pb_dot_layouts__pb2._CREATEGRIDRESPONSE,
@@ -380,7 +390,7 @@ _GEOCUBE = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='DeleteGrid',
     full_name='geocube.Geocube.DeleteGrid',
-    index=33,
+    index=34,
     containing_service=None,
     input_type=geocube_dot_pb_dot_layouts__pb2._DELETEGRIDREQUEST,
     output_type=geocube_dot_pb_dot_layouts__pb2._DELETEGRIDRESPONSE,
@@ -390,7 +400,7 @@ _GEOCUBE = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='ListGrids',
     full_name='geocube.Geocube.ListGrids',
-    index=34,
+    index=35,
     containing_service=None,
     input_type=geocube_dot_pb_dot_layouts__pb2._LISTGRIDSREQUEST,
     output_type=geocube_dot_pb_dot_layouts__pb2._LISTGRIDSRESPONSE,
@@ -400,7 +410,7 @@ _GEOCUBE = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='Version',
     full_name='geocube.Geocube.Version',
-    index=35,
+    index=36,
     containing_service=None,
     input_type=geocube_dot_pb_dot_version__pb2._GETVERSIONREQUEST,
     output_type=geocube_dot_pb_dot_version__pb2._GETVERSIONRESPONSE,

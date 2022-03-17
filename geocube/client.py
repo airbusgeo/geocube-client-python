@@ -573,6 +573,33 @@ class Client:
         return [entities.Layout.from_pb(layout) for layout in res.layouts]
 
     @utils.catch_rpc_error
+    def find_container_layouts(self, instance: Union[str, entities.VariableInstance],
+                               records: List[Union[str, entities.Record]] = None,
+                               tags: Dict[str, str] = None,
+                               from_time: datetime = None, to_time: datetime = None,
+                               aoi: geometry.MultiPolygon = None) -> Dict[str, List[str]]:
+        """
+        Find layouts of the containers covering an area or a list of records for a given instance
+        """
+        if records is not None:
+            req = layouts_pb2.FindContainerLayoutsRequest(
+                instance_id=entities.get_id(instance),
+                records=records_pb2.RecordIdList(ids=entities.get_ids(records))
+            )
+        else:
+            from_time_pb = utils.pb_null_timestamp()
+            if from_time is not None:
+                from_time_pb.FromDatetime(from_time)
+            to_time_pb = utils.pb_null_timestamp()
+            if to_time is not None:
+                to_time_pb.FromDatetime(to_time)
+            req = catalog_pb2.GetCubeRequest(
+                instance_id=entities.get_id(instance),
+                filters=records_pb2.RecordFiltersWithAOI(aoi=aoi, tags=tags,
+                                                         from_time=from_time_pb, to_time=to_time_pb))
+        return {resp.layout_name: resp.container_uris for resp in self.stub.FindContainerLayouts(req)}
+
+    @utils.catch_rpc_error
     def delete_layout(self, name: str = ""):
         """ Delete a layout from the Geocube """
         self.stub.DeleteLayout(layouts_pb2.DeleteLayoutRequest(name=name))

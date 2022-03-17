@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z\014./pb;geocube',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x18geocube/pb/layouts.proto\x12\x07geocube\x1a\x18geocube/pb/records.proto\"%\n\x04Size\x12\r\n\x05width\x18\x01 \x01(\x05\x12\x0e\n\x06height\x18\x02 \x01(\x05\"P\n\x0cGeoTransform\x12\t\n\x01\x61\x18\x01 \x01(\x01\x12\t\n\x01\x62\x18\x02 \x01(\x01\x12\t\n\x01\x63\x18\x03 \x01(\x01\x12\t\n\x01\x64\x18\x04 \x01(\x01\x12\t\n\x01\x65\x18\x05 \x01(\x01\x12\t\n\x01\x66\x18\x06 \x01(\x01\"]\n\x04Tile\x12(\n\ttransform\x18\x01 \x01(\x0b\x32\x15.geocube.GeoTransform\x12\x1e\n\x07size_px\x18\x02 \x01(\x0b\x32\r.geocube.Size\x12\x0b\n\x03\x63rs\x18\x03 \x01(\t\"\xe0\x01\n\x06Layout\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x12\n\ngrid_flags\x18\x03 \x03(\t\x12<\n\x0fgrid_parameters\x18\x04 \x03(\x0b\x32#.geocube.Layout.GridParametersEntry\x12\x14\n\x0c\x62lock_x_size\x18\x05 \x01(\x03\x12\x14\n\x0c\x62lock_y_size\x18\x06 \x01(\x03\x12\x13\n\x0bmax_records\x18\x07 \x01(\x03\x1a\x35\n\x13GridParametersEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"6\n\x13\x43reateLayoutRequest\x12\x1f\n\x06layout\x18\x01 \x01(\x0b\x32\x0f.geocube.Layout\"\x16\n\x14\x43reateLayoutResponse\"#\n\x13\x44\x65leteLayoutRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x16\n\x14\x44\x65leteLayoutResponse\"\'\n\x12ListLayoutsRequest\x12\x11\n\tname_like\x18\x01 \x01(\t\"7\n\x13ListLayoutsResponse\x12 \n\x07layouts\x18\x01 \x03(\x0b\x32\x0f.geocube.Layout\"s\n\x0eTileAOIRequest\x12\x19\n\x03\x61oi\x18\x01 \x01(\x0b\x32\x0c.geocube.AOI\x12\x15\n\x0blayout_name\x18\x05 \x01(\tH\x00\x12!\n\x06layout\x18\x06 \x01(\x0b\x32\x0f.geocube.LayoutH\x00\x42\x0c\n\nidentifier\"/\n\x0fTileAOIResponse\x12\x1c\n\x05tiles\x18\x01 \x03(\x0b\x32\r.geocube.Tile\"G\n\x04Grid\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x1c\n\x05\x63\x65lls\x18\x03 \x03(\x0b\x32\r.geocube.Cell\"I\n\x04\x43\x65ll\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0b\n\x03\x63rs\x18\x02 \x01(\t\x12(\n\x0b\x63oordinates\x18\x03 \x01(\x0b\x32\x13.geocube.LinearRing\"0\n\x11\x43reateGridRequest\x12\x1b\n\x04grid\x18\x01 \x01(\x0b\x32\r.geocube.Grid\"\x14\n\x12\x43reateGridResponse\"!\n\x11\x44\x65leteGridRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x14\n\x12\x44\x65leteGridResponse\"%\n\x10ListGridsRequest\x12\x11\n\tname_like\x18\x01 \x01(\t\"1\n\x11ListGridsResponse\x12\x1c\n\x05grids\x18\x01 \x03(\x0b\x32\r.geocube.GridB\x0eZ\x0c./pb;geocubeb\x06proto3'
+  serialized_pb=b'\n\x18geocube/pb/layouts.proto\x12\x07geocube\x1a\x18geocube/pb/records.proto\"%\n\x04Size\x12\r\n\x05width\x18\x01 \x01(\x05\x12\x0e\n\x06height\x18\x02 \x01(\x05\"P\n\x0cGeoTransform\x12\t\n\x01\x61\x18\x01 \x01(\x01\x12\t\n\x01\x62\x18\x02 \x01(\x01\x12\t\n\x01\x63\x18\x03 \x01(\x01\x12\t\n\x01\x64\x18\x04 \x01(\x01\x12\t\n\x01\x65\x18\x05 \x01(\x01\x12\t\n\x01\x66\x18\x06 \x01(\x01\"]\n\x04Tile\x12(\n\ttransform\x18\x01 \x01(\x0b\x32\x15.geocube.GeoTransform\x12\x1e\n\x07size_px\x18\x02 \x01(\x0b\x32\r.geocube.Size\x12\x0b\n\x03\x63rs\x18\x03 \x01(\t\"\xe0\x01\n\x06Layout\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x12\n\ngrid_flags\x18\x03 \x03(\t\x12<\n\x0fgrid_parameters\x18\x04 \x03(\x0b\x32#.geocube.Layout.GridParametersEntry\x12\x14\n\x0c\x62lock_x_size\x18\x05 \x01(\x03\x12\x14\n\x0c\x62lock_y_size\x18\x06 \x01(\x03\x12\x13\n\x0bmax_records\x18\x07 \x01(\x03\x1a\x35\n\x13GridParametersEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"6\n\x13\x43reateLayoutRequest\x12\x1f\n\x06layout\x18\x01 \x01(\x0b\x32\x0f.geocube.Layout\"\x16\n\x14\x43reateLayoutResponse\"#\n\x13\x44\x65leteLayoutRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x16\n\x14\x44\x65leteLayoutResponse\"\'\n\x12ListLayoutsRequest\x12\x11\n\tname_like\x18\x01 \x01(\t\"7\n\x13ListLayoutsResponse\x12 \n\x07layouts\x18\x01 \x03(\x0b\x32\x0f.geocube.Layout\"\x9c\x01\n\x1b\x46indContainerLayoutsRequest\x12\x13\n\x0binstance_id\x18\x01 \x01(\t\x12(\n\x07records\x18\x02 \x01(\x0b\x32\x15.geocube.RecordIdListH\x00\x12\x30\n\x07\x66ilters\x18\x03 \x01(\x0b\x32\x1d.geocube.RecordFiltersWithAOIH\x00\x42\x0c\n\nidentifier\"K\n\x1c\x46indContainerLayoutsResponse\x12\x13\n\x0blayout_name\x18\x01 \x01(\t\x12\x16\n\x0e\x63ontainer_uris\x18\x02 \x03(\t\"s\n\x0eTileAOIRequest\x12\x19\n\x03\x61oi\x18\x01 \x01(\x0b\x32\x0c.geocube.AOI\x12\x15\n\x0blayout_name\x18\x05 \x01(\tH\x00\x12!\n\x06layout\x18\x06 \x01(\x0b\x32\x0f.geocube.LayoutH\x00\x42\x0c\n\nidentifier\"/\n\x0fTileAOIResponse\x12\x1c\n\x05tiles\x18\x01 \x03(\x0b\x32\r.geocube.Tile\"G\n\x04Grid\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x1c\n\x05\x63\x65lls\x18\x03 \x03(\x0b\x32\r.geocube.Cell\"I\n\x04\x43\x65ll\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0b\n\x03\x63rs\x18\x02 \x01(\t\x12(\n\x0b\x63oordinates\x18\x03 \x01(\x0b\x32\x13.geocube.LinearRing\"0\n\x11\x43reateGridRequest\x12\x1b\n\x04grid\x18\x01 \x01(\x0b\x32\r.geocube.Grid\"\x14\n\x12\x43reateGridResponse\"!\n\x11\x44\x65leteGridRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x14\n\x12\x44\x65leteGridResponse\"%\n\x10ListGridsRequest\x12\x11\n\tname_like\x18\x01 \x01(\t\"1\n\x11ListGridsResponse\x12\x1c\n\x05grids\x18\x01 \x03(\x0b\x32\r.geocube.GridB\x0eZ\x0c./pb;geocubeb\x06proto3'
   ,
   dependencies=[geocube_dot_pb_dot_records__pb2.DESCRIPTOR,])
 
@@ -462,6 +462,96 @@ _LISTLAYOUTSRESPONSE = _descriptor.Descriptor(
 )
 
 
+_FINDCONTAINERLAYOUTSREQUEST = _descriptor.Descriptor(
+  name='FindContainerLayoutsRequest',
+  full_name='geocube.FindContainerLayoutsRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='instance_id', full_name='geocube.FindContainerLayoutsRequest.instance_id', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='records', full_name='geocube.FindContainerLayoutsRequest.records', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='filters', full_name='geocube.FindContainerLayoutsRequest.filters', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+    _descriptor.OneofDescriptor(
+      name='identifier', full_name='geocube.FindContainerLayoutsRequest.identifier',
+      index=0, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
+  ],
+  serialized_start=746,
+  serialized_end=902,
+)
+
+
+_FINDCONTAINERLAYOUTSRESPONSE = _descriptor.Descriptor(
+  name='FindContainerLayoutsResponse',
+  full_name='geocube.FindContainerLayoutsResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='layout_name', full_name='geocube.FindContainerLayoutsResponse.layout_name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='container_uris', full_name='geocube.FindContainerLayoutsResponse.container_uris', index=1,
+      number=2, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=904,
+  serialized_end=979,
+)
+
+
 _TILEAOIREQUEST = _descriptor.Descriptor(
   name='TileAOIRequest',
   full_name='geocube.TileAOIRequest',
@@ -508,8 +598,8 @@ _TILEAOIREQUEST = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=745,
-  serialized_end=860,
+  serialized_start=981,
+  serialized_end=1096,
 )
 
 
@@ -540,8 +630,8 @@ _TILEAOIRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=862,
-  serialized_end=909,
+  serialized_start=1098,
+  serialized_end=1145,
 )
 
 
@@ -586,8 +676,8 @@ _GRID = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=911,
-  serialized_end=982,
+  serialized_start=1147,
+  serialized_end=1218,
 )
 
 
@@ -632,8 +722,8 @@ _CELL = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=984,
-  serialized_end=1057,
+  serialized_start=1220,
+  serialized_end=1293,
 )
 
 
@@ -664,8 +754,8 @@ _CREATEGRIDREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1059,
-  serialized_end=1107,
+  serialized_start=1295,
+  serialized_end=1343,
 )
 
 
@@ -689,8 +779,8 @@ _CREATEGRIDRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1109,
-  serialized_end=1129,
+  serialized_start=1345,
+  serialized_end=1365,
 )
 
 
@@ -721,8 +811,8 @@ _DELETEGRIDREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1131,
-  serialized_end=1164,
+  serialized_start=1367,
+  serialized_end=1400,
 )
 
 
@@ -746,8 +836,8 @@ _DELETEGRIDRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1166,
-  serialized_end=1186,
+  serialized_start=1402,
+  serialized_end=1422,
 )
 
 
@@ -778,8 +868,8 @@ _LISTGRIDSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1188,
-  serialized_end=1225,
+  serialized_start=1424,
+  serialized_end=1461,
 )
 
 
@@ -810,8 +900,8 @@ _LISTGRIDSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1227,
-  serialized_end=1276,
+  serialized_start=1463,
+  serialized_end=1512,
 )
 
 _TILE.fields_by_name['transform'].message_type = _GEOTRANSFORM
@@ -820,6 +910,14 @@ _LAYOUT_GRIDPARAMETERSENTRY.containing_type = _LAYOUT
 _LAYOUT.fields_by_name['grid_parameters'].message_type = _LAYOUT_GRIDPARAMETERSENTRY
 _CREATELAYOUTREQUEST.fields_by_name['layout'].message_type = _LAYOUT
 _LISTLAYOUTSRESPONSE.fields_by_name['layouts'].message_type = _LAYOUT
+_FINDCONTAINERLAYOUTSREQUEST.fields_by_name['records'].message_type = geocube_dot_pb_dot_records__pb2._RECORDIDLIST
+_FINDCONTAINERLAYOUTSREQUEST.fields_by_name['filters'].message_type = geocube_dot_pb_dot_records__pb2._RECORDFILTERSWITHAOI
+_FINDCONTAINERLAYOUTSREQUEST.oneofs_by_name['identifier'].fields.append(
+  _FINDCONTAINERLAYOUTSREQUEST.fields_by_name['records'])
+_FINDCONTAINERLAYOUTSREQUEST.fields_by_name['records'].containing_oneof = _FINDCONTAINERLAYOUTSREQUEST.oneofs_by_name['identifier']
+_FINDCONTAINERLAYOUTSREQUEST.oneofs_by_name['identifier'].fields.append(
+  _FINDCONTAINERLAYOUTSREQUEST.fields_by_name['filters'])
+_FINDCONTAINERLAYOUTSREQUEST.fields_by_name['filters'].containing_oneof = _FINDCONTAINERLAYOUTSREQUEST.oneofs_by_name['identifier']
 _TILEAOIREQUEST.fields_by_name['aoi'].message_type = geocube_dot_pb_dot_records__pb2._AOI
 _TILEAOIREQUEST.fields_by_name['layout'].message_type = _LAYOUT
 _TILEAOIREQUEST.oneofs_by_name['identifier'].fields.append(
@@ -843,6 +941,8 @@ DESCRIPTOR.message_types_by_name['DeleteLayoutRequest'] = _DELETELAYOUTREQUEST
 DESCRIPTOR.message_types_by_name['DeleteLayoutResponse'] = _DELETELAYOUTRESPONSE
 DESCRIPTOR.message_types_by_name['ListLayoutsRequest'] = _LISTLAYOUTSREQUEST
 DESCRIPTOR.message_types_by_name['ListLayoutsResponse'] = _LISTLAYOUTSRESPONSE
+DESCRIPTOR.message_types_by_name['FindContainerLayoutsRequest'] = _FINDCONTAINERLAYOUTSREQUEST
+DESCRIPTOR.message_types_by_name['FindContainerLayoutsResponse'] = _FINDCONTAINERLAYOUTSRESPONSE
 DESCRIPTOR.message_types_by_name['TileAOIRequest'] = _TILEAOIREQUEST
 DESCRIPTOR.message_types_by_name['TileAOIResponse'] = _TILEAOIRESPONSE
 DESCRIPTOR.message_types_by_name['Grid'] = _GRID
@@ -932,6 +1032,20 @@ ListLayoutsResponse = _reflection.GeneratedProtocolMessageType('ListLayoutsRespo
   # @@protoc_insertion_point(class_scope:geocube.ListLayoutsResponse)
   })
 _sym_db.RegisterMessage(ListLayoutsResponse)
+
+FindContainerLayoutsRequest = _reflection.GeneratedProtocolMessageType('FindContainerLayoutsRequest', (_message.Message,), {
+  'DESCRIPTOR' : _FINDCONTAINERLAYOUTSREQUEST,
+  '__module__' : 'geocube.pb.layouts_pb2'
+  # @@protoc_insertion_point(class_scope:geocube.FindContainerLayoutsRequest)
+  })
+_sym_db.RegisterMessage(FindContainerLayoutsRequest)
+
+FindContainerLayoutsResponse = _reflection.GeneratedProtocolMessageType('FindContainerLayoutsResponse', (_message.Message,), {
+  'DESCRIPTOR' : _FINDCONTAINERLAYOUTSRESPONSE,
+  '__module__' : 'geocube.pb.layouts_pb2'
+  # @@protoc_insertion_point(class_scope:geocube.FindContainerLayoutsResponse)
+  })
+_sym_db.RegisterMessage(FindContainerLayoutsResponse)
 
 TileAOIRequest = _reflection.GeneratedProtocolMessageType('TileAOIRequest', (_message.Message,), {
   'DESCRIPTOR' : _TILEAOIREQUEST,

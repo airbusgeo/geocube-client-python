@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z\014./pb;geocube',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x18geocube/pb/records.proto\x12\x07geocube\x1a\x1fgoogle/protobuf/timestamp.proto\"!\n\x05\x43oord\x12\x0b\n\x03lon\x18\x01 \x01(\x02\x12\x0b\n\x03lat\x18\x02 \x01(\x02\",\n\nLinearRing\x12\x1e\n\x06points\x18\x01 \x03(\x0b\x32\x0e.geocube.Coord\"3\n\x07Polygon\x12(\n\x0blinearrings\x18\x01 \x03(\x0b\x32\x13.geocube.LinearRing\")\n\x03\x41OI\x12\"\n\x08polygons\x18\x01 \x03(\x0b\x32\x10.geocube.Polygon\"\xcd\x01\n\x06Record\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12(\n\x04time\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\'\n\x04tags\x18\x04 \x03(\x0b\x32\x19.geocube.Record.TagsEntry\x12\x0e\n\x06\x61oi_id\x18\x05 \x01(\t\x12\x19\n\x03\x61oi\x18\x06 \x01(\x0b\x32\x0c.geocube.AOI\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xac\x01\n\tNewRecord\x12\x0c\n\x04name\x18\x01 \x01(\t\x12(\n\x04time\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12*\n\x04tags\x18\x03 \x03(\x0b\x32\x1c.geocube.NewRecord.TagsEntry\x12\x0e\n\x06\x61oi_id\x18\x04 \x01(\t\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\x1b\n\x0cRecordIdList\x12\x0b\n\x03ids\x18\x01 \x03(\t\"2\n\x0eGroupedRecords\x12 \n\x07records\x18\x01 \x03(\x0b\x32\x0f.geocube.Record\"\x1f\n\x10GroupedRecordIds\x12\x0b\n\x03ids\x18\x01 \x03(\t\"B\n\x14GroupedRecordIdsList\x12*\n\x07records\x18\x01 \x03(\x0b\x32\x19.geocube.GroupedRecordIds\";\n\x14\x43reateRecordsRequest\x12#\n\x07records\x18\x01 \x03(\x0b\x32\x12.geocube.NewRecord\"$\n\x15\x43reateRecordsResponse\x12\x0b\n\x03ids\x18\x01 \x03(\t\"#\n\x14\x44\x65leteRecordsRequest\x12\x0b\n\x03ids\x18\x01 \x03(\t\"#\n\x15\x44\x65leteRecordsResponse\x12\n\n\x02nb\x18\x01 \x01(\x03\"\x89\x01\n\x15\x41\x64\x64RecordsTagsRequest\x12\x0b\n\x03ids\x18\x01 \x03(\t\x12\x36\n\x04tags\x18\x02 \x03(\x0b\x32(.geocube.AddRecordsTagsRequest.TagsEntry\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"$\n\x16\x41\x64\x64RecordsTagsResponse\x12\n\n\x02nb\x18\x01 \x01(\x03\"8\n\x18RemoveRecordsTagsRequest\x12\x0b\n\x03ids\x18\x01 \x03(\t\x12\x0f\n\x07tagsKey\x18\x02 \x03(\t\"\'\n\x19RemoveRecordsTagsResponse\x12\n\n\x02nb\x18\x01 \x01(\x03\"-\n\x10\x43reateAOIRequest\x12\x19\n\x03\x61oi\x18\x01 \x01(\x0b\x32\x0c.geocube.AOI\"\x1f\n\x11\x43reateAOIResponse\x12\n\n\x02id\x18\x01 \x01(\t\"\x1b\n\rGetAOIRequest\x12\n\n\x02id\x18\x01 \x01(\t\"+\n\x0eGetAOIResponse\x12\x19\n\x03\x61oi\x18\x01 \x01(\x0b\x32\x0c.geocube.AOI\"\xaa\x02\n\x12ListRecordsRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x33\n\x04tags\x18\x03 \x03(\x0b\x32%.geocube.ListRecordsRequest.TagsEntry\x12-\n\tfrom_time\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12+\n\x07to_time\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x19\n\x03\x61oi\x18\x08 \x01(\x0b\x32\x0c.geocube.AOI\x12\r\n\x05limit\x18\x06 \x01(\x05\x12\x0c\n\x04page\x18\x07 \x01(\x05\x12\x10\n\x08with_aoi\x18\t \x01(\x08\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\":\n\x17ListRecordsResponseItem\x12\x1f\n\x06record\x18\x01 \x01(\x0b\x32\x0f.geocube.Record\"\xc8\x01\n\rRecordFilters\x12.\n\x04tags\x18\x01 \x03(\x0b\x32 .geocube.RecordFilters.TagsEntry\x12-\n\tfrom_time\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12+\n\x07to_time\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x42\x0eZ\x0c./pb;geocubeb\x06proto3'
+  serialized_pb=b'\n\x18geocube/pb/records.proto\x12\x07geocube\x1a\x1fgoogle/protobuf/timestamp.proto\"!\n\x05\x43oord\x12\x0b\n\x03lon\x18\x01 \x01(\x02\x12\x0b\n\x03lat\x18\x02 \x01(\x02\",\n\nLinearRing\x12\x1e\n\x06points\x18\x01 \x03(\x0b\x32\x0e.geocube.Coord\"3\n\x07Polygon\x12(\n\x0blinearrings\x18\x01 \x03(\x0b\x32\x13.geocube.LinearRing\")\n\x03\x41OI\x12\"\n\x08polygons\x18\x01 \x03(\x0b\x32\x10.geocube.Polygon\"\xcd\x01\n\x06Record\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12(\n\x04time\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\'\n\x04tags\x18\x04 \x03(\x0b\x32\x19.geocube.Record.TagsEntry\x12\x0e\n\x06\x61oi_id\x18\x05 \x01(\t\x12\x19\n\x03\x61oi\x18\x06 \x01(\x0b\x32\x0c.geocube.AOI\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xac\x01\n\tNewRecord\x12\x0c\n\x04name\x18\x01 \x01(\t\x12(\n\x04time\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12*\n\x04tags\x18\x03 \x03(\x0b\x32\x1c.geocube.NewRecord.TagsEntry\x12\x0e\n\x06\x61oi_id\x18\x04 \x01(\t\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\x1b\n\x0cRecordIdList\x12\x0b\n\x03ids\x18\x01 \x03(\t\"2\n\x0eGroupedRecords\x12 \n\x07records\x18\x01 \x03(\x0b\x32\x0f.geocube.Record\"\x1f\n\x10GroupedRecordIds\x12\x0b\n\x03ids\x18\x01 \x03(\t\"B\n\x14GroupedRecordIdsList\x12*\n\x07records\x18\x01 \x03(\x0b\x32\x19.geocube.GroupedRecordIds\";\n\x14\x43reateRecordsRequest\x12#\n\x07records\x18\x01 \x03(\x0b\x32\x12.geocube.NewRecord\"$\n\x15\x43reateRecordsResponse\x12\x0b\n\x03ids\x18\x01 \x03(\t\"#\n\x14\x44\x65leteRecordsRequest\x12\x0b\n\x03ids\x18\x01 \x03(\t\"#\n\x15\x44\x65leteRecordsResponse\x12\n\n\x02nb\x18\x01 \x01(\x03\"\x89\x01\n\x15\x41\x64\x64RecordsTagsRequest\x12\x0b\n\x03ids\x18\x01 \x03(\t\x12\x36\n\x04tags\x18\x02 \x03(\x0b\x32(.geocube.AddRecordsTagsRequest.TagsEntry\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"$\n\x16\x41\x64\x64RecordsTagsResponse\x12\n\n\x02nb\x18\x01 \x01(\x03\"8\n\x18RemoveRecordsTagsRequest\x12\x0b\n\x03ids\x18\x01 \x03(\t\x12\x0f\n\x07tagsKey\x18\x02 \x03(\t\"\'\n\x19RemoveRecordsTagsResponse\x12\n\n\x02nb\x18\x01 \x01(\x03\"-\n\x10\x43reateAOIRequest\x12\x19\n\x03\x61oi\x18\x01 \x01(\x0b\x32\x0c.geocube.AOI\"\x1f\n\x11\x43reateAOIResponse\x12\n\n\x02id\x18\x01 \x01(\t\"\x1b\n\rGetAOIRequest\x12\n\n\x02id\x18\x01 \x01(\t\"+\n\x0eGetAOIResponse\x12\x19\n\x03\x61oi\x18\x01 \x01(\x0b\x32\x0c.geocube.AOI\"\xaa\x02\n\x12ListRecordsRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x33\n\x04tags\x18\x03 \x03(\x0b\x32%.geocube.ListRecordsRequest.TagsEntry\x12-\n\tfrom_time\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12+\n\x07to_time\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x19\n\x03\x61oi\x18\x08 \x01(\x0b\x32\x0c.geocube.AOI\x12\r\n\x05limit\x18\x06 \x01(\x05\x12\x0c\n\x04page\x18\x07 \x01(\x05\x12\x10\n\x08with_aoi\x18\t \x01(\x08\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\":\n\x17ListRecordsResponseItem\x12\x1f\n\x06record\x18\x01 \x01(\x0b\x32\x0f.geocube.Record\"\xc8\x01\n\rRecordFilters\x12.\n\x04tags\x18\x01 \x03(\x0b\x32 .geocube.RecordFilters.TagsEntry\x12-\n\tfrom_time\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12+\n\x07to_time\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"Z\n\x14RecordFiltersWithAOI\x12\'\n\x07\x66ilters\x18\x01 \x01(\x0b\x32\x16.geocube.RecordFilters\x12\x19\n\x03\x61oi\x18\x02 \x01(\x0b\x32\x0c.geocube.AOIB\x0eZ\x0c./pb;geocubeb\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
@@ -1156,6 +1156,45 @@ _RECORDFILTERS = _descriptor.Descriptor(
   serialized_end=1978,
 )
 
+
+_RECORDFILTERSWITHAOI = _descriptor.Descriptor(
+  name='RecordFiltersWithAOI',
+  full_name='geocube.RecordFiltersWithAOI',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='filters', full_name='geocube.RecordFiltersWithAOI.filters', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='aoi', full_name='geocube.RecordFiltersWithAOI.aoi', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1980,
+  serialized_end=2070,
+)
+
 _LINEARRING.fields_by_name['points'].message_type = _COORD
 _POLYGON.fields_by_name['linearrings'].message_type = _LINEARRING
 _AOI.fields_by_name['polygons'].message_type = _POLYGON
@@ -1183,6 +1222,8 @@ _RECORDFILTERS_TAGSENTRY.containing_type = _RECORDFILTERS
 _RECORDFILTERS.fields_by_name['tags'].message_type = _RECORDFILTERS_TAGSENTRY
 _RECORDFILTERS.fields_by_name['from_time'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _RECORDFILTERS.fields_by_name['to_time'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
+_RECORDFILTERSWITHAOI.fields_by_name['filters'].message_type = _RECORDFILTERS
+_RECORDFILTERSWITHAOI.fields_by_name['aoi'].message_type = _AOI
 DESCRIPTOR.message_types_by_name['Coord'] = _COORD
 DESCRIPTOR.message_types_by_name['LinearRing'] = _LINEARRING
 DESCRIPTOR.message_types_by_name['Polygon'] = _POLYGON
@@ -1208,6 +1249,7 @@ DESCRIPTOR.message_types_by_name['GetAOIResponse'] = _GETAOIRESPONSE
 DESCRIPTOR.message_types_by_name['ListRecordsRequest'] = _LISTRECORDSREQUEST
 DESCRIPTOR.message_types_by_name['ListRecordsResponseItem'] = _LISTRECORDSRESPONSEITEM
 DESCRIPTOR.message_types_by_name['RecordFilters'] = _RECORDFILTERS
+DESCRIPTOR.message_types_by_name['RecordFiltersWithAOI'] = _RECORDFILTERSWITHAOI
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Coord = _reflection.GeneratedProtocolMessageType('Coord', (_message.Message,), {
@@ -1424,6 +1466,13 @@ RecordFilters = _reflection.GeneratedProtocolMessageType('RecordFilters', (_mess
   })
 _sym_db.RegisterMessage(RecordFilters)
 _sym_db.RegisterMessage(RecordFilters.TagsEntry)
+
+RecordFiltersWithAOI = _reflection.GeneratedProtocolMessageType('RecordFiltersWithAOI', (_message.Message,), {
+  'DESCRIPTOR' : _RECORDFILTERSWITHAOI,
+  '__module__' : 'geocube.pb.records_pb2'
+  # @@protoc_insertion_point(class_scope:geocube.RecordFiltersWithAOI)
+  })
+_sym_db.RegisterMessage(RecordFiltersWithAOI)
 
 
 DESCRIPTOR._options = None
