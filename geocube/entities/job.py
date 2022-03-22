@@ -103,7 +103,7 @@ class Job:
                 if i < 3:
                     warnings.warn("tasks_from_logs might have missed tasks. Please, reload job with more logs")
                 # Parse coordinates
-                coordinates = parse.findall("{lon:f} {lat:f}", log_task['coordinates'])
+                coordinates = parse.findall("{lon:g} {lat:g}", log_task['coordinates'])
                 coordinates = geometry.LinearRing([[p['lon'], p['lat']] for p in coordinates])
 
                 tasks.append(Task(log_task['container'], log_task['records'], log_task['datasets'], coordinates))
@@ -133,7 +133,7 @@ class Job:
 
     def __str__(self):
         if len(self.logs) > 20:
-            logs = f"[+{len(self.logs)-20}...]\n"+("      \n".join(self.logs[-20:]))
+            logs = f"{self.logs[0]}\n[+{len(self.logs)-20}...]\n"+("      \n".join(self.logs[-19:]))
         else:
             logs = "      \n".join(self.logs)
         return "Job {} ({})\n" \
