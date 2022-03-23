@@ -1,0 +1,162 @@
+ARG GDALVERSION=3.4.1
+ARG PROJVERSION=7.2.1
+ARG GEOSVERSION=3.8.1
+
+FROM golang as builder
+ARG PROJVERSION
+ARG GEOSVERSION
+ARG GDALVERSION
+
+RUN apt update \
+    && apt install -y pkg-config curl libcurl4-gnutls-dev sqlite3 libsqlite3-dev make g++ libzstd-dev libboost-all-dev libtool libtiff-dev musl-dev autoconf automake build-essential \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt autoremove -y \
+    && apt clean -y
+
+WORKDIR /build
+
+RUN mkdir proj && cd proj && curl -sL https://github.com/OSGeo/proj.4/releases/download/$PROJVERSION/proj-$PROJVERSION.tar.gz -o proj-$PROJVERSION.tar.gz && \
+    mkdir proj && \
+    tar  xzf proj-$PROJVERSION.tar.gz -C proj --strip-components 1 && \
+    cd proj && \
+    ./configure && \
+    make -j8 && \
+    make install && \
+    cd /build && rm -rf proj
+
+RUN mkdir geos && cd geos && curl -sL http://download.osgeo.org/geos/geos-$GEOSVERSION.tar.bz2 -o geos.tbz2 && \
+     tar xf geos.tbz2 && \
+     cd geos-$GEOSVERSION && \
+     ./configure && \
+     make -j8 && \
+     make install && \
+     cd /build && rm -rf geos
+
+
+RUN mkdir gdal && cd gdal && curl -sL https://github.com/OSGeo/gdal/releases/download/v$GDALVERSION/gdal-$GDALVERSION.tar.gz -o gdal.tar.gz && \
+    mkdir gdal && \
+    tar xzf gdal.tar.gz -C gdal --strip-components 1 && \
+    cd gdal && \
+    ./configure \
+    	    --disable-lto \
+    		--disable-static \
+    		--enable-shared \
+    		--disable-all-optional-drivers \
+    		--without-gnm \
+    		--without-qhull \
+    		--without-sqlite3 \
+    		--without-pcidsk \
+    		--without-gif \
+    		--without-pcraster \
+    		--with-geos \
+    		--with-curl \
+    		--with-jpeg \
+    		--with-libtiff=internal \
+    		--with-webp \
+    		--with-zstd \
+    		--with-geotiff=internal && \
+    	make -j8 && \
+    	make install &&\
+    	 (for i in \
+                # BAG driver
+                /usr/local/share/gdal/bag*.xml \
+                # SXF driver
+                /usr/local/share/gdal/default.rsc \
+                # unused
+                /usr/local/share/gdal/*.svg \
+                # unused
+                /usr/local/share/gdal/*.png \
+                # GML driver
+                /usr/local/share/gdal/*.gfs \
+                # GML driver
+                /usr/local/share/gdal/gml_registry.xml \
+                # NITF driver
+                /usr/local/share/gdal/nitf* \
+                # NITF driver
+                /usr/local/share/gdal/gt_datum.csv \
+                # NITF driver
+                /usr/local/share/gdal/gt_ellips.csv \
+                # PDF driver
+                /usr/local/share/gdal/pdf* \
+                # PDS4 driver
+                /usr/local/share/gdal/pds* \
+                # S57 driver
+                /usr/local/share/gdal/s57* \
+                # VDV driver
+                /usr/local/share/gdal/vdv* \
+                # DXF driver
+                /usr/local/share/gdal/*.dxf \
+                # DGN driver
+                /usr/local/share/gdal/*.dgn \
+                # OSM driver
+                /usr/local/share/gdal/osm* \
+                # GMLAS driver
+                /usr/local/share/gdal/gmlas* \
+                # PLScenes driver
+                /usr/local/share/gdal/plscenes* \
+                # netCDF driver
+                /usr/local/share/gdal/netcdf_config.xsd \
+                # PCIDSK driver
+                /usr/local/share/gdal/pci* \
+                # ECW and ERS drivers
+                /usr/local/share/gdal/ecw_cs.wkt \
+                # EEDA driver
+                /usr/local/share/gdal/eedaconf.json \
+                # MAP driver / ImportFromOZI()
+                /usr/local/share/gdal/ozi_* \
+           ;do rm $i; done) &&\
+        (for i in /usr/local/lib/*; do strip -s $i 2>/dev/null || /bin/true; done) &&\
+        ldconfig /usr/local/lib &&\
+        cd /build && rm -rf gdal
+
+RUN git clone https://github.com/airbusgeo/geocube.git \
+    && cd geocube/cmd/downloader \
+    && go build -ldflags="-s -w" \
+    && mv downloader /build/ \
+    && cd /build && rm -rf geocube
+
+FROM ubuntu:20.04
+ARG GDALVERSION
+
+ENV GRPC_ENABLE_FORK_SUPPORT=1
+ENV TINI_VERSION v0.19.0
+
+COPY --from=builder /usr/local/lib /usr/local/lib
+COPY --from=builder /usr/local/share /usr/local/share
+COPY --from=builder /usr/local/bin/ /usr/local/bin/
+COPY --from=builder /usr/local/include /usr/local/include
+COPY --from=builder /build/downloader /usr/bin/downloader
+COPY docker/prepare_downloader.sh /usr/bin/prepare_downloader.sh
+
+RUN apt update \
+    && apt install -y --no-install-recommends \
+        g++ \
+        git \
+        python3-pip \
+        python3-setuptools \
+        python3-dev \
+        pkg-config \
+        libjpeg62 \
+        libdeflate0 \
+        libcurl4-gnutls-dev \
+        libtiff5 \
+    && ln -s /usr/bin/python3 /usr/bin/python \
+    && python3 -m pip install \
+        gcloud \
+        "protobuf < 4" \
+        "numpy < 1.22" \
+        git+https://github.com/airbusgeo/geocube-client-python.git@v0.4.0 \
+        click~=7.1.2 \
+        bokeh>=2.1.1 \
+    # gdal must be installed after numpy
+    && python3 -m pip install GDAL==$GDALVERSION \
+    && apt remove -y git g++ python3-dev --purge \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt autoremove -y \
+    && apt clean -y
+
+
+# Add Tini
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
+RUN chmod +x /tini && chmod +x /usr/bin/prepare_downloader.sh && mkdir /var/log/container
+ENTRYPOINT ["/tini", "-g", "--", "/usr/bin/prepare_downloader.sh"]
