@@ -1,3 +1,4 @@
+import warnings
 from datetime import datetime
 from typing import List, Union, Dict, Tuple
 
@@ -84,7 +85,8 @@ class Admin(Consolidater):
     @utils.catch_rpc_error
     def admin_delete_datasets(self, instances: List[Union[str, entities.VariableInstance]],
                               records: List[Union[str, entities.Record]],
-                              execution_level: entities.ExecutionLevel = entities.ExecutionLevel.SYNCHRONOUS,
+                              file_patterns: List[str] = None,
+                              execution_level: entities.ExecutionLevel = entities.ExecutionLevel.STEP_BY_STEP_CRITICAL,
                               job_name: str = None) -> entities.Job:
         """
         Admin function to delete datasets that are referenced by a list of instances and a list of records.
@@ -94,12 +96,19 @@ class Admin(Consolidater):
         Parameters
         ----------
         instances: select all the datasets referenced by these instances.
-        records:select all the datasets referenced by these records.
+        records: select all the datasets referenced by these records.
+        file_patterns: select all the datasets with on of the given file patterns
+            (support * and ? for all or any characters and trailing (?i) for case-insensitiveness)
         execution_level: see entities.ExecutionLevel.
+        job_name: [optional] gives a name to the job, otherwise, a name will be automatically generated
         """
+        if len(records) == 0 and len(instances) == 0:
+            warnings.warn("this job is about to delete the whole database")
         res = self.admin_stub.DeleteDatasets(admin_pb2.DeleteDatasetsRequest(
             job_name=job_name if job_name is not None else f"Deletion_{datetime.now()}_{len(records)}_records",
             execution_level=execution_level.value,
-            instance_ids=entities.get_ids(instances), record_ids=entities.get_ids(records)))
+            instance_ids=entities.get_ids(instances), record_ids=entities.get_ids(records),
+            dataset_patterns=file_patterns)
+        )
 
         return entities.Job.from_pb(self.stub, res.job)
