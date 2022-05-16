@@ -19,3 +19,4 @@ xarray>=0.20
 parse
 dask
 distributed
+pytz

@@ -3,6 +3,7 @@ import logging
 import sys
 import time
 from random import random
+import pebble
 
 from geocube.sdk import MessageType, multiprocess, Status, ProcessAbnormalTermination, ProcessTimeoutError, \
     ProcessPicklingError
@@ -68,19 +69,21 @@ class TestMultiProcess:
     def test_success(self):
         t = 2
         funcs = {str(i): functools.partial(rand_sleep_success, t) for i in range(10)}
-        results = multiprocess(funcs, children=None, timeout_sec=t, log_lvl=logging.DEBUG)
+        mprocesses = multiprocess.MultiProcesses(pebble.ProcessPool(1), funcs, timeout_sec=t, log_lvl=logging.DEBUG)
+        mprocesses.join()
 
-        for i, r in results.items():
-            assert r[0] == Status.DONE
+        for i, r in mprocesses.results().items():
+            assert r[0] == Status.DONE.name
             assert r[1] is True
 
     def test_failed(self):
         t = 2
         funcs = {str(i): functools.partial(rand_sleep_failed, t) for i in range(10)}
-        results = multiprocess(funcs, children=None, timeout_sec=t, log_lvl=logging.DEBUG)
+        mprocesses = multiprocess.MultiProcesses(pebble.ProcessPool(1), funcs, timeout_sec=t, log_lvl=logging.DEBUG)
+        mprocesses.join()
 
-        for i, r in results.items():
-            assert r[0] == Status.FAILED
+        for i, r in mprocesses.results().items():
+            assert r[0] == Status.FAILED.name
             assert isinstance(r[1][0], NameError)
 
     def test_retry(self):
@@ -89,11 +92,12 @@ class TestMultiProcess:
         nb_retries = 3
         children = 4
         funcs = {str(i): n_errors for i in range(10)}
-        results = multiprocess(funcs, children=children, timeout_sec=1, log_lvl=logging.DEBUG,
-                               retry_on_error=retry_on_value_error)
+        mprocesses = multiprocess.MultiProcesses(pebble.ProcessPool(children), funcs, timeout_sec=1,
+                                                 log_lvl=logging.DEBUG, retry_on_error=retry_on_value_error)
+        mprocesses.join()
 
-        for i, r in results.items():
-            assert r[0] == Status.DONE
+        for i, r in mprocesses.results().items():
+            assert r[0] == Status.DONE.name
             assert r[1] is True
         assert global_retries == nb_retries*children
 
@@ -102,11 +106,12 @@ class TestMultiProcess:
         global_retries = 0
         t = 2
         funcs = {str(i): sys.exit for i in range(10)}
-        results = multiprocess(funcs, children=None, timeout_sec=t, log_lvl=logging.DEBUG,
-                               retry_on_error=retry_on_value_error, max_attempts=3)
+        mprocesses = multiprocess.MultiProcesses(pebble.ProcessPool(1), funcs, timeout_sec=t, log_lvl=logging.DEBUG,
+                                                 retry_on_error=retry_on_value_error, max_attempts=3)
+        mprocesses.join()
 
-        for i, r in results.items():
-            assert r[0] == Status.FAILED
+        for i, r in mprocesses.results().items():
+            assert r[0] == Status.FAILED.name
             assert isinstance(r[1][0], ProcessAbnormalTermination)
 
     def test_success_with_timeout(self):
@@ -114,11 +119,12 @@ class TestMultiProcess:
         global_retries = 0
         t = 2
         funcs = {str(i): functools.partial(rand_timeout, t, 0.7) for i in range(10)}
-        results = multiprocess(funcs, children=None, timeout_sec=t//2, log_lvl=logging.DEBUG,
-                               retry_on_error=retry_on_value_error, max_attempts=None)
+        mprocesses = multiprocess.MultiProcesses(pebble.ProcessPool(1), funcs, timeout_sec=t//2, log_lvl=logging.DEBUG,
+                                                 retry_on_error=retry_on_value_error, max_attempts=None)
+        mprocesses.join()
 
-        for i, r in results.items():
-            assert r[0] == Status.DONE
+        for i, r in mprocesses.results().items():
+            assert r[0] == Status.DONE.name
             assert r[1] is True
         assert global_retries == 0
 
@@ -127,36 +133,40 @@ class TestMultiProcess:
         global_retries = 0
         t = 2
         funcs = {str(i): functools.partial(time.sleep, t) for i in range(10)}
-        results = multiprocess(funcs, children=None, timeout_sec=t//2, log_lvl=logging.DEBUG,
-                               retry_on_error=retry_on_value_error, max_attempts=2)
-        for i, r in results.items():
-            assert r[0] == Status.FAILED
+        mprocesses = multiprocess.MultiProcesses(pebble.ProcessPool(1), funcs, timeout_sec=t//2, log_lvl=logging.DEBUG,
+                                                 retry_on_error=retry_on_value_error, max_attempts=2)
+        mprocesses.join()
+        for i, r in mprocesses.results().items():
+            assert r[0] == Status.FAILED.name
             assert isinstance(r[1][0], ProcessTimeoutError)
         assert global_retries == 0
 
     def test_log_queue(self):
         t = 2
         funcs = {str(i): func_log_queue for i in range(10)}
-        results = multiprocess(funcs, children=None, timeout_sec=t//2, log_lvl=logging.DEBUG,
-                               retry_on_error=None, max_attempts=None)
-        for i, r in results.items():
-            assert r[0] == Status.DONE
+        mprocesses = multiprocess.MultiProcesses(pebble.ProcessPool(1), funcs, timeout_sec=t//2, log_lvl=logging.DEBUG,
+                                                 retry_on_error=None, max_attempts=None)
+        mprocesses.join()
+        for i, r in mprocesses.results().items():
+            assert r[0] == Status.DONE.name
             assert r[1] is True
 
     def test_unpicklable_error(self):
         t = 2
         funcs = {str(i): unpicklable_error for i in range(10)}
-        results = multiprocess(funcs, children=None, timeout_sec=t//2, log_lvl=logging.DEBUG,
-                               retry_on_error=None, max_attempts=2)
-        for i, r in results.items():
-            assert r[0] == Status.FAILED
+        mprocesses = multiprocess.MultiProcesses(pebble.ProcessPool(1), funcs, timeout_sec=t//2, log_lvl=logging.DEBUG,
+                                                 retry_on_error=None, max_attempts=2)
+        mprocesses.join()
+        for i, r in mprocesses.results().items():
+            assert r[0] == Status.FAILED.name
             assert isinstance(r[1][0], ProcessPicklingError)
 
     def test_unpicklable_return(self):
         t = 2
         funcs = {str(i): unpicklable_return for i in range(10)}
-        results = multiprocess(funcs, children=None, timeout_sec=t//2, log_lvl=logging.DEBUG,
-                               retry_on_error=None, max_attempts=2)
-        for i, r in results.items():
-            assert r[0] == Status.FAILED
+        mprocesses = multiprocess.MultiProcesses(pebble.ProcessPool(1), funcs, timeout_sec=t//2, log_lvl=logging.DEBUG,
+                                                 retry_on_error=None, max_attempts=2)
+        mprocesses.join()
+        for i, r in mprocesses.results().items():
+            assert r[0] == Status.FAILED.name
             assert isinstance(r[1][0], ProcessPicklingError)
