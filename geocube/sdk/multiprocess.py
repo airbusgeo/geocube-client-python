@@ -33,6 +33,8 @@ class Status(Enum):
     FAILED = enum.auto()
 
 
+logger = logging.getLogger("geocube_multiprocess")
+
 """ message_queue_t can be used for logging or for progress updating in an asynchronous function """
 message_queue_t = Optional[Callable[[MessageType, Any], None]]
 
@@ -54,7 +56,7 @@ class ProcessAbnormalTermination(pebble.ProcessExpired):
 
 
 class ProcessPicklingError(pickle.PicklingError):
-    """The process returned or raised something unpicklable."""
+    """The process returned or raised something un-pickleable."""
     pass
 
 
@@ -142,13 +144,13 @@ class Process:
     @staticmethod
     def message(q: mp.Queue, _id: str, _type: MessageType, value, args):
         try:
-            logging.debug(f'[{_id}]: Post message {_type}: {_truncate_fmt(value, 100)}')
+            logger.debug(f'[{_id}]: Post message {_type}: {_truncate_fmt(value, 100)}')
             q.put(Message(_id, _type, value, args), timeout=60)
 
         except queue.Full as e:
-            logging.error(f"Full queue ({e}) : unable to post {_type.name}:{value} [{args}]")
+            logger.error(f"Full queue ({e}) : unable to post {_type.name}:{value} [{args}]")
         except ConnectionRefusedError as e:
-            logging.error(f"Connection refused ({e}) : unable to post {_type.name}:{value} [{args}]")
+            logger.error(f"Connection refused ({e}) : unable to post {_type.name}:{value} [{args}]")
         except Exception as e:
             raise Exception(f"Unable to post message {_type.name}:{value} [{args}]: {e}")
 
@@ -163,14 +165,13 @@ def multiprocess(funcs: Dict[str, Callable[[Optional[mp.Queue]], Any]], children
     if len(funcs) == 0:
         return {}
 
-    # Check funcs are picklable
+    # Check funcs are pickleable
     for f in funcs.values():
-        assert is_picklable(f), f"{f} is not picklable"
+        assert is_pickleable(f), f"{f} is not pickleable"
 
     if checkpoint_dir:
         os.makedirs(checkpoint_dir, exist_ok=True)
-
-    logging.basicConfig(level=log_lvl)
+    logger.setLevel(log_lvl)
 
     # Prepare the data
     children = mp.cpu_count() if children is None else children
@@ -197,10 +198,10 @@ def multiprocess(funcs: Dict[str, Callable[[Optional[mp.Queue]], Any]], children
                 if message.type == MessageType.STATUS:
                     try:
                         processes[message.id].update_status(message.value, message.args)
-                        logging.info(f'{message.date}: [{message.id}] new status : {message.value} '
-                                     f'[{_truncate_fmt(message.args, 100)}]')
+                        logger.info(f'{message.date}: [{message.id}] new status : {message.value} '
+                                    f'[{_truncate_fmt(message.args, 100)}]')
                     except ValueError as e:
-                        logging.error(e)
+                        logger.error(e)
                     checkpoint = True
                     print_status = True
 
@@ -208,7 +209,7 @@ def multiprocess(funcs: Dict[str, Callable[[Optional[mp.Queue]], Any]], children
             for message in _QueueIterator(log_queue, False):
                 if message.type == MessageType.PROGRESS:
                     processes[message.id].update_progress(message.value)
-                    logging.debug(f'{message.date}: [{message.id}] {100*message.value:.0f}%')
+                    logger.debug(f'{message.date}: [{message.id}] {100*message.value:.0f}%')
 
             # Scan timeout
             if timeout_sec is not None:
@@ -216,17 +217,17 @@ def multiprocess(funcs: Dict[str, Callable[[Optional[mp.Queue]], Any]], children
                     if process.status == Status.PENDING and\
                             process.start_time + timedelta(seconds=timeout_sec+100*sleep_sec) < datetime.today():
                         print_status = True
-                        logging.error(f"[{process.id}] Timeout error !! Process looks stuck ({process.start_time})")
+                        logger.error(f"[{process.id}] Timeout error !! Process looks stuck ({process.start_time})")
                         try:
                             process.update_status(Status.FAILED, ProcessTimeoutError("Unrecoverable timeout"))
                         except ValueError as e:
-                            logging.error(e)
+                            logger.error(e)
 
             # Retry
             for process in processes.values():
                 if process.status == Status.RETRY:
                     process.start(pool, start_func, task_done_func, timeout_sec)
-                    logging.info(f"[{process.id}] will restart later")
+                    logger.info(f"[{process.id}] will restart later")
                     print_status = True
 
             # Sleep and print status on demand
@@ -250,7 +251,7 @@ def multiprocess(funcs: Dict[str, Callable[[Optional[mp.Queue]], Any]], children
                     with open(os.path.join(checkpoint_dir, f"checkpoint-{datetime.today()}.json"), "w") as f:
                         json.dump({p.id: (p.status.name, p.result) for p in processes.values()}, f, cls=ResultsEncoder)
                 except Exception as e:
-                    logging.error(e)
+                    logger.error(e)
 
     state_queue.join()
     log_queue.join()
@@ -271,55 +272,55 @@ def _format_pending_state(process):
 
 
 def _print_full_status(processes):
-    if logging.root.level > logging.INFO:
+    if logger.level > logging.INFO:
         return
-    logging.info(f"************** Full Status {datetime.today()} ***************")
+    logger.info(f"************** Full Status {datetime.today()} ***************")
     for process in processes.values():
         if process.status == Status.NEW:
-            logging.info(f'  [{process.id}] new')
+            logger.info(f'  [{process.id}] new')
         elif process.status == Status.PENDING:
-            logging.info(_format_pending_state(process))
+            logger.info(_format_pending_state(process))
         elif process.status == Status.DONE:
-            logging.info(f'  [{process.id}] done in {process.elapsed_time} ({_truncate_fmt(process.result, 30)})')
+            logger.info(f'  [{process.id}] done in {process.elapsed_time} ({_truncate_fmt(process.result, 30)})')
         elif process.status == Status.FAILED:
-            logging.info(f'  [{process.id}] failed in {process.elapsed_time} ({_truncate_fmt(process.result[0], 30)}')
-    logging.info("********************************************************************")
+            logger.info(f'  [{process.id}] failed in {process.elapsed_time} ({_truncate_fmt(process.result[0], 30)}')
+    logger.info("********************************************************************")
 
 
 def _print_status(processes):
-    if logging.root.level < logging.INFO:
+    if logger.level < logging.INFO:
         return
-    logging.info(f"************** Status {datetime.today()} ***************")
+    logger.info(f"************** Status {datetime.today()} ***************")
     count = {Status.NEW: 0, Status.PENDING: 0, Status.DONE: 0, Status.FAILED: 0, Status.RETRY: 0}
     for process in processes.values():
         if process.status == Status.PENDING:
-            logging.info(_format_pending_state(process))
+            logger.info(_format_pending_state(process))
         count[process.status] += 1
     for k, c in count.items():
-        logging.info(f'  {k.name}: {c}')
-    logging.info("********************************************************************")
+        logger.info(f'  {k.name}: {c}')
+    logger.info("********************************************************************")
 
 
 def _task_done(future, _id: str, mq: mp.Queue, retry_on_error=None):
     try:
         result = future.result(0)
-        logging.debug(f'[{_id}]: TaskDone ({_truncate_fmt(result, 100)})')
+        logger.debug(f'[{_id}]: TaskDone ({_truncate_fmt(result, 100)})')
         Process.message(mq, _id, MessageType.STATUS, Status.DONE, result)
 
     except pebble.common.ProcessExpired as error:
-        logging.debug(f'[{_id}]: ProcessExpired')
+        logger.debug(f'[{_id}]: ProcessExpired')
         Process.message(mq, _id, MessageType.STATUS, Status.RETRY, (ProcessAbnormalTermination(error),
                                                                     traceback.format_exc()))
     except futures.TimeoutError as error:
-        logging.debug(f'[{_id}]: Timeout')
+        logger.debug(f'[{_id}]: Timeout')
         Process.message(mq, _id, MessageType.STATUS, Status.RETRY, (ProcessTimeoutError(error), traceback.format_exc()))
 
     except Exception as error:
         if retry_on_error and retry_on_error(error):
-            logging.debug(f'[{_id}]: Function raised "{error}"... retrying')
+            logger.debug(f'[{_id}]: Function raised "{error}"... retrying')
             status = Status.RETRY
         else:
-            logging.debug(f'[{_id}]: Function raised "{error}"\n{traceback.format_exc()}')
+            logger.debug(f'[{_id}]: Function raised "{error}"\n{traceback.format_exc()}')
             status = Status.FAILED
         Process.message(mq, _id, MessageType.STATUS, status, (error, traceback.format_exc()))
 
@@ -336,20 +337,20 @@ def _async_func(_id, func, mq: mp.Queue, log_queue: mp.Queue = None, log_prefix=
         else:
             result = func()
 
-        logging.debug(f'[{_id}]: Function returned "{_truncate_fmt(result, 100)}"')
+        logger.debug(f'[{_id}]: Function returned "{_truncate_fmt(result, 100)}"')
 
-        if is_picklable(result):
+        if is_pickleable(result):
             return result
-        raise ProcessPicklingError(f'"{result}" is not picklable')
+        raise ProcessPicklingError(f'"{result}" is not pickleable')
 
     except Exception as error:
-        if is_picklable(error):
+        if is_pickleable(error):
             raise
-        logging.debug(f'[{_id}]: Unpicklable Exception raised {error}')
-        raise ProcessPicklingError(f"{error} is not picklable")
+        logger.debug(f'[{_id}]: Unpickleable Exception raised {error}')
+        raise ProcessPicklingError(f"{error} is not pickleable")
 
 
-def is_picklable(obj):
+def is_pickleable(obj):
     try:
         pickle.loads(pickle.dumps(obj))
         return True
