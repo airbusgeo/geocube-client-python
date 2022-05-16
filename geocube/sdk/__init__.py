@@ -2,7 +2,7 @@ import os
 
 from geocube.sdk.connection_params import ConnectionParams
 from geocube.sdk.collection import Collection
-from geocube.sdk.multiprocess import is_picklable, multiprocess, MessageType, Status, ResultsEncoder, \
+from geocube.sdk.multiprocess import is_pickleable, multiprocess, MessageType, Status, ResultsEncoder, \
     ProcessAbnormalTermination, ProcessTimeoutError, ProcessPicklingError, message_queue_t
 from geocube.sdk.catalogue import image_callback_t, image_do_nothing, cube_callback_t, cube_do_nothing,\
     get_cube, get_cubes, is_geocube_error
