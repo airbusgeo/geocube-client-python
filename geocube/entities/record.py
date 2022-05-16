@@ -158,6 +158,9 @@ class Record:
         -------
         A list of grouped records (which is actually a list of records)
         """
+        if len(records) == 0:
+            return records
+
         if isinstance(records[0], list):
             records = [r for rs in records for r in rs]
             return Record.group_by(records, func_key)
