@@ -106,7 +106,7 @@ class Client:
         palette: for rendering in png (TileServer). Must be created using create_palette.
         resampling_alg: when reprojection is needed (see entities.Resampling)
         exist_ok: (optional, see warning): if already exists, do not raise an error. !!! WARNING: it does not mean that
-        the variable in the geocube is the same !!!
+        the variable already stored in the geocube is exactly the same !!!
 
         Returns
         -------
@@ -272,7 +272,7 @@ class Client:
             req.to_time.FromDatetime(to_time)
 
         records = [entities.Record.from_pb(resp.record) for resp in self.stub.ListRecords(req)]
-        if len(records) == limit:
+        if limit != 0 and len(records) == limit:
             warnings.warn("Maximum number of records reached. Call list_records(..., page=) or "
                           "list_records(..., limit=) to get more records.")
 
@@ -590,9 +590,16 @@ class Client:
         f.close()
 
     @utils.catch_rpc_error
-    def create_layout(self, layout: entities.Layout):
-        """ Create a layout in the Geocube"""
-        self.stub.CreateLayout(layouts_pb2.CreateLayoutRequest(layout=layout.to_pb()))
+    def create_layout(self, layout: entities.Layout, exist_ok=False):
+        """ Create a layout in the Geocube
+        exist_ok: (optional, see warning): if already exists, do not raise an error. !!! WARNING: it does not mean that
+        the layout already stored in the geocube is exactly the same !!!
+        """
+        try:
+            self.stub.CreateLayout(layouts_pb2.CreateLayoutRequest(layout=layout.to_pb()))
+        except utils.GeocubeError as e:
+            if not e.is_already_exists() or not exist_ok:
+                raise
 
     @utils.catch_rpc_error
     def list_layouts(self, name_like: str = "") -> List[entities.Layout]:
