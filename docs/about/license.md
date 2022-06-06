@@ -1,0 +1,1 @@
+Geocube-Client-Python is licensed under the Apache License, Version 2.0. See [LICENSE](https://github.com/airbusgeo/geocube-client-python/blob/main/LICENSE) for the full license text.
