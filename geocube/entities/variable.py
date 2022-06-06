@@ -127,13 +127,12 @@ class _ProxyVariable:
         """
         Some fields of the variable can be updated. All are optional.
 
-        Parameters
-        ----------
-        name: new name
-        unit: new unit
-        description: new description
-        palette: new palette
-        resampling_alg: new resampling_alg
+        Args:
+            name: new name
+            unit: new unit
+            description: new description
+            palette: new palette
+            resampling_alg: new resampling_alg
         """
         req = variables_pb2.UpdateVariableRequest(
             id=self.variable_id,
@@ -236,16 +235,14 @@ class Variable(_ProxyVariable):
         return self.variable_name
 
     @utils.catch_rpc_error
-    def instance(self, name=None) -> VariableInstance:
+    def instance(self, name: Union[None, str] = None) -> VariableInstance:
         """ Load the given instance
 
-        Parameters
-        ----------
-        name: of the instance (or if None: the default instance if exists)
+        Args:
+            name: of the instance (or if None: the default instance if exists)
 
-        Returns
-        -------
-        Specialization of the variable
+        Returns:
+            Specialization of the variable
         """
         if name is None:
             if len(self.instances) != 1:
@@ -260,17 +257,15 @@ class Variable(_ProxyVariable):
         return VariableInstance(self, self.instances[name])
 
     @utils.catch_rpc_error
-    def instantiate(self, name, metadata: Dict[str, str]) -> VariableInstance:
+    def instantiate(self, name: str, metadata: Dict[str, str]) -> VariableInstance:
         """
         Instantiate the variable (create a specialization)
-        Parameters
-        ----------
-        name: of the instance
-        metadata: of the instance (e.g. processing parameters, version...) can be empty
+        Args:
+            name: of the instance
+            metadata: of the instance (e.g. processing parameters, version...) can be empty
 
-        Returns
-        -------
-        The specialization of this variable
+        Returns:
+            The specialization of this variable
         """
         if name in self.instances:
             if metadata is not None and self.instances[name].metadata != metadata:
@@ -299,6 +294,7 @@ class Variable(_ProxyVariable):
     def config_consolidation(self, dformat: entities.DataFormat, exponent=1., bands_interleave=False,
                              compression: entities.Compression = entities.Compression.LOSSLESS, overviews_min_size=-1,
                              resampling_alg: entities.Resampling = entities.Resampling.near):
+        """ See entities.ConsolidationParams """
         self.consolidation_params = entities.ConsolidationParams(
             dformat=entities.DataFormat.from_user(dformat), exponent=exponent, bands_interleave=bands_interleave,
             compression=compression, overviews_min_size=overviews_min_size, resampling_alg=resampling_alg)

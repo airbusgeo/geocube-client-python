@@ -65,10 +65,9 @@ class Job:
         """
         Retry a failed job
 
-        Parameters
-        ----------
-        force: TO BE USED CAUTIOUSLY: retry the current state of the job, whatever the state.
-        It can be unpredictable. Should only be used if the job is stuck in a pending state.
+        Args:
+            force: TO BE USED CAUTIOUSLY: retry the current state of the job, whatever the state.
+                It can be unpredictable. Should only be used if the job is stuck in a pending state.
 
         """
         self._stub.RetryJob(operations_pb2.RetryJobRequest(id=self.id, force_any_state=force))

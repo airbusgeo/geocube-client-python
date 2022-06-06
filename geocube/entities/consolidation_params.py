@@ -11,14 +11,16 @@ class ConsolidationParams:
     Parameters of consolidation that describe the format of the consolidated datasets.
     It is linked to a variable, because ConsolidationParams are supposed to be the same for all datasets of
     all instances of the variable.
-    - dformat:            dataformat of the consolidated data. See exponent for the mapping formula.
-    - exponent:           1: linear scaling
-        otherwise: (RealMax - RealMin) * pow( (Value - Min) / (Max - Min), Exponent) + RealMin
-    - compression:        Define how the data is compressed at block level (see entities.Compression enum)
-    - overviews_min_size: Maximum width or height of the smallest overview level. 0: No overview, -1: default=256.
-    - resampling_alg:     Define how to resample the data during the consolidation (if a reprojection is needed or if
-        the overviews are created)
-    - bands_interleave:   If the variable is multibands, define whether the bands are interleaved
+
+    Attributes:
+        dformat:            dataformat of the consolidated data. See exponent for the mapping formula.
+        exponent:           1: linear scaling
+            otherwise: (RealMax - RealMin) * pow( (Value - Min) / (Max - Min), Exponent) + RealMin
+        compression:        Define how the data is compressed at block level (see entities.Compression enum)
+        overviews_min_size: Maximum width or height of the smallest overview level. 0: No overview, -1: default=256.
+        resampling_alg:     Define how to resample the data during the consolidation (if a reprojection is needed or if
+            the overviews are created)
+        bands_interleave:   If the variable is multibands, define whether the bands are interleaved
     """
     dformat:            entities.DataFormat
     exponent:           float

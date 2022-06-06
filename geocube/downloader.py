@@ -18,12 +18,11 @@ class Downloader:
         """
         Initialise the connexion to the Geocube Downloader
 
-        Parameters
-        ----------
-        uri: of the Geocube Downloader
-        secure: True to use a TLS Connexion
-        api_key: (optional) API Key if Geocube Server is secured using a bearer authentication
-        verbose: display the version of the Geocube Server
+        Args:
+            uri: of the Geocube Downloader
+            secure: True to use a TLS Connexion
+            api_key: (optional) API Key if Geocube Server is secured using a bearer authentication
+            verbose: display the version of the Geocube Server
         """
         if secure:
             credentials = grpc.ssl_channel_credentials()
@@ -39,12 +38,7 @@ class Downloader:
 
     @utils.catch_rpc_error
     def version(self) -> str:
-        """
-
-        Returns
-        -------
-        The version of the Geocube Server
-        """
+        """ Returns the version of the Geocube Server """
         return self.stub.Version(version_pb2.GetVersionRequest()).Version
 
     @utils.catch_rpc_error
@@ -53,16 +47,14 @@ class Downloader:
         """
         Get a cube given a CubeParameters
 
-        Parameters
-        ----------
-        metadata: CubeMetadata (see entities.CubeMetadata and entities.CubeIterator)
-        verbose: add information during the transfer
+        Args:
+            metadata: CubeMetadata (see entities.CubeMetadata and entities.CubeIterator)
+            verbose: add information during the transfer
 
-        Returns
-        -------
-        list of images (np.ndarray) and the list of corresponding records
-        (several records can be returned for each image when they are grouped together, by date or something else.
-        See entities.Record.group_by)
+        Returns:
+            list of images (np.ndarray) and the list of corresponding records
+                (several records can be returned for each image when they are grouped together,
+                by date or something else. See entities.Record.group_by)
         """
         cube = self._get_cube_it(metadata)
         images, grouped_records = [], []
@@ -90,16 +82,14 @@ class Downloader:
         """
         Returns a cube iterator over the requested images
 
-        Parameters
-        ----------
-        metadata: CubeMetadata (see entities.CubeMetadata and entities.CubeIterator)
-        file_format: (optional) currently supported geocube.FileFormatRaw & geocube.FileFormatGTiff
-        file_pattern: (optional) iif file_format != Raw, pattern of the file name.
-        {#} will be replaced by the number of image, {date} and {id} by the value of the record
+        Args:
+            metadata: CubeMetadata (see entities.CubeMetadata and entities.CubeIterator)
+            file_format: (optional) currently supported geocube.FileFormatRaw & geocube.FileFormatGTiff
+            file_pattern: (optional) iif file_format != Raw, pattern of the file name.
+                {#} will be replaced by the number of image, {date} and {id} by the value of the record
 
-        Returns
-        -------
-        an iterator yielding an image, its associated records, an error (or None) and the size of the image
+        Returns:
+            an iterator yielding an image, its associated records, an error (or None) and the size of the image
         """
         return self._get_cube_it(metadata, file_format, file_pattern)
 

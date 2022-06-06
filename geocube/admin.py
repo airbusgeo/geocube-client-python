@@ -11,12 +11,11 @@ class Admin(Consolidater):
         """
         Initialise the connexion to the Geocube Server
 
-        Parameters
-        ----------
-        uri: of the Geocube Server
-        secure: True to use a TLS Connexion
-        api_key: (optional) API Key if Geocube Server is secured using a bearer authentication
-        verbose: display the version of the Geocube Server
+        Args:
+            uri: of the Geocube Server
+            secure: True to use a TLS Connexion
+            api_key: (optional) API Key if Geocube Server is secured using a bearer authentication
+            verbose: display the version of the Geocube Server
         """
         super().__init__(uri, secure, api_key, verbose)
         self.admin_stub = admin_pb2_grpc.AdminStub(self._channel)
@@ -29,15 +28,14 @@ class Admin(Consolidater):
         Remove all the entities that are not linked to any dataset.
         Should be used with caution when no ingestion or indexation task is in progress.
 
-        Parameters
-        ----------
-        aois: remove the pending AOI
-        records: remove the pending Records
-        variables: remove the pending Variables
-        instances: remove the pending Instances
-        containers: remove the pending Containers
-        consolidation_params: remove the pending ConsolidationParams
-        simulate: if True no operation is performed. Only the number of entities that would have been deleted
+        Args:
+            aois: remove the pending AOI
+            records: remove the pending Records
+            variables: remove the pending Variables
+            instances: remove the pending Instances
+            containers: remove the pending Containers
+            consolidation_params: remove the pending ConsolidationParams
+            simulate: if True no operation is performed. Only the number of entities that would have been deleted
         """
         res = self.admin_stub.TidyDB(admin_pb2.TidyDBRequest(
             PendingAOIs=aois, PendingRecords=records, PendingVariables=variables, PendingInstances=instances,
@@ -61,15 +59,14 @@ class Admin(Consolidater):
         """
         Admin function to update some sensitive information of datasets referenced by an instance and a list of records
 
-        Parameters
-        ----------
-        instance: select the datasets that are referenced by this instance
-        records:select the datasets that are referenced by these records
-        dformat: new dataformat
-        min_out: new min_out
-        max_out: new max_out
-        exponent: new exponent
-        simulate: if True, no operation is performed. Only display the datasets that would have been updated.
+        Args:
+            instance: select the datasets that are referenced by this instance
+            records: select the datasets that are referenced by these records
+            dformat: new dataformat
+            min_out: new min_out
+            max_out: new max_out
+            exponent: new exponent
+            simulate: if True, no operation is performed. Only display the datasets that would have been updated.
         """
         res = self.admin_stub.UpdateDatasets(admin_pb2.UpdateDatasetsRequest(
             simulate=simulate, instance_id=entities.get_id(instance),
@@ -93,14 +90,13 @@ class Admin(Consolidater):
         This function is provided without any guaranties of service continuity.
         In the future, a secured function will be provided to safely delete datasets.
 
-        Parameters
-        ----------
-        instances: select all the datasets referenced by these instances.
-        records: select all the datasets referenced by these records.
-        file_patterns: select all the datasets with on of the given file patterns
-            (support * and ? for all or any characters and trailing (?i) for case-insensitiveness)
-        execution_level: see entities.ExecutionLevel.
-        job_name: [optional] gives a name to the job, otherwise, a name will be automatically generated
+        Args:
+            instances: select all the datasets referenced by these instances.
+            records: select all the datasets referenced by these records.
+            file_patterns: select all the datasets with on of the given file patterns
+                (support * and ? for all or any characters and trailing (?i) for case-insensitiveness)
+            execution_level: see entities.ExecutionLevel.
+            job_name: [optional] gives a name to the job, otherwise, a name will be automatically generated
         """
         if len(records) == 0 and len(instances) == 0:
             warnings.warn("this job is about to delete the whole database")

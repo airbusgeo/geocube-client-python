@@ -14,13 +14,12 @@ class CubeIterator:
     """
     Iterator on a cube of datasets from the Geocube Server
 
-    Yields
-    -------
-    - ndarray, ArrayLike or filename depending on options.
-    @warning CubeIterator might not own the returned ndarray.
-    To update the returned image, check ndarray.flags.writeable and use ndarray.copy() if necessary.
-    - metadata, including a list of records composing the image
-    - error or None
+    Yields:
+        - ndarray, ArrayLike or filename depending on options.
+        @warning CubeIterator might not own the returned ndarray.
+        To update the returned image, check ndarray.flags.writeable and use ndarray.copy() if necessary.
+        - metadata, including a list of records composing the image
+        - error or None
     """
     @dataclass
     class ArrayLike:

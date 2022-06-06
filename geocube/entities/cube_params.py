@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
 from typing import List, Tuple, Dict, Union
 import geopandas as gpd
@@ -24,23 +26,21 @@ class CubeParams:
     def from_tags(cls, crs: str, transform: Union[affine.Affine, Tuple6Float],
                   shape: Tuple[int, int],
                   instance: Union[str, entities.VariableInstance, None],
-                  tags: Dict[str, str], from_time: datetime = None, to_time: datetime = None):
+                  tags: Dict[str, str], from_time: datetime = None, to_time: datetime = None) -> entities.CubeParams:
         """
         Create a set of parameters to get a cube from record tags
 
-        Parameters
-        ----------
-        crs: of the output images (images will be reprojected on the fly if necessary)
-        transform: of the requested cube (images will be rescaled on the fly if necessary)
-        shape: of the requested cube (@warning shape is the transpose of numpy shape)
-        instance: of the requested data
-        tags: of the records to be requested
-        from_time: (optional) to filter the records
-        to_time: (optional) to filter the records
+        Args:
+            crs: of the output images (images will be reprojected on the fly if necessary)
+            transform: of the requested cube (images will be rescaled on the fly if necessary)
+            shape: of the requested cube (@warning shape is the transpose of numpy shape)
+            instance: of the requested data
+            tags: of the records to be requested
+            from_time: (optional) to filter the records
+            to_time: (optional) to filter the records
 
-        Returns
-        -------
-        A CubeParams to be passed as a parameter of a get_cube request
+        Returns:
+            A CubeParams to be passed as a parameter of a get_cube request
         """
         return cls.from_tile(entities.Tile.from_geotransform(transform, crs, shape), instance,
                              tags=tags, from_time=from_time, to_time=to_time)
@@ -49,21 +49,19 @@ class CubeParams:
     def from_records(cls, records: List[entities.RecordIdentifiers],
                      crs: str, transform: Union[affine.Affine, Tuple6Float],
                      shape: Tuple[int, int],
-                     instance: Union[str, entities.VariableInstance, None]):
+                     instance: Union[str, entities.VariableInstance, None]) -> entities.CubeParams:
         """
         Create a set of parameters to get a cube from a list of records
 
-        Parameters
-        ----------
-        crs: of the output images (images will be reprojected on the fly if necessary)
-        transform: of the requested cube (images will be rescaled on the fly if necessary)
-        shape: of the requested cube (@warning shape is the transpose of numpy shape)
-        instance: of the requested data
-        records: to be retrieved
+        Args:
+            crs: of the output images (images will be reprojected on the fly if necessary)
+            transform: of the requested cube (images will be rescaled on the fly if necessary)
+            shape: of the requested cube (@warning shape is the transpose of numpy shape)
+            instance: of the requested data
+            records: to be retrieved
 
-        Returns
-        -------
-        A CubeParams to be passed as a parameter of a get_cube request
+        Returns:
+            A CubeParams to be passed as a parameter of a get_cube request
 
         """
         return cls.from_tile(entities.Tile.from_geotransform(transform, crs, shape), instance, records=records)
@@ -72,21 +70,20 @@ class CubeParams:
     def from_tile(cls, tile: entities.Tile,
                   instance: Union[str, entities.VariableInstance, None],
                   records: List[entities.RecordIdentifiers] = None,
-                  tags: Dict[str, str] = None, from_time: datetime = None, to_time: datetime = None):
+                  tags: Dict[str, str] = None, from_time: datetime = None, to_time: datetime = None) \
+            -> entities.CubeParams:
         """
 
-        Parameters
-        ----------
-        tile: defining the Cube to be retrieved (images will be reprojected on the fly if necessary)
-        instance: of the requested data
-        records: (optional) to be retrieved
-        tags: of the records to be requested
-        from_time: (optional) to filter the records
-        to_time: (optional) to filter the records
+        Args:
+            tile: defining the Cube to be retrieved (images will be reprojected on the fly if necessary)
+            instance: of the requested data
+            records: (optional) to be retrieved
+            tags: of the records to be requested
+            from_time: (optional) to filter the records
+            to_time: (optional) to filter the records
 
-        Returns
-        -------
-        A CubeParams to be passed as a parameter of a get_cube request
+        Returns:
+            A CubeParams to be passed as a parameter of a get_cube request
 
         """
         return cls(tile=tile,

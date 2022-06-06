@@ -23,12 +23,11 @@ class Client:
         """
         Initialise the connexion to the Geocube Server
 
-        Parameters
-        ----------
-        uri: of the Geocube Server
-        secure: True to use a TLS Connexion
-        api_key: (optional) API Key if Geocube Server is secured using a bearer authentication
-        verbose: set the default verbose mode
+        Args:
+            uri: of the Geocube Server
+            secure: True to use a TLS Connexion
+            api_key: (optional) API Key if Geocube Server is secured using a bearer authentication
+            verbose: set the default verbose mode
         """
         if secure:
             credentials = grpc.ssl_channel_credentials()
@@ -49,12 +48,7 @@ class Client:
 
     @utils.catch_rpc_error
     def version(self) -> str:
-        """
-
-        Returns
-        -------
-        The version of the Geocube Server
-        """
+        """ Returns the version of the Geocube Server """
         return self.stub.Version(version_pb2.GetVersionRequest()).Version
 
     @utils.catch_rpc_error
@@ -63,15 +57,13 @@ class Client:
         """
         Fetch a variable given an id, a name or an instance id (mutually exclusive)
 
-        Parameters
-        ----------
-        name:
-        id_: internal id of the variable (uuid4)
-        instance_id: internal id of one instance of the variable (uuid4)
+        Args:
+            name:
+            id_: internal id of the variable (uuid4)
+            instance_id: internal id of one instance of the variable (uuid4)
 
-        Returns
-        -------
-        either a Variable (first two cases) or a VariableInstance (specialization of the variable)
+        Returns:
+            either a Variable (first two cases) or a VariableInstance (specialization of the variable)
         """
         if id_:
             req = variables_pb2.GetVariableRequest(id=id_)
@@ -96,21 +88,19 @@ class Client:
             -> entities.Variable:
         """ Create a single Variable
 
-        Parameters
-        ----------
-        name: Name of the variable
-        dformat: data format of the variable (min and max are the theoretical extrema)
-        bands: Name of the bands
-        unit: of the data (for user information only)
-        description: of the data (for user information only)
-        palette: for rendering in png (TileServer). Must be created using create_palette.
-        resampling_alg: when reprojection is needed (see entities.Resampling)
-        exist_ok: (optional, see warning): if already exists, do not raise an error. !!! WARNING: it does not mean that
-        the variable already stored in the geocube is exactly the same !!!
+        Args:
+            name: Name of the variable
+            dformat: data format of the variable (min and max are the theoretical extrema)
+            bands: Name of the bands
+            unit: of the data (for user information only)
+            description: of the data (for user information only)
+            palette: for rendering in png (TileServer). Must be created using create_palette.
+            resampling_alg: when reprojection is needed (see entities.Resampling)
+            exist_ok: (optional, see warning): if already exists, do not raise an error. !!! WARNING: it does not mean
+                that the variable already stored in the geocube is exactly the same !!!
 
-        Returns
-        -------
-        the variable
+        Returns:
+            the variable
         """
         req = variables_pb2.CreateVariableRequest(variable=variables_pb2.Variable(
             name=name,
@@ -135,11 +125,10 @@ class Client:
         Create a new palette from [0, 1] to RGBA, providing a list of index from 0 to 1.
         The intermediate values are linearly interpolated.
 
-        Parameters
-        ----------
-        name: Name of the palette
-        colors: a list of tuple[index, R, G, B, A] mapping index to the corresponding RGBA value
-        replace: if a palette already exists with the same name, replace it else raise an error.
+        Args:
+            name: Name of the palette
+            colors: a list of tuple[index, R, G, B, A] mapping index to the corresponding RGBA value
+            replace: if a palette already exists with the same name, replace it else raise an error.
         """
         colors = [variables_pb2.colorPoint(value=v[0], r=v[1], g=v[2], b=v[3], a=v[4]) for v in colors]
         req = variables_pb2.CreatePaletteRequest(palette=variables_pb2.Palette(name=name, colors=colors),
@@ -151,16 +140,14 @@ class Client:
         """
         List all the variables given a pattern
 
-        Parameters
-        ----------
-        name: pattern of the name. * and ? are supported to match all or any character.
-        (?i) can be added at the end to be insensitive to case
-        limit: limit the number of variables returned
-        page: number of the page (starting at 0).
+        Args:
+            name: pattern of the name. * and ? are supported to match all or any character.
+                (?i) can be added at the end to be insensitive to case
+            limit: limit the number of variables returned
+            page: number of the page (starting at 0).
 
-        Returns
-        -------
-        a list of variable
+        Returns:
+            a list of variable
         """
         req = variables_pb2.ListVariablesRequest(name=name, limit=limit, page=page)
         return [entities.Variable.from_pb(self.stub, resp.variable) for resp in self.stub.ListVariables(req)]
@@ -171,14 +158,12 @@ class Client:
         Create a new AOI. Raise an error if an AOI with the same coordinates already exists.
         The id of the AOI can be retrieved from the details of the error.
 
-        Parameters
-        ----------
-        aoi: in geographic coordinates
-        exist_ok: (optional): if already exists, do not raise an error and return the aoi_id
+        Args:
+            aoi: in geographic coordinates
+            exist_ok: (optional): if already exists, do not raise an error and return the aoi_id
 
-        Returns
-        -------
-        the id of the AOI
+        Returns:
+            the id of the AOI
         """
         try:
             req = records_pb2.CreateAOIRequest(aoi=entities.aoi_to_pb(aoi))
@@ -195,18 +180,16 @@ class Client:
         Create a new record. A record is uniquely identified with the tuple (name, tags, date)
         Raise an error if a record with the same Name, Tags and Date already exists.
 
-        Parameters
-        ----------
-        aoi_id: uuid4 of the AOI.
-        name: of the records.
-        tags: user-defined tags associated to the record.
-        date: date of the data referenced by the record.
-        exist_ok: (optional, see warning): if already exists, do not raise an error !!! WARNING: it does not mean that
-        the record in the geocube is the same: its aoi may be different !!!
+        Args:
+            aoi_id: uuid4 of the AOI.
+            name: of the records.
+            tags: user-defined tags associated to the record.
+            date: date of the data referenced by the record.
+            exist_ok: (optional, see warning): if already exists, do not raise an error !!! WARNING: it does not mean
+                that the record in the geocube is the same: its aoi may be different !!!
 
-        Returns
-        -------
-        the ID of the record
+        Returns:
+            the ID of the record
         """
         try:
             return self.create_records([aoi_id], [name], [tags], [date])[0]
@@ -245,22 +228,20 @@ class Client:
         """
         List records given filters
 
-        Parameters
-        ----------
-        name: pattern of the name. * and ? are supported to match all or any character.
-        (?i) can be added at the end to be insensitive to case
-        tags: list of mandatory tags. Support the same pattern as name.
-        from_time: filter by date
-        to_time: filter by date
-        aoi: records that intersect the AOI in geographic coordinates
-        limit: the number of records returned (0 to return all records)
-        page: start at 0
-        with_aoi: also returns the AOI of the record. Otherwise, only the ID of the aoi is returned.
-        load_aoi(record) can be called to retrieve the AOI later.
+        Args:
+            name: pattern of the name. * and ? are supported to match all or any character.
+                (?i) can be added at the end to be insensitive to case
+            tags: list of mandatory tags. Support the same pattern as name.
+            from_time: filter by date
+            to_time: filter by date
+            aoi: records that intersect the AOI in geographic coordinates
+            limit: the number of records returned (0 to return all records)
+            page: start at 0
+            with_aoi: also returns the AOI of the record. Otherwise, only the ID of the aoi is returned.
+                load_aoi(record) can be called to retrieve the AOI later.
 
-        Returns
-        -------
-        a list of records
+        Returns:
+            a list of records
         """
         req = records_pb2.ListRecordsRequest(name=name, tags=tags,
                                              aoi=entities.aoi_to_pb(aoi),
@@ -283,13 +264,11 @@ class Client:
         """
         Load the geometry of the AOI of the given record
 
-        Parameters
-        ----------
-        aoi_id: uuid of the AOI or the record. If the record is provided, its geometry will be updated
+        Args:
+            aoi_id: uuid of the AOI or the record. If the record is provided, its geometry will be updated
 
-        Returns
-        -------
-        the geometry of the AOI
+        Returns:
+            the geometry of the AOI
         """
         record = None
         if isinstance(aoi_id, entities.Record):
@@ -305,14 +284,12 @@ class Client:
     def add_records_tags(self, records: List[Union[str, entities.Record]], tags: Dict[str, str]) -> int:
         """ Add or update tags to a list of records
 
-        Parameters
-        ----------
-        records: List of records to be updated
-        tags: List of new tags or tags to be updated
+        Args:
+            records: List of records to be updated
+            tags: List of new tags or tags to be updated
 
-        Returns
-        -------
-        the number of updated records
+        Returns:
+            the number of updated records
         """
         req = records_pb2.AddRecordsTagsRequest(ids=entities.get_ids(records), tags=tags)
         return self.stub.AddRecordsTags(req).nb
@@ -321,14 +298,12 @@ class Client:
     def remove_records_tags(self, records: List[Union[str, entities.Record]], tag_keys: List[str]) -> int:
         """ Remove tags keys from a list of records
 
-        Parameters
-        ----------
-        records: List of records to be updated
-        tag_keys: List of keys to be deleted
+        Args:
+            records: List of records to be updated
+            tag_keys: List of keys to be deleted
 
-        Returns
-        -------
-        the number of updated records
+        Returns:
+            the number of updated records
         """
         req = records_pb2.RemoveRecordsTagsRequest(ids=entities.get_ids(records), tagsKey=tag_keys)
         return self.stub.RemoveRecordsTags(req).nb
@@ -338,9 +313,8 @@ class Client:
         """
         Delete records iif no dataset are indexed to them.
 
-        Parameters
-        ----------
-        records: List of records to be deleted
+        Args:
+            records: List of records to be deleted
         """
         req = records_pb2.DeleteRecordsRequest(ids=entities.get_ids(records))
         self.stub.DeleteRecords(req)
@@ -350,9 +324,8 @@ class Client:
         """
         Index a new container.
 
-        Parameters
-        ----------
-        containers: List of container to index.
+        Args:
+            containers: List of container to index.
         """
         pb_containers = []
         for container in containers:
@@ -434,8 +407,8 @@ class Client:
 
         Returns:
             list of images (np.ndarray) and the list of corresponding records
-                (several records can be returned for each image when they are grouped together, by date or something else.
-                See entities.Record.group_by)
+                (several records can be returned for each image when they are grouped together,
+                by date or something else. See entities.Record.group_by)
         """
         cube = self._get_cube_it(params, headers_only=headers_only, compression=compression)
         images, grouped_records = [], []
@@ -464,26 +437,20 @@ class Client:
                     file_format=FileFormatRaw, file_pattern: str = None) -> entities.CubeIterator:
         """ Returns a cube iterator over the requested images
 
-        Parameters
-        ----------
-        params CubeParams (see entities.CubeParams) :
+        Args:
+            params: CubeParams (see entities.CubeParams)
 
-        `headers_only` returns only the header
-            returns only the header of the dataset (use this option to control the output of get_cube)
-        compression :
-            define a level of compression to speed up the transfer
-            (0: no compression, 1 fastest to 9 best, -2: huffman-only)
-            The data is compressed by the server and decompressed by the Client.
-            Compression=0 or -2 is advised if the bandwidth is not limited
-        file_format :
-            (optional) currently supported geocube.FileFormatRaw & geocube.FileFormatGTiff
-        file_pattern :
-            (optional) iif file_format != Raw, pattern of the file name.
-            {#} will be replaced by the number of image, {date} and {id} by the value of the record
+            headers_only : returns only the header of the dataset (use this option to control the output of get_cube)
+            compression : define a level of compression to speed up the transfer
+                (0: no compression, 1 fastest to 9 best, -2: huffman-only)
+                The data is compressed by the server and decompressed by the Client.
+                Compression=0 or -2 is advised if the bandwidth is not limited
+            file_format : (optional) currently supported geocube.FileFormatRaw & geocube.FileFormatGTiff
+            file_pattern : (optional) iif file_format != Raw, pattern of the file name.
+                {#} will be replaced by the number of image, {date} and {id} by the value of the record
 
-        Returns
-        -------
-        an iterator yielding an image, its associated records, an error (or None) and the size of the image
+        Returns:
+            an iterator yielding an image, its associated records, an error (or None) and the size of the image
         >>> client = Client('127.0.0.1:8080', False)
         >>> cube_params = entities.CubeParams.from_records("+proj=utm +zone=31",
         ...     entities.geo_transform(366162, 4833123, 30), (512, 512),
@@ -540,18 +507,16 @@ class Client:
         """
         Tile an AOI
 
-        Parameters
-        ----------
-        aoi: AOI to be tiled in **geographic coordinates**
-        crs: CRS of the tile (not the AOI)
-        resolution: resolution of the tile
-        shape: shape of each tile
-        layout_name: use a defined layout.
-        layout: use a customer defined layout
+        Args:
+            aoi: AOI to be tiled in **geographic coordinates**
+            crs: CRS of the tile (not the AOI)
+            resolution: resolution of the tile
+            shape: shape of each tile
+            layout_name: use a defined layout.
+            layout: use a customer defined layout
 
-        Returns
-        -------
-        a list of Tiles covering the AOI in the given CRS at the given resolution
+        Returns:
+            a list of Tiles covering the AOI in the given CRS at the given resolution
         """
         aoi = entities.aoi_to_pb(aoi)
         if layout_name is not None:
@@ -565,18 +530,17 @@ class Client:
 
     @utils.catch_rpc_error
     def get_xyz_tile(self, instance: Union[str, entities.VariableInstance],
-                     records: List[Union[str, entities.Record]], x, y, z: int, file: str):
+                     records: List[Union[str, entities.Record]], x: int, y: int, z: int, file: str):
         """
         Create a PNG file covering the (X,Y,Z) web-mercator tile, using the palette of the variable.
 
-        Parameters
-        ----------
-        instance: instance of the variable
-        records: list of records
-        x: coordinate of the web-mercator XYZ tile
-        y: coordinate of the web-mercator XYZ tile
-        z: coordinate of the web-mercator XYZ tile
-        file: output PNG file
+        Args:
+            instance: instance of the variable
+            records: list of records
+            x: coordinate of the web-mercator XYZ tile
+            y: coordinate of the web-mercator XYZ tile
+            z: coordinate of the web-mercator XYZ tile
+            file: output PNG file
         """
         req = catalog_pb2.GetTileRequest(
             records=records_pb2.RecordIdList(ids=entities.get_ids(records)),
