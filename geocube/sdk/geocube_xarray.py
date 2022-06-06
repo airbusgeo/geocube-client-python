@@ -22,22 +22,18 @@ def open_geocube(
 
     The `cube_params` object should be a valid Collection
 
-    Parameters
-    ----------
-    chunks
-    collection :
-    connection_params : connection parameters to a geocube
-    downloader_params : connection parameters to a downloader
-    block_size: internal block_size of the layout
+    Args:
+        chunks
+        collection :
+        connection_params : connection parameters to a geocube
+        downloader_params : connection parameters to a downloader
+        block_size: internal block_size of the layout
 
-    Returns
-    -------
-    dataset : Dataset
+    Returns:
         The newly created dataset.
 
-    References
-    ----------
-    http://github.com/airbusgeo/geocube
+    References:
+        http://github.com/airbusgeo/geocube
     """
 
     from xarray import open_dataset

@@ -50,14 +50,12 @@ class Collection:
         """
         Define a collection from a tile
 
-        Parameters
-        ----------
-        tile: defining the Cube to be retrieved (images will be reprojected on the fly if necessary)
-        kwargs: all other params to define the collection
+        Args:
+            tile: defining the Cube to be retrieved (images will be reprojected on the fly if necessary)
+            kwargs: all other params to define the collection
 
-        Returns
-        -------
-        A Collection defining images
+        Returns:
+            A Collection defining images
 
         """
         cp_kwargs = {k: v for k, v in kwargs.items() if k in entities.CubeParams.from_tile.__code__.co_varnames}

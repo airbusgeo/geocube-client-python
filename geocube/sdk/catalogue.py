@@ -82,12 +82,11 @@ def get_cube(connection_params: ConnectionParams, cube_params: entities.CubePara
     """
     A wrapper on client.get_cube, adding a call to 'image_callback' on each slice of the cube (cf client.get_cube)
     and an optional call to 'cube_callback' on the cube.
-    Parameters.
-    ----------
-    connection_params: to connect to the Geocube
-    image_callback: a function called for each slice of the cube (by default: do_nothing)
-    cube_callback: a function called for each cube (by default: do_nothing)
-    mp_log_queue: a callable to receive logs and progress updates
+    Args:
+        connection_params: to connect to the Geocube
+        image_callback: a function called for each slice of the cube (by default: do_nothing)
+        cube_callback: a function called for each cube (by default: do_nothing)
+        mp_log_queue: a callable to receive logs and progress updates
     """
     geo_params = {
         "crs": cube_params.crs,
@@ -114,13 +113,12 @@ def get_cubes(connection_params: ConnectionParams, cube_params: entities.CubePar
     """
     A loop over a call to client.get_cube for each variable, adding a call to 'image_callback' on each slice of the cube
     and a call to 'cube_callback' on each cube
-    Parameters.
-    ----------
-    connection_params: to connect to the Geocube
-    variables: list of variables (couples of (variable, instance)) to be retrieved
-    image_callback: a function called for each slice of the cube (by default: do_nothing)
-    cube_callback: a function called for each cube (by default: do_nothing)
-    mp_log_queue: a callable to receive logs and progress updates
+    Args:
+        connection_params: to connect to the Geocube
+        variables: list of variables (couples of (variable, instance)) to be retrieved
+        image_callback: a function called for each slice of the cube (by default: do_nothing)
+        cube_callback: a function called for each cube (by default: do_nothing)
+        mp_log_queue: a callable to receive logs and progress updates
     """
     client = connection_params.new_client(with_downloader=True)
 

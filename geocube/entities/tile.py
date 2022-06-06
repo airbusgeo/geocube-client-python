@@ -23,13 +23,11 @@ def geo_transform(offset_x: float, offset_y: float, scale: Union[float, Tuple[fl
 def crs_to_str(crs: Union[str, int]) -> str:
     """
     Return a string representation of a crs
-    Parameters
-    ----------
-    crs: an epsg number, a string or a class that support __str__() (e.g. pyproj.CRS)
+    Args:
+        crs: an epsg number, a string or a class that support __str__() (e.g. pyproj.CRS)
 
-    Returns
-    -------
-    a string representation of the crs
+    Returns:
+        a string representation of the crs
     """
     if isinstance(crs, int):
         return f"epsg:{crs}"
@@ -54,15 +52,13 @@ class Tile:
                           crs: Union[str, int], shape: Tuple[int, int]) -> Tile:
         """
         Create a tile from a geotransform, a crs and a shape
-        Parameters
-        ----------
-        transform: geotransform from pixel coordinates to CRS.
-        crs: Coordinate Reference System of the tile
-        shape: shape of the tile (in pixel) (@warning shape is the transpose of numpy shape)
+        Args:
+            transform: geotransform from pixel coordinates to CRS.
+            crs: Coordinate Reference System of the tile
+            shape: shape of the tile (in pixel) (@warning shape is the transpose of numpy shape)
 
-        Returns
-        -------
-        A new tile
+        Returns:
+            A new tile
         """
         return cls(crs_to_str(crs), Tile._parse_geotransform(transform), shape)
 
@@ -73,15 +69,13 @@ class Tile:
         Warning: Check the `result.shape` as the size might be huge !
         Warning: the aoi is converted to the crs, but it might be imprecise at the borders
 
-        Parameters
-        ----------
-        record
-        crs: Coordinate Reference System of the tile
-        resolution: resolution of the pixel in the CRS
+        Args:
+            record:
+            crs: Coordinate Reference System of the tile
+            resolution: resolution of the pixel in the CRS
 
-        Returns
-        -------
-        A new tile
+        Returns:
+            A new tile
         """
         return Tile.from_aoi(record.aoi, crs, resolution)
 
@@ -90,15 +84,13 @@ class Tile:
                   resolution: Union[float, Tuple[float, float]]) -> Tile:
         """
         Create a tile from a bbox, a crs and a resolution
-        Parameters
-        ----------
-        bbox (x1, y1, x2, y2) in crs coordinates
-        crs (Coordinate Reference System) of the tile
-        resolution of the pixel in the CRS
+        Args:
+            bbox : (x1, y1, x2, y2) in crs coordinates
+            crs : (Coordinate Reference System) of the tile
+            resolution : of the pixel in the CRS
 
-        Returns
-        -------
-        A new tile
+        Returns:
+            A new tile
         """
         rx, ry = resolution if isinstance(resolution, tuple) else (resolution, -resolution)
         x1, y1, x2, y2 = bbox
@@ -115,15 +107,13 @@ class Tile:
                  resolution: Union[float, Tuple[float, float]]) -> Tile:
         """
 
-        Parameters
-        ----------
-        aoi multipolygon in 4326 coordinates
-        crs (Coordinate Reference System) of the tile
-        resolution of the pixel in the CRS
+        Args:
+            aoi : multipolygon in 4326 coordinates
+            crs : (Coordinate Reference System) of the tile
+            resolution : of the pixel in the CRS
 
-        Returns
-        -------
-        A new tile
+        Returns:
+            A new tile
         """
         return Tile.from_bbox(gpd.GeoSeries(aoi, crs=4326).to_crs(crs).total_bounds, crs=crs, resolution=resolution)
 

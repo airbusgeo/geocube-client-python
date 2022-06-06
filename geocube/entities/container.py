@@ -17,14 +17,15 @@ class Dataset:
          . the mapping from each pixel to the data format of the variable (variable.dformat).
            This mapping is defined as [MinOut, MaxOut, Exponent].
 
-    record_id:   id of the record describing the data-take
-    instance_id: describing the data.
-        @warning Must be an instance of Variable if one of bands, dformat, min_out, max_out is None
-    bands:       subset of bands' container (start at 1) that maps to `variable.bands` (by default, all the bands)
-    dformat:     describing the internal format (see entities.DataFormat.from_user())
-    min_out:     (optional, default: instance.dformat.min_value, instance.dformat.dtype) maps dformat.min_value
-    max_out:     (optional, default: instance.dformat.max_value, instance.dformat.dtype) maps dformat.max_value
-    exponent:    (optional, default: 1) non-linear scaling between dformat.min_max_value to min_max_out.
+    Attributes:
+        record_id:   id of the record describing the data-take
+        instance_id: describing the data.
+            @warning Must be an instance of Variable if one of bands, dformat, min_out, max_out is None
+        bands:       subset of bands' container (start at 1) that maps to `variable.bands` (by default, all the bands)
+        dformat:     describing the internal format (see entities.DataFormat.from_user())
+        min_out:     (optional, default: instance.dformat.min_value, instance.dformat.dtype) maps dformat.min_value
+        max_out:     (optional, default: instance.dformat.max_value, instance.dformat.dtype) maps dformat.max_value
+        exponent:    (optional, default: 1) non-linear scaling between dformat.min_max_value to min_max_out.
     """
     record_id:   str
     instance_id: Union[str, entities.VariableInstance]
@@ -71,9 +72,10 @@ class Container:
     Usually a container is a file containing one dataset.
     But after a consolidation or if the container has several bands, it can contain several datasets.
 
-    uri:      URI of the file
-    managed:  True if the Geocube is responsible for the lifecycle of this file
-    datasets: List of datasets of the container
+    Attributes:
+        uri:      URI of the file
+        managed:  True if the Geocube is responsible for the lifecycle of this file
+        datasets: List of datasets of the container
     """
     uri: str
     managed: bool
