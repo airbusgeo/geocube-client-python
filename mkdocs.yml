@@ -1,0 +1,33 @@
+site_name: Geocube Client Python
+site_url: https://github.com/airbusgeo/geocube-client-python
+nav:
+    - 'Home': index.md
+    - 'Getting started': quickstart.md
+    - 'User guide':
+        - 'Tutorials': user-guide/tutorials.md
+        - 'Client':
+          - 'Basic access': user-guide/client/client-reference.md
+          - 'Consolidater': user-guide/client/consolidater-reference.md
+          - 'Admin': user-guide/client/admin-reference.md
+        - 'Entities':
+          - 'Variable': user-guide/entities/variable-reference.md
+          - 'Records': user-guide/entities/record-reference.md
+          - 'Dataset & Container': user-guide/entities/dataset-reference.md
+          - 'Layout & Grid': user-guide/entities/layout-reference.md
+          - 'Job': user-guide/entities/job-reference.md
+        - 'GetCube':
+          - 'Tile': user-guide/getcube/tile-reference.md
+          - 'CubeParams': user-guide/getcube/cubeparams-reference.md
+          - 'CubeMetadata': user-guide/getcube/cubemetadata-reference.md
+        - 'GRPC Interface': user-guide/grpc.md
+    - 'About':
+      - 'Getting help': about/help.md
+      - 'Contributing': about/CONTRIBUTING.md
+      - 'License': about/license.md
+      - 'Release Notes': about/release-notes.md
+theme:
+  name: "readthedocs"
+
+plugins:
+  - search
+  - mkdocstrings

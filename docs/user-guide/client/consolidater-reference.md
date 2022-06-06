@@ -1,0 +1,2 @@
+# Consolidater
+::: geocube.Consolidater

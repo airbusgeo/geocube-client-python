@@ -146,14 +146,14 @@ class Record:
         group_by groups the records of the list by the key provided by the func_key(Record)
         Returns a list of lists of records
 
-        Parameters
-        ----------
-        records: list of records to group. If records is a list of list, records is flattened.
-        func_key: function taking a record and returning a key (e.g. entities.Record.key_date, lambda r:r.datetime)
+        Args:
+            records : list of records to group.
+                If records is a list of list, records is flattened.
+            func_key : function taking a record and returning a key
+                (e.g. entities.Record.key_date, lambda r:r.datetime)
 
-        Returns
-        -------
-        A list of grouped records (which is actually a list of records)
+        Returns:
+            A list of grouped records (which is actually a list of records)
         """
         if len(records) == 0:
             return records

@@ -371,24 +371,21 @@ class Client:
 
     @utils.catch_rpc_error
     def index_dataset(self, uri: str, record: Union[str, entities.Record, Tuple[str, Dict[str, str], datetime]],
-                      instance: entities.VariableInstance, dformat, bands: List[int] = None,
+                      instance: entities.VariableInstance, dformat: entities.DataFormat, bands: List[int] = None,
                       min_out: float = None, max_out: float = None, exponent: float = 1):
         """
         Index the given "bands" of the dataset located at "uri", referenced by a record and an instance.
 
-        Parameters
-        ----------
-        uri: of the file to index
-        record: id of the record describing the data-take or a tuple (name, metadata, datetime)
-         to create the record on the fly
-        instance: describing the data
-        dformat: describing the internal format (see entities.DataFormat.from_user())
-        bands: subset of bands' file (start at 1) that maps to `variable.bands` (by default, all the bands)
-        min_out: (optional, default: instance.dformat.min_value, instance.dformat.dtype)
-         maps dformat.min_value
-        max_out: (optional, default: instance.dformat.max_value, instance.dformat.dtype)
-         maps dformat.max_value
-        exponent: (optional, default: 1) non-linear scaling between dformat.min_max_value to min_max_out.
+        Args:
+            uri: of the file to index
+            record: id of the record describing the data-take or a tuple (name, metadata, datetime)
+                to create the record on the fly
+            instance: describing the data
+            dformat: describing the internal format (see entities.DataFormat.from_user())
+            bands: subset of bands' file (start at 1) that maps to `variable.bands` (by default, all the bands)
+            min_out: (optional, default: instance.dformat.min_value, instance.dformat.dtype) maps dformat.min_value
+            max_out: (optional, default: instance.dformat.max_value, instance.dformat.dtype) maps dformat.max_value
+            exponent: (optional, default: 1) non-linear scaling between dformat.min_max_value to min_max_out.
         """
         ds_dtype = "u1"
         if isinstance(record, tuple) or dformat is None:
@@ -424,24 +421,21 @@ class Client:
     def get_cube(self, params: entities.CubeParams,
                  headers_only: bool = False, compression: int = 0, verbose: bool = None) \
             -> Tuple[List[np.array], List[entities.GroupedRecords]]:
-        """
-        Get a cube given a CubeParameters
+        """ Get a cube given a CubeParameters
 
-        Parameters
-        ----------
-        params: CubeParams (see entities.CubeParams)
-        headers_only: Only returns the header of each image (gives an overview of the query)
-        compression: define a level of compression to speed up the transfer.
-        (0: no compression, 1 fastest to 9 best, -2: huffman-only)
-        The data is compressed by the server and decompressed by the Client.
-        Compression=0 or -2 is advised if the bandwidth is not limited
-        verbose: display information during the transfer (if None, use the default verbose mode)
+        Args:
+            params: CubeParams (see entities.CubeParams)
+            headers_only: Only returns the header of each image (gives an overview of the query)
+            compression: define a level of compression to speed up the transfer.
+                (0: no compression, 1 fastest to 9 best, -2: huffman-only)
+                The data is compressed by the server and decompressed by the Client.
+                Compression=0 or -2 is advised if the bandwidth is not limited
+            verbose: display information during the transfer (if None, use the default verbose mode)
 
-        Returns
-        -------
-        list of images (np.ndarray) and the list of corresponding records
-        (several records can be returned for each image when they are grouped together, by date or something else.
-        See entities.Record.group_by)
+        Returns:
+            list of images (np.ndarray) and the list of corresponding records
+                (several records can be returned for each image when they are grouped together, by date or something else.
+                See entities.Record.group_by)
         """
         cube = self._get_cube_it(params, headers_only=headers_only, compression=compression)
         images, grouped_records = [], []
@@ -468,20 +462,24 @@ class Client:
     @utils.catch_rpc_error
     def get_cube_it(self, params: entities.CubeParams, headers_only: bool = False, compression: int = 0,
                     file_format=FileFormatRaw, file_pattern: str = None) -> entities.CubeIterator:
-        """
-        Returns a cube iterator over the requested images
+        """ Returns a cube iterator over the requested images
 
         Parameters
         ----------
-        params: CubeParams (see entities.CubeParams)
-        headers_only: returns only the header of the dataset (use this option to control the output of get_cube)
-        compression: define a level of compression to speed up the transfer
-        (0: no compression, 1 fastest to 9 best, -2: huffman-only)
-        The data is compressed by the server and decompressed by the Client.
-        Compression=0 or -2 is advised if the bandwidth is not limited
-        file_format: (optional) currently supported geocube.FileFormatRaw & geocube.FileFormatGTiff
-        file_pattern: (optional) iif file_format != Raw, pattern of the file name.
-        {#} will be replaced by the number of image, {date} and {id} by the value of the record
+        params CubeParams (see entities.CubeParams) :
+
+        `headers_only` returns only the header
+            returns only the header of the dataset (use this option to control the output of get_cube)
+        compression :
+            define a level of compression to speed up the transfer
+            (0: no compression, 1 fastest to 9 best, -2: huffman-only)
+            The data is compressed by the server and decompressed by the Client.
+            Compression=0 or -2 is advised if the bandwidth is not limited
+        file_format :
+            (optional) currently supported geocube.FileFormatRaw & geocube.FileFormatGTiff
+        file_pattern :
+            (optional) iif file_format != Raw, pattern of the file name.
+            {#} will be replaced by the number of image, {date} and {id} by the value of the record
 
         Returns
         -------

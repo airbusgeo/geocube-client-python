@@ -1,0 +1,2 @@
+# Record
+::: geocube.entities.Record
