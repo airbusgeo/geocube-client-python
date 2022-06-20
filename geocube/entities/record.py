@@ -15,7 +15,6 @@ from geocube.pb import records_pb2
 
 def aoi_from_pb(geom: records_pb2.AOI) -> geometry.MultiPolygon:
     polygons = []
-
     for p in geom.polygons:
         polygon = []
         for lr in p.linearrings:
@@ -23,9 +22,7 @@ def aoi_from_pb(geom: records_pb2.AOI) -> geometry.MultiPolygon:
             for pt in lr.points:
                 linearring.append([pt.lon, pt.lat])
             polygon.append(linearring)
-        if len(polygon) == 1:
-            polygon.append([])
-        polygons.append(polygon)
+        polygons.append(geometry.Polygon(polygon[0], polygon[1:]))
     return geometry.MultiPolygon(polygons)
 
 

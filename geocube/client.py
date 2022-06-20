@@ -181,7 +181,7 @@ class Client:
         the id of the AOI
         """
         try:
-            req = records_pb2.CreateAOIRequest(aoi=entities.record.aoi_to_pb(aoi))
+            req = records_pb2.CreateAOIRequest(aoi=entities.aoi_to_pb(aoi))
             return self.stub.CreateAOI(req).id
         except grpc.RpcError as e:
             e = utils.GeocubeError.from_rpc(e)
@@ -263,7 +263,7 @@ class Client:
         a list of records
         """
         req = records_pb2.ListRecordsRequest(name=name, tags=tags,
-                                             aoi=entities.record.aoi_to_pb(aoi),
+                                             aoi=entities.aoi_to_pb(aoi),
                                              limit=limit, page=page, with_aoi=with_aoi)
 
         if from_time is not None:
@@ -555,7 +555,7 @@ class Client:
         -------
         a list of Tiles covering the AOI in the given CRS at the given resolution
         """
-        aoi = entities.record.aoi_to_pb(aoi)
+        aoi = entities.aoi_to_pb(aoi)
         if layout_name is not None:
             req = layouts_pb2.TileAOIRequest(aoi=aoi, layout_name=layout_name)
         else:
