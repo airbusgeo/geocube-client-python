@@ -14,7 +14,7 @@ pandas
 tqdm
 pebble
 retrying
-xarray
+xarray>=0.20
 parse
 dask
 distributed
