@@ -15,6 +15,7 @@ class GeocubeStub(object):
 
     *
     API
+    Documentation may be detailed in Request/Response sections.
     """
 
     def __init__(self, channel):
@@ -23,20 +24,15 @@ class GeocubeStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.ListRecords = channel.unary_stream(
-                '/geocube.Geocube/ListRecords',
-                request_serializer=geocube_dot_pb_dot_records__pb2.ListRecordsRequest.SerializeToString,
-                response_deserializer=geocube_dot_pb_dot_records__pb2.ListRecordsResponseItem.FromString,
-                )
         self.CreateRecords = channel.unary_unary(
                 '/geocube.Geocube/CreateRecords',
                 request_serializer=geocube_dot_pb_dot_records__pb2.CreateRecordsRequest.SerializeToString,
                 response_deserializer=geocube_dot_pb_dot_records__pb2.CreateRecordsResponse.FromString,
                 )
-        self.DeleteRecords = channel.unary_unary(
-                '/geocube.Geocube/DeleteRecords',
-                request_serializer=geocube_dot_pb_dot_records__pb2.DeleteRecordsRequest.SerializeToString,
-                response_deserializer=geocube_dot_pb_dot_records__pb2.DeleteRecordsResponse.FromString,
+        self.ListRecords = channel.unary_stream(
+                '/geocube.Geocube/ListRecords',
+                request_serializer=geocube_dot_pb_dot_records__pb2.ListRecordsRequest.SerializeToString,
+                response_deserializer=geocube_dot_pb_dot_records__pb2.ListRecordsResponseItem.FromString,
                 )
         self.AddRecordsTags = channel.unary_unary(
                 '/geocube.Geocube/AddRecordsTags',
@@ -47,6 +43,11 @@ class GeocubeStub(object):
                 '/geocube.Geocube/RemoveRecordsTags',
                 request_serializer=geocube_dot_pb_dot_records__pb2.RemoveRecordsTagsRequest.SerializeToString,
                 response_deserializer=geocube_dot_pb_dot_records__pb2.RemoveRecordsTagsResponse.FromString,
+                )
+        self.DeleteRecords = channel.unary_unary(
+                '/geocube.Geocube/DeleteRecords',
+                request_serializer=geocube_dot_pb_dot_records__pb2.DeleteRecordsRequest.SerializeToString,
+                response_deserializer=geocube_dot_pb_dot_records__pb2.DeleteRecordsResponse.FromString,
                 )
         self.CreateAOI = channel.unary_unary(
                 '/geocube.Geocube/CreateAOI',
@@ -63,35 +64,35 @@ class GeocubeStub(object):
                 request_serializer=geocube_dot_pb_dot_variables__pb2.CreateVariableRequest.SerializeToString,
                 response_deserializer=geocube_dot_pb_dot_variables__pb2.CreateVariableResponse.FromString,
                 )
-        self.InstantiateVariable = channel.unary_unary(
-                '/geocube.Geocube/InstantiateVariable',
-                request_serializer=geocube_dot_pb_dot_variables__pb2.InstantiateVariableRequest.SerializeToString,
-                response_deserializer=geocube_dot_pb_dot_variables__pb2.InstantiateVariableResponse.FromString,
-                )
         self.GetVariable = channel.unary_unary(
                 '/geocube.Geocube/GetVariable',
                 request_serializer=geocube_dot_pb_dot_variables__pb2.GetVariableRequest.SerializeToString,
                 response_deserializer=geocube_dot_pb_dot_variables__pb2.GetVariableResponse.FromString,
-                )
-        self.ListVariables = channel.unary_stream(
-                '/geocube.Geocube/ListVariables',
-                request_serializer=geocube_dot_pb_dot_variables__pb2.ListVariablesRequest.SerializeToString,
-                response_deserializer=geocube_dot_pb_dot_variables__pb2.ListVariablesResponseItem.FromString,
                 )
         self.UpdateVariable = channel.unary_unary(
                 '/geocube.Geocube/UpdateVariable',
                 request_serializer=geocube_dot_pb_dot_variables__pb2.UpdateVariableRequest.SerializeToString,
                 response_deserializer=geocube_dot_pb_dot_variables__pb2.UpdateVariableResponse.FromString,
                 )
-        self.UpdateInstance = channel.unary_unary(
-                '/geocube.Geocube/UpdateInstance',
-                request_serializer=geocube_dot_pb_dot_variables__pb2.UpdateInstanceRequest.SerializeToString,
-                response_deserializer=geocube_dot_pb_dot_variables__pb2.UpdateInstanceResponse.FromString,
-                )
         self.DeleteVariable = channel.unary_unary(
                 '/geocube.Geocube/DeleteVariable',
                 request_serializer=geocube_dot_pb_dot_variables__pb2.DeleteVariableRequest.SerializeToString,
                 response_deserializer=geocube_dot_pb_dot_variables__pb2.DeleteVariableResponse.FromString,
+                )
+        self.ListVariables = channel.unary_stream(
+                '/geocube.Geocube/ListVariables',
+                request_serializer=geocube_dot_pb_dot_variables__pb2.ListVariablesRequest.SerializeToString,
+                response_deserializer=geocube_dot_pb_dot_variables__pb2.ListVariablesResponseItem.FromString,
+                )
+        self.InstantiateVariable = channel.unary_unary(
+                '/geocube.Geocube/InstantiateVariable',
+                request_serializer=geocube_dot_pb_dot_variables__pb2.InstantiateVariableRequest.SerializeToString,
+                response_deserializer=geocube_dot_pb_dot_variables__pb2.InstantiateVariableResponse.FromString,
+                )
+        self.UpdateInstance = channel.unary_unary(
+                '/geocube.Geocube/UpdateInstance',
+                request_serializer=geocube_dot_pb_dot_variables__pb2.UpdateInstanceRequest.SerializeToString,
+                response_deserializer=geocube_dot_pb_dot_variables__pb2.UpdateInstanceResponse.FromString,
                 )
         self.DeleteInstance = channel.unary_unary(
                 '/geocube.Geocube/DeleteInstance',
@@ -215,226 +216,257 @@ class GeocubeServicer(object):
 
     *
     API
+    Documentation may be detailed in Request/Response sections.
     """
 
-    def ListRecords(self, request, context):
-        """@exclude Records
+    def CreateRecords(self, request, context):
+        """Create one or a list of records
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def CreateRecords(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def DeleteRecords(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+    def ListRecords(self, request, context):
+        """List records given criterias
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def AddRecordsTags(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Update records, adding or updating tags
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def RemoveRecordsTags(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Update records, removing tags
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def DeleteRecords(self, request, context):
+        """Delete records iif no dataset has a reference on
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def CreateAOI(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Create an AOI if not exists or returns the aoi id of the aoi.
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def GetAOI(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Get an AOI from its ID
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def CreateVariable(self, request, context):
-        """@exclude Variables
+        """Create a variable
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetVariable(self, request, context):
+        """Get a variable given its id, name or one of its instance id
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def UpdateVariable(self, request, context):
+        """Update some fields of a variable
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def DeleteVariable(self, request, context):
+        """Delete a variable iif no dataset has a reference on
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ListVariables(self, request, context):
+        """List variables given a name pattern
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def InstantiateVariable(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def GetVariable(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def ListVariables(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def UpdateVariable(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Instantiate a variable 
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def UpdateInstance(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def DeleteVariable(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Update metadata of an instance
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def DeleteInstance(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Delete an instance iif no dataset has a reference on
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def CreatePalette(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Create or update a palette that can be used to create a display of a dataset
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def IndexDatasets(self, request, context):
-        """@exclude Operations
+        """Index new datasets in the Geocube
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def ConfigConsolidation(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Configurate a consolidation process
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def GetConsolidationParams(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Get the configuration of a consolidation
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def Consolidate(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Start a consolidation job
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def ListJobs(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """List the jobs given a name pattern
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def GetJob(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Get a job given its name
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def CleanJobs(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Delete jobs given their status
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def RetryJob(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Retry a job
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def CancelJob(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Cancel a job
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def ContinueJob(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Continue a job that is in waiting state
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def GetCube(self, request, context):
-        """@exclude Catalog
+        """Get a cube of data given a CubeParams
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def GetXYZTile(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Get a XYZTile (can be used with a TileServer, provided a GRPCGateway is up)
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def CreateLayout(self, request, context):
-        """@exclude Layout
+        """Create a layout to be used for tiling or consolidation
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def DeleteLayout(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Delete a layout given its name
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def ListLayouts(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """List layouts given a name pattern
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def FindContainerLayouts(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Find all the layouts known for a set of containers
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def TileAOI(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Tile an AOI given a layout
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def CreateGrid(self, request_iterator, context):
-        """@exclude Grid
+        """Create a grid that can be used to tile an AOI
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def DeleteGrid(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Delete a grid
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def ListGrids(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """List grids given a name pattern
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -449,20 +481,15 @@ class GeocubeServicer(object):
 
 def add_GeocubeServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'ListRecords': grpc.unary_stream_rpc_method_handler(
-                    servicer.ListRecords,
-                    request_deserializer=geocube_dot_pb_dot_records__pb2.ListRecordsRequest.FromString,
-                    response_serializer=geocube_dot_pb_dot_records__pb2.ListRecordsResponseItem.SerializeToString,
-            ),
             'CreateRecords': grpc.unary_unary_rpc_method_handler(
                     servicer.CreateRecords,
                     request_deserializer=geocube_dot_pb_dot_records__pb2.CreateRecordsRequest.FromString,
                     response_serializer=geocube_dot_pb_dot_records__pb2.CreateRecordsResponse.SerializeToString,
             ),
-            'DeleteRecords': grpc.unary_unary_rpc_method_handler(
-                    servicer.DeleteRecords,
-                    request_deserializer=geocube_dot_pb_dot_records__pb2.DeleteRecordsRequest.FromString,
-                    response_serializer=geocube_dot_pb_dot_records__pb2.DeleteRecordsResponse.SerializeToString,
+            'ListRecords': grpc.unary_stream_rpc_method_handler(
+                    servicer.ListRecords,
+                    request_deserializer=geocube_dot_pb_dot_records__pb2.ListRecordsRequest.FromString,
+                    response_serializer=geocube_dot_pb_dot_records__pb2.ListRecordsResponseItem.SerializeToString,
             ),
             'AddRecordsTags': grpc.unary_unary_rpc_method_handler(
                     servicer.AddRecordsTags,
@@ -473,6 +500,11 @@ def add_GeocubeServicer_to_server(servicer, server):
                     servicer.RemoveRecordsTags,
                     request_deserializer=geocube_dot_pb_dot_records__pb2.RemoveRecordsTagsRequest.FromString,
                     response_serializer=geocube_dot_pb_dot_records__pb2.RemoveRecordsTagsResponse.SerializeToString,
+            ),
+            'DeleteRecords': grpc.unary_unary_rpc_method_handler(
+                    servicer.DeleteRecords,
+                    request_deserializer=geocube_dot_pb_dot_records__pb2.DeleteRecordsRequest.FromString,
+                    response_serializer=geocube_dot_pb_dot_records__pb2.DeleteRecordsResponse.SerializeToString,
             ),
             'CreateAOI': grpc.unary_unary_rpc_method_handler(
                     servicer.CreateAOI,
@@ -489,35 +521,35 @@ def add_GeocubeServicer_to_server(servicer, server):
                     request_deserializer=geocube_dot_pb_dot_variables__pb2.CreateVariableRequest.FromString,
                     response_serializer=geocube_dot_pb_dot_variables__pb2.CreateVariableResponse.SerializeToString,
             ),
-            'InstantiateVariable': grpc.unary_unary_rpc_method_handler(
-                    servicer.InstantiateVariable,
-                    request_deserializer=geocube_dot_pb_dot_variables__pb2.InstantiateVariableRequest.FromString,
-                    response_serializer=geocube_dot_pb_dot_variables__pb2.InstantiateVariableResponse.SerializeToString,
-            ),
             'GetVariable': grpc.unary_unary_rpc_method_handler(
                     servicer.GetVariable,
                     request_deserializer=geocube_dot_pb_dot_variables__pb2.GetVariableRequest.FromString,
                     response_serializer=geocube_dot_pb_dot_variables__pb2.GetVariableResponse.SerializeToString,
-            ),
-            'ListVariables': grpc.unary_stream_rpc_method_handler(
-                    servicer.ListVariables,
-                    request_deserializer=geocube_dot_pb_dot_variables__pb2.ListVariablesRequest.FromString,
-                    response_serializer=geocube_dot_pb_dot_variables__pb2.ListVariablesResponseItem.SerializeToString,
             ),
             'UpdateVariable': grpc.unary_unary_rpc_method_handler(
                     servicer.UpdateVariable,
                     request_deserializer=geocube_dot_pb_dot_variables__pb2.UpdateVariableRequest.FromString,
                     response_serializer=geocube_dot_pb_dot_variables__pb2.UpdateVariableResponse.SerializeToString,
             ),
-            'UpdateInstance': grpc.unary_unary_rpc_method_handler(
-                    servicer.UpdateInstance,
-                    request_deserializer=geocube_dot_pb_dot_variables__pb2.UpdateInstanceRequest.FromString,
-                    response_serializer=geocube_dot_pb_dot_variables__pb2.UpdateInstanceResponse.SerializeToString,
-            ),
             'DeleteVariable': grpc.unary_unary_rpc_method_handler(
                     servicer.DeleteVariable,
                     request_deserializer=geocube_dot_pb_dot_variables__pb2.DeleteVariableRequest.FromString,
                     response_serializer=geocube_dot_pb_dot_variables__pb2.DeleteVariableResponse.SerializeToString,
+            ),
+            'ListVariables': grpc.unary_stream_rpc_method_handler(
+                    servicer.ListVariables,
+                    request_deserializer=geocube_dot_pb_dot_variables__pb2.ListVariablesRequest.FromString,
+                    response_serializer=geocube_dot_pb_dot_variables__pb2.ListVariablesResponseItem.SerializeToString,
+            ),
+            'InstantiateVariable': grpc.unary_unary_rpc_method_handler(
+                    servicer.InstantiateVariable,
+                    request_deserializer=geocube_dot_pb_dot_variables__pb2.InstantiateVariableRequest.FromString,
+                    response_serializer=geocube_dot_pb_dot_variables__pb2.InstantiateVariableResponse.SerializeToString,
+            ),
+            'UpdateInstance': grpc.unary_unary_rpc_method_handler(
+                    servicer.UpdateInstance,
+                    request_deserializer=geocube_dot_pb_dot_variables__pb2.UpdateInstanceRequest.FromString,
+                    response_serializer=geocube_dot_pb_dot_variables__pb2.UpdateInstanceResponse.SerializeToString,
             ),
             'DeleteInstance': grpc.unary_unary_rpc_method_handler(
                     servicer.DeleteInstance,
@@ -646,24 +678,8 @@ class Geocube(object):
 
     *
     API
+    Documentation may be detailed in Request/Response sections.
     """
-
-    @staticmethod
-    def ListRecords(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/geocube.Geocube/ListRecords',
-            geocube_dot_pb_dot_records__pb2.ListRecordsRequest.SerializeToString,
-            geocube_dot_pb_dot_records__pb2.ListRecordsResponseItem.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def CreateRecords(request,
@@ -683,7 +699,7 @@ class Geocube(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def DeleteRecords(request,
+    def ListRecords(request,
             target,
             options=(),
             channel_credentials=None,
@@ -693,9 +709,9 @@ class Geocube(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/geocube.Geocube/DeleteRecords',
-            geocube_dot_pb_dot_records__pb2.DeleteRecordsRequest.SerializeToString,
-            geocube_dot_pb_dot_records__pb2.DeleteRecordsResponse.FromString,
+        return grpc.experimental.unary_stream(request, target, '/geocube.Geocube/ListRecords',
+            geocube_dot_pb_dot_records__pb2.ListRecordsRequest.SerializeToString,
+            geocube_dot_pb_dot_records__pb2.ListRecordsResponseItem.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -730,6 +746,23 @@ class Geocube(object):
         return grpc.experimental.unary_unary(request, target, '/geocube.Geocube/RemoveRecordsTags',
             geocube_dot_pb_dot_records__pb2.RemoveRecordsTagsRequest.SerializeToString,
             geocube_dot_pb_dot_records__pb2.RemoveRecordsTagsResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def DeleteRecords(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/geocube.Geocube/DeleteRecords',
+            geocube_dot_pb_dot_records__pb2.DeleteRecordsRequest.SerializeToString,
+            geocube_dot_pb_dot_records__pb2.DeleteRecordsResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -785,23 +818,6 @@ class Geocube(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def InstantiateVariable(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/geocube.Geocube/InstantiateVariable',
-            geocube_dot_pb_dot_variables__pb2.InstantiateVariableRequest.SerializeToString,
-            geocube_dot_pb_dot_variables__pb2.InstantiateVariableResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-    @staticmethod
     def GetVariable(request,
             target,
             options=(),
@@ -815,23 +831,6 @@ class Geocube(object):
         return grpc.experimental.unary_unary(request, target, '/geocube.Geocube/GetVariable',
             geocube_dot_pb_dot_variables__pb2.GetVariableRequest.SerializeToString,
             geocube_dot_pb_dot_variables__pb2.GetVariableResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-    @staticmethod
-    def ListVariables(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/geocube.Geocube/ListVariables',
-            geocube_dot_pb_dot_variables__pb2.ListVariablesRequest.SerializeToString,
-            geocube_dot_pb_dot_variables__pb2.ListVariablesResponseItem.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -853,23 +852,6 @@ class Geocube(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def UpdateInstance(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/geocube.Geocube/UpdateInstance',
-            geocube_dot_pb_dot_variables__pb2.UpdateInstanceRequest.SerializeToString,
-            geocube_dot_pb_dot_variables__pb2.UpdateInstanceResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-    @staticmethod
     def DeleteVariable(request,
             target,
             options=(),
@@ -883,6 +865,57 @@ class Geocube(object):
         return grpc.experimental.unary_unary(request, target, '/geocube.Geocube/DeleteVariable',
             geocube_dot_pb_dot_variables__pb2.DeleteVariableRequest.SerializeToString,
             geocube_dot_pb_dot_variables__pb2.DeleteVariableResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ListVariables(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/geocube.Geocube/ListVariables',
+            geocube_dot_pb_dot_variables__pb2.ListVariablesRequest.SerializeToString,
+            geocube_dot_pb_dot_variables__pb2.ListVariablesResponseItem.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def InstantiateVariable(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/geocube.Geocube/InstantiateVariable',
+            geocube_dot_pb_dot_variables__pb2.InstantiateVariableRequest.SerializeToString,
+            geocube_dot_pb_dot_variables__pb2.InstantiateVariableResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def UpdateInstance(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/geocube.Geocube/UpdateInstance',
+            geocube_dot_pb_dot_variables__pb2.UpdateInstanceRequest.SerializeToString,
+            geocube_dot_pb_dot_variables__pb2.UpdateInstanceResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

@@ -10,7 +10,7 @@ from geocube.entities.cube_metadata import CubeMetadata, SliceMetadata
 from geocube.entities.cube_params import CubeParams
 from geocube.entities.cubeiterator import CubeIterator
 from geocube.entities.job import ExecutionLevel, Job
-from geocube.entities.layout import Layout
+from geocube.entities.layout import Layout, MUCOGPattern, COGPattern
 from geocube.entities.grid import Grid, Cell
 from geocube.entities.utils import get_ids, get_id
 

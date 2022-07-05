@@ -32,5 +32,5 @@ setuptools.setup(
     entry_points={
         "xarray.backends": ["geocube=geocube.sdk.geocube_xarray:GeocubeBackendEntrypoint"],
     },
-    python_requires='>=3.6',
+    python_requires='>=3.7',
 )

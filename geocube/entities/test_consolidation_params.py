@@ -9,9 +9,7 @@ class TestConsolidationParams:
             dformat=entities.DataFormat.from_user("u1"),
             exponent=1,
             compression=entities.Compression.LOSSLESS,
-            overviews_min_size=255,
-            resampling_alg=entities.Resampling.cubic,
-            bands_interleave=True)
+            overviews_min_size=255)
         d = asdict(p)
         p_from_dict = entities.ConsolidationParams.from_dict(d)
         assert p_from_dict == p

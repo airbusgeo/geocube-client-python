@@ -291,13 +291,13 @@ class Variable(_ProxyVariable):
         req = variables_pb2.DeleteVariableRequest(id=self.id)
         self.client.DeleteVariable(req)
 
-    def config_consolidation(self, dformat: entities.DataFormat, exponent=1., bands_interleave=False,
-                             compression: entities.Compression = entities.Compression.LOSSLESS, overviews_min_size=-1,
+    def config_consolidation(self, dformat: entities.DataFormat, exponent=1.,
+                             compression: entities.Compression = entities.Compression.LOSSLESS,
                              resampling_alg: entities.Resampling = entities.Resampling.near):
         """ See entities.ConsolidationParams """
         self.consolidation_params = entities.ConsolidationParams(
-            dformat=entities.DataFormat.from_user(dformat), exponent=exponent, bands_interleave=bands_interleave,
-            compression=compression, overviews_min_size=overviews_min_size, resampling_alg=resampling_alg)
+            dformat=entities.DataFormat.from_user(dformat), exponent=exponent,
+            compression=compression, resampling_alg=resampling_alg)
 
     def __str__(self):
         return "{}\n" \
