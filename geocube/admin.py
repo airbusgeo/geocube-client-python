@@ -84,7 +84,8 @@ class Admin(Consolidater):
                               records: List[Union[str, entities.Record]],
                               file_patterns: List[str] = None,
                               execution_level: entities.ExecutionLevel = entities.ExecutionLevel.STEP_BY_STEP_CRITICAL,
-                              job_name: str = None) -> entities.Job:
+                              job_name: str = None, allow_empty_instances=False, allow_empty_records=False)\
+            -> entities.Job:
         """
         Admin function to delete datasets that are referenced by a list of instances and a list of records.
         This function is provided without any guaranties of service continuity.
@@ -97,9 +98,27 @@ class Admin(Consolidater):
                 (support * and ? for all or any characters and trailing (?i) for case-insensitiveness)
             execution_level: see entities.ExecutionLevel.
             job_name: [optional] gives a name to the job, otherwise, a name will be automatically generated
+            allow_empty_instances: [optional] allows instances to be empty.
+                @warning It means that the job will delete all the instances for the given records.
+            allow_empty_records: [optional] allows records to be empty.
+                @warning It means that the job will delete all the records for the given instances.
         """
+        if len(records) == 0 and not allow_empty_records:
+            raise ValueError("DeleteDataset: records is empty, but it has not been allowed. "
+                             "Empty records means that all the datasets for the given instances are about to be "
+                             "deleted. If this is what is wanted, please set allow_empty_records=True")
+        if len(instances) == 0 and not allow_empty_instances:
+            raise ValueError("DeleteDataset: instances is empty, but it has not been allowed. "
+                             "Empty instances means that all the datasets for the given records are about to be "
+                             "deleted. If this is what is wanted, please set allow_empty_instances=True")
+
         if len(records) == 0 and len(instances) == 0:
             warnings.warn("this job is about to delete the whole database")
+            if execution_level == entities.ExecutionLevel.ASYNCHRONOUS or \
+               execution_level == entities.ExecutionLevel.SYNCHRONOUS:
+                raise ValueError("I cannot allow that in a non-interactive execution_level. "
+                                 "Please use execution_level == entities.ExecutionLevel.STEP_BY_STEP_CRITICAL.")
+
         res = self.admin_stub.DeleteDatasets(admin_pb2.DeleteDatasetsRequest(
             job_name=job_name if job_name is not None else f"Deletion_{datetime.now()}_{len(records)}_records",
             execution_level=execution_level.value,
