@@ -122,7 +122,7 @@ class CubeParams:
     @staticmethod
     def _parse_grouped_record_ids(records: List[entities.RecordIdentifiers])\
             -> Union[List[entities.GroupedRecordIds], None]:
-        return [CubeParams._parse_record_ids(rs) for rs in records] if records else None
+        return [CubeParams._parse_record_ids(rs) for rs in records] if records is not None else None
 
     @staticmethod
     def _parse_record_ids(records: entities.RecordIdentifiers) -> List[str]:
