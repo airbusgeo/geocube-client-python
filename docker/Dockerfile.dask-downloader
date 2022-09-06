@@ -109,7 +109,7 @@ RUN mkdir gdal && cd gdal && curl -sL https://github.com/OSGeo/gdal/releases/dow
         ldconfig /usr/local/lib &&\
         cd /build && rm -rf gdal
 
-RUN git clone https://github.com/airbusgeo/geocube.git \
+RUN git clone -b v0.6.0 https://github.com/airbusgeo/geocube.git \
     && cd geocube/cmd/downloader \
     && go build -ldflags="-s -w" \
     && mv downloader /build/ \
@@ -145,7 +145,7 @@ RUN apt update \
         gcloud \
         "protobuf < 4" \
         "numpy < 1.22" \
-        git+https://github.com/airbusgeo/geocube-client-python.git@v0.4.0 \
+        git+https://github.com/airbusgeo/geocube-client-python.git@v0.6.0 \
         click~=7.1.2 \
         bokeh>=2.1.1 \
     # gdal must be installed after numpy
