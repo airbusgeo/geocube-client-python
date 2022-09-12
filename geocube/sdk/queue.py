@@ -35,6 +35,9 @@ class _QueueIterator:
     def __iter__(self):
         return self
 
+    def __len__(self):
+        return self.queue.qsize()
+
     def __next__(self):
         try:
             item = self.queue.get(timeout=self.timeout, **self.kwargs)

@@ -255,6 +255,7 @@ class MultiProcesses:
         # Client
         self.client = client
         self.close_client = own_client
+        self.pbar = tqdm(total=100, desc="Progress")
 
         # Create Queues
         if isinstance(client, distributed.Client):
@@ -292,10 +293,9 @@ class MultiProcesses:
 
         # Scan log_queue
         q = _QueueIterator(self.log_queue)
-        for message in (tqdm(q) if self.log_queue.qsize() > 10 else q):
+        for message in (tqdm(q, desc="Updating") if len(q) > 10 else q):
             if message.type == MessageType.PROGRESS:
                 self.processes[message.id].update_progress(message.value)
-                logger.debug(f'{message.date}: [{message.id}] {100 * message.value:.0f}%')
             elif message.type == MessageType.LOG:
                 logger.info(f'{message.date}: [{message.id}] {message.value}')
 
@@ -354,8 +354,8 @@ class MultiProcesses:
 
                 progress = int(self.get_progress()*100)
                 if progress > old_progress:
+                    self.pbar.update(progress-old_progress)
                     old_progress = progress
-                    logger.info(f"Progress {progress}%")
         except Exception as e:
             print(e)
         finally:
@@ -366,6 +366,7 @@ class MultiProcesses:
         return self.results()
 
     def close(self):
+        self.pbar.close()
         try:
             self.state_queue.join()
             self.log_queue.join()
@@ -377,6 +378,15 @@ class MultiProcesses:
 
     def results(self):
         return {p.id: (p.status.name, p.result) for p in self.processes.values()}
+
+    def retry_failed(self, _id: str = None):
+        """ If _id is None, retry all failed processes"""
+        if _id is None:
+            for _id in self.processes:
+                self.retry_failed(_id)
+        elif self.processes[_id].status == Status.FAILED:
+            self.processes[_id].attempts = 0
+            self.processes[_id].start(self.client, self.timeout_sec)
 
     def print_full_status(self):
         if logger.level > logging.INFO:
