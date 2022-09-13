@@ -543,7 +543,7 @@ class Client:
             file: output PNG file
         """
         req = catalog_pb2.GetTileRequest(
-            records=records_pb2.RecordIdList(ids=entities.get_ids(records)),
+            records=records_pb2.GroupedRecordIds(ids=entities.get_ids(records)),
             instance_id=entities.get_id(instance),
             x=x, y=y, z=z)
         resp = self.stub.GetXYZTile(req)
