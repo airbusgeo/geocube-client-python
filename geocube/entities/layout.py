@@ -96,13 +96,12 @@ class Layout:
         )
 
     @classmethod
-    def web_mercator(cls, name: str, z_level: int,
-                     cell_size: int = 4096, max_records: int = 1000):
+    def web_mercator(cls, name: str, z_level: int, cell_size: int = 4096, **kwargs):
         """ Define a regular layout using web-mercator projection at a given z_level """
         earth_perimeter = 2*6378137*math.pi
         ox, oy, resolution = -earth_perimeter/2, earth_perimeter/2, earth_perimeter/(256*(1 << z_level))
-        return Layout.regular(name, "epsg:3857", cell_size=(cell_size, cell_size), resolution=resolution,
-                              block_size=256, max_records=max_records, origin=(ox, oy))
+        return Layout.regular(name, "epsg:3857", cell_size=cell_size, resolution=resolution,
+                              block_size=256, origin=(ox, oy), **kwargs)
 
     def __repr__(self):
         return f"Layout '{self.name}'"
