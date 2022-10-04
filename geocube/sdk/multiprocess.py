@@ -220,11 +220,11 @@ class MultiProcesses:
     """
     Handle multiprocess tasks with DaskClient or PeeblePool
     >>> with pebble.ProcessPool(max_workers=1, max_tasks=1) as client:
-    ...      mprocesses = MultiProcesses(client, [print])
+    ...      mprocesses = MultiProcesses(client, {"": print})
     ...      results = mprocesses.join()
     >>> print(results)
     >>> with distributed.Client() as client:
-    ...      mprocesses = MultiProcesses(client, [print])
+    ...      mprocesses = MultiProcesses(client, {"": print})
     ...      results = mprocesses.join()
     """
     def __init__(self,

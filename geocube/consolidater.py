@@ -1,4 +1,5 @@
 import time
+import warnings
 from datetime import datetime
 from typing import Union, Dict, List
 
@@ -81,6 +82,12 @@ class Consolidater(Client):
         if records is not None:
             req = operations_pb2.ConsolidateRequest(
                 **common, records=records_pb2.RecordIdList(ids=entities.get_ids(records)))
+            if from_time is not None:
+                warnings.warn("from_time is ignored if records is provided as argument to consolidate")
+            if to_time is not None:
+                warnings.warn("to_time is ignored if records is provided as argument to consolidate")
+            if tags is not None:
+                warnings.warn("tags is ignored if records is provided as argument to consolidate")
         else:
             from_time_pb = utils.pb_null_timestamp()
             if from_time is not None:

@@ -367,8 +367,9 @@ class Client:
                     tile = entities.Tile.from_geotransform(ds.transform, ds.crs, ds.shape)
                     ds_dtype = ds.dtypes[0]
             except Exception as e:
-                raise f'if "record" is a tuple or "bands" or "dformat" is not defined, geocube-client tries to deduce'\
-                      f'some information reading the file {uri}, but it encountered the following error :{e}.'
+                raise ValueError(f'if "record" is a tuple or "bands" or "dformat" is not defined, geocube-client tries'
+                                 f' to deduce some information reading the file {uri}, but it encountered'
+                                 f' the following error :{e}.')
 
         if isinstance(record, tuple):
             aoi_id = self.create_aoi(tile.geometry(4326), exist_ok=True)
