@@ -252,7 +252,7 @@ class Variable(_ProxyVariable):
 
         if name not in self.instances:
             raise utils.GeocubeError("instance", "NOT EXISTS",
-                                     "Instance does not exist. To instantiate a variable, use instantiate()")
+                                     f"Instance {name} does not exist. To instantiate a variable, use instantiate()")
 
         return VariableInstance(self, self.instances[name])
 

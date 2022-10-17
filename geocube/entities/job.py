@@ -56,7 +56,7 @@ class Job:
             logs=pb_job.logs,
             active_tasks=pb_job.active_tasks,
             failed_tasks=pb_job.failed_tasks,
-            execution_level=pb_job.execution_level,
+            execution_level=ExecutionLevel(pb_job.execution_level),
             waiting=pb_job.waiting,
         )
 
@@ -146,4 +146,4 @@ class Job:
                "    logs\n{}\n".format(self.name, self.id, self.type, self.state,
                                        "(waiting for user action)" if self.waiting else "",
                                        self.creation_time, self.last_update_time, self.active_tasks, self.failed_tasks,
-                                       self.execution_level, logs)
+                                       self.execution_level.name, logs)

@@ -136,7 +136,7 @@ class Record:
 
     @staticmethod
     def key_datetime(r: Record):
-        """ Returns the datetime of the record (without time).
+        """ Returns the datetime of the record.
         It's a GroupByKeyFunc, thus it can be used to group_by."""
         return r.datetime
 
