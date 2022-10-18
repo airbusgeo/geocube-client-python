@@ -220,6 +220,19 @@ class Client:
         req = records_pb2.CreateRecordsRequest(records=records)
         return self.stub.CreateRecords(req).ids
 
+    def get_record(self, _id: str) -> entities.Record:
+        r = self.get_records([_id])
+        assert len(r) > 0, utils.GeocubeError("get_record", grpc.StatusCode.NOT_FOUND.name, "record with id "+_id)
+        return r[0]
+
+    @utils.catch_rpc_error
+    def get_records(self, ids: List[str]) -> List[entities.Record]:
+        """
+        Get a list of records.
+        """
+        req = records_pb2.GetRecordsRequest(ids=ids)
+        return [entities.Record.from_pb(resp.record) for resp in self.stub.GetRecords(req)]
+
     @utils.catch_rpc_error
     def list_records(self, name: str = "", tags: Dict[str, str] = None,
                      from_time: datetime = None, to_time: datetime = None,

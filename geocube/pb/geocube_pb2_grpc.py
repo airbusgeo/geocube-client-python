@@ -29,6 +29,11 @@ class GeocubeStub(object):
                 request_serializer=geocube_dot_pb_dot_records__pb2.CreateRecordsRequest.SerializeToString,
                 response_deserializer=geocube_dot_pb_dot_records__pb2.CreateRecordsResponse.FromString,
                 )
+        self.GetRecords = channel.unary_stream(
+                '/geocube.Geocube/GetRecords',
+                request_serializer=geocube_dot_pb_dot_records__pb2.GetRecordsRequest.SerializeToString,
+                response_deserializer=geocube_dot_pb_dot_records__pb2.GetRecordsResponseItem.FromString,
+                )
         self.ListRecords = channel.unary_stream(
                 '/geocube.Geocube/ListRecords',
                 request_serializer=geocube_dot_pb_dot_records__pb2.ListRecordsRequest.SerializeToString,
@@ -221,6 +226,13 @@ class GeocubeServicer(object):
 
     def CreateRecords(self, request, context):
         """Create one or a list of records
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetRecords(self, request, context):
+        """Get records from their ID
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -486,6 +498,11 @@ def add_GeocubeServicer_to_server(servicer, server):
                     request_deserializer=geocube_dot_pb_dot_records__pb2.CreateRecordsRequest.FromString,
                     response_serializer=geocube_dot_pb_dot_records__pb2.CreateRecordsResponse.SerializeToString,
             ),
+            'GetRecords': grpc.unary_stream_rpc_method_handler(
+                    servicer.GetRecords,
+                    request_deserializer=geocube_dot_pb_dot_records__pb2.GetRecordsRequest.FromString,
+                    response_serializer=geocube_dot_pb_dot_records__pb2.GetRecordsResponseItem.SerializeToString,
+            ),
             'ListRecords': grpc.unary_stream_rpc_method_handler(
                     servicer.ListRecords,
                     request_deserializer=geocube_dot_pb_dot_records__pb2.ListRecordsRequest.FromString,
@@ -695,6 +712,23 @@ class Geocube(object):
         return grpc.experimental.unary_unary(request, target, '/geocube.Geocube/CreateRecords',
             geocube_dot_pb_dot_records__pb2.CreateRecordsRequest.SerializeToString,
             geocube_dot_pb_dot_records__pb2.CreateRecordsResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetRecords(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/geocube.Geocube/GetRecords',
+            geocube_dot_pb_dot_records__pb2.GetRecordsRequest.SerializeToString,
+            geocube_dot_pb_dot_records__pb2.GetRecordsResponseItem.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
