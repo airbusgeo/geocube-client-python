@@ -560,7 +560,8 @@ class Client:
         """
         try:
             self.stub.CreateLayout(layouts_pb2.CreateLayoutRequest(layout=layout.to_pb()))
-        except utils.GeocubeError as e:
+        except grpc.RpcError as e:
+            e = utils.GeocubeError.from_rpc(e)
             if not e.is_already_exists() or not exist_ok:
                 raise
 
