@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import typing
 from typing import List, Tuple
 
 import grpc
@@ -100,7 +101,7 @@ class Downloader:
                              for s in metadata.slices],
             datasets_meta=[datasetMeta_pb2.DatasetMeta(internalsMeta=s.metadata) for s in metadata.slices],
             ref_dformat=metadata.dformat.to_pb(),
-            resampling_alg=metadata.resampling_alg.value-1,
+            resampling_alg=typing.cast(int, metadata.resampling_alg.value)-1,
             crs=metadata.crs,
             pix_to_crs=layouts_pb2.GeoTransform(
                 a=metadata.transform.c, b=metadata.transform.a, c=metadata.transform.b,

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import typing
 import warnings
 from datetime import datetime
 from typing import Dict, List, Tuple, Union, Optional
@@ -109,7 +110,7 @@ class Client:
             dformat=entities.DataFormat.from_user(dformat).to_pb(),
             bands=bands,
             palette=palette,
-            resampling_alg=resampling_alg.value-1))
+            resampling_alg=typing.cast(int, resampling_alg.value)-1))
 
         try:
             return self.variable(id_=self.stub.CreateVariable(req).id)
@@ -405,13 +406,15 @@ class Client:
         return cube_it.metadata()
 
     @utils.catch_rpc_error
-    def get_cube(self, params: entities.CubeParams,
+    def get_cube(self, params: entities.CubeParams, *,
+                 resampling_alg: entities.Resampling = entities.Resampling.undefined,
                  headers_only: bool = False, compression: int = 0, verbose: bool = None) \
             -> Tuple[List[np.array], List[entities.GroupedRecords]]:
         """ Get a cube given a CubeParameters
 
         Args:
             params: CubeParams (see entities.CubeParams)
+            resampling_alg: if defined, overwrite the variable.Resampling used for reprojection.
             headers_only: Only returns the header of each image (gives an overview of the query)
             compression: define a level of compression to speed up the transfer.
                 (0: no compression, 1 fastest to 9 best, -2: huffman-only)
@@ -424,7 +427,8 @@ class Client:
                 (several records can be returned for each image when they are grouped together,
                 by date or something else. See entities.Record.group_by)
         """
-        cube = self._get_cube_it(params, headers_only=headers_only, compression=compression)
+        cube = self._get_cube_it(params, resampling_alg=resampling_alg,
+                                 headers_only=headers_only, compression=compression)
         images, grouped_records = [], []
         verbose = self.verbose if verbose is None else verbose
         if verbose:
@@ -447,13 +451,16 @@ class Client:
         return images, grouped_records
 
     @utils.catch_rpc_error
-    def get_cube_it(self, params: entities.CubeParams, headers_only: bool = False, compression: int = 0,
+    def get_cube_it(self, params: entities.CubeParams, *,
+                    resampling_alg: entities.Resampling = entities.Resampling.undefined,
+                    headers_only: bool = False, compression: int = 0,
                     file_format=FileFormatRaw, file_pattern: str = None) -> entities.CubeIterator:
         """ Returns a cube iterator over the requested images
 
         Args:
             params: CubeParams (see entities.CubeParams)
 
+            resampling_alg: if defined, overwrite the variable.Resampling used for reprojection.
             headers_only : returns only the header of the dataset (use this option to control the output of get_cube)
             compression : define a level of compression to speed up the transfer
                 (0: no compression, 1 fastest to 9 best, -2: huffman-only)
@@ -477,12 +484,17 @@ class Client:
         ...         plt.figure(cube_it.index+1)
         ...         plt.imshow(image)
         """
-        return self._get_cube_it(params, headers_only, compression, file_format, file_pattern)
+        return self._get_cube_it(params, resampling_alg=resampling_alg, headers_only=headers_only,
+                                 compression=compression, file_format=file_format, file_pattern=file_pattern)
 
-    def _get_cube_it(self, params: entities.CubeParams, headers_only: bool = False, compression: int = 1,
+    def _get_cube_it(self, params: entities.CubeParams, *,
+                     resampling_alg: entities.Resampling = entities.Resampling.undefined,
+                     headers_only: bool = False, compression: int = 1,
                      file_format=FileFormatRaw, file_pattern: str = None) -> entities.CubeIterator:
         if self.downloader is not None and not headers_only:
             metadata = self._get_cube_it(params, headers_only=True).metadata()
+            if resampling_alg != entities.Resampling.undefined:
+                metadata.resampling_alg = resampling_alg
             return self.downloader.get_cube_it(metadata, file_format, file_pattern)
 
         common = {
@@ -495,6 +507,7 @@ class Client:
             "compression_level": compression,
             "headers_only":      headers_only,
             "format":            file_format,
+            "resampling_alg":    typing.cast(int, resampling_alg.value)-1
         }
         if params.records is not None:
             req = catalog_pb2.GetCubeRequest(**common, grouped_records=records_pb2.GroupedRecordIdsList(

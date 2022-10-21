@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import pprint
+import typing
 from dataclasses import dataclass, field, asdict
 from typing import Dict, List, Union
 
@@ -140,7 +141,7 @@ class _ProxyVariable:
             unit=utils.pb_string(unit),
             description=utils.pb_string(description),
             palette=utils.pb_string(palette),
-            resampling_alg=resampling_alg.value-1)
+            resampling_alg=typing.cast(int, resampling_alg.value)-1)
 
         self.client.UpdateVariable(req)
 

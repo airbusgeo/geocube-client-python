@@ -1,3 +1,4 @@
+import typing
 from dataclasses import dataclass
 from typing import Union
 
@@ -48,8 +49,8 @@ class ConsolidationParams:
         return operations_pb2.ConsolidationParams(
             dformat=self.dformat.to_pb(),
             exponent=self.exponent,
-            compression=self.compression.value-1,
-            resampling_alg=self.resampling_alg.value-1)
+            compression=typing.cast(int, self.compression.value)-1,
+            resampling_alg=typing.cast(int, self.resampling_alg.value)-1)
 
     def __repr__(self):
         return "Consolidation Parameters\n" \
