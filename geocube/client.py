@@ -592,6 +592,16 @@ class Client:
                 raise
 
     @utils.catch_rpc_error
+    def layout(self, name: str) -> entities.Layout:
+        """
+        Get layout by name
+        """
+        res = self.stub.ListLayouts(layouts_pb2.ListLayoutsRequest(name_like=name))
+        if len(res.layouts) == 0:
+            raise utils.GeocubeError("layout", grpc.StatusCode.ALREADY_EXISTS.name, "with name: " + name)
+        return entities.Layout.from_pb(res.layouts[0])
+
+    @utils.catch_rpc_error
     def list_layouts(self, name_like: str = "") -> List[entities.Layout]:
         """
         List available layouts by name
@@ -599,7 +609,6 @@ class Client:
         """
         res = self.stub.ListLayouts(layouts_pb2.ListLayoutsRequest(name_like=name_like))
         return [entities.Layout.from_pb(layout) for layout in res.layouts]
-
     @utils.catch_rpc_error
     def find_container_layouts(self, instance: Union[str, entities.VariableInstance],
                                records: List[Union[str, entities.Record]] = None,
