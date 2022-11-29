@@ -1,6 +1,6 @@
 import math
 import pprint
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Tuple, List, Dict, Union
 
 from geocube.pb import layouts_pb2
@@ -22,9 +22,9 @@ class Layout:
     grid_flags:          List[str]
     grid_parameters:     Dict[str, str]
     block_shape:         Tuple[int, int]
-    max_records:         int
-    overviews_min_size:  int
-    interlacing_pattern: str
+    max_records:         int = field(default=1000)
+    overviews_min_size:  int = field(default=-1)
+    interlacing_pattern: str = field(default=MUCOGPattern)
 
     @classmethod
     def from_pb(cls, pb_layout: layouts_pb2.Layout):
