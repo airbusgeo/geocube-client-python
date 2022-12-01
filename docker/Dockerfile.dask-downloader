@@ -145,7 +145,7 @@ RUN apt update \
         gcloud \
         "protobuf < 4" \
         "numpy < 1.22" \
-        git+https://github.com/airbusgeo/geocube-client-python.git@v1.0.0 \
+        git+https://github.com/airbusgeo/geocube-client-python.git@v1.0.1 \
         click~=7.1.2 \
         bokeh>=2.1.1 \
     # gdal must be installed after numpy
