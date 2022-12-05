@@ -1,11 +1,15 @@
 ARG GDALVERSION=3.4.1
 ARG PROJVERSION=7.2.1
 ARG GEOSVERSION=3.8.1
+ARG GEOCUBEVERSION=v1.0.1
+ARG GEOCUBECLIENTVERSION=v1.0.1
 
 FROM golang as builder
 ARG PROJVERSION
 ARG GEOSVERSION
 ARG GDALVERSION
+ARG GEOCUBEVERSION
+ARG GEOCUBECLIENTVERSION
 
 RUN apt update \
     && apt install -y pkg-config curl libcurl4-gnutls-dev sqlite3 libsqlite3-dev make g++ libzstd-dev libboost-all-dev libtool libtiff-dev musl-dev autoconf automake build-essential \
@@ -109,7 +113,7 @@ RUN mkdir gdal && cd gdal && curl -sL https://github.com/OSGeo/gdal/releases/dow
         ldconfig /usr/local/lib &&\
         cd /build && rm -rf gdal
 
-RUN git clone -b v1.0.0 https://github.com/airbusgeo/geocube.git \
+RUN git clone -b $GEOCUBEVERSION https://github.com/airbusgeo/geocube.git \
     && cd geocube/cmd/downloader \
     && go build -ldflags="-s -w" \
     && mv downloader /build/ \
@@ -145,7 +149,7 @@ RUN apt update \
         gcloud \
         "protobuf < 4" \
         "numpy < 1.22" \
-        git+https://github.com/airbusgeo/geocube-client-python.git@v1.0.1 \
+        git+https://github.com/airbusgeo/geocube-client-python.git@$GEOCUBECLIENTVERSION \
         click~=7.1.2 \
         bokeh>=2.1.1 \
     # gdal must be installed after numpy

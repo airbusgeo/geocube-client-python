@@ -12,8 +12,19 @@ function loop_exec () {
     done
 }
 
+OPTIONS=""
+if [ "$DOWNLOADER_WORKERS" != "" ]; then
+  OPTIONS="$OPTIONS -workers $DOWNLOADER_WORKERS"
+fi
+if [ "$DOWNLOADER_GDAL_BLOCK_SIZE" != "" ]; then
+  OPTIONS="$OPTIONS -gdalBlockSize $DOWNLOADER_GDAL_BLOCK_SIZE"
+fi
+if [ "$DOWNLOADER_GDAL_NUM_BLOCKS" != "" ]; then
+  OPTIONS="$OPTIONS -gdalNumCachedBlocks $DOWNLOADER_GDAL_NUM_BLOCKS"
+fi
+
 # We start Downloader.
-loop_exec "/usr/bin/downloader -port 8083 -with-gcs" 10 > /var/log/downloader_output.log 2>&1 &
+loop_exec "/usr/bin/downloader -port 8083 -with-gcs $OPTIONS" 10 > /var/log/downloader_output.log 2>&1 &
 
 # We start by adding extra apt packages, since pip modules may required library
 if [ "$EXTRA_APT_PACKAGES" ]; then
