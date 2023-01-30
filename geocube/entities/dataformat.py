@@ -78,6 +78,9 @@ class DataFormat:
                            d.get('max_value', -1),
                            d.get('no_data', float('nan')))
 
+            assert dtype != "byte", "Using dtype=byte is forbidden due to the ambiguity between numpy.byte=int8 and" \
+                                    " gdal.byte=uint8. Use 'uint8' or 'int8' instead."
+
             dtype = np.dtype(dtype)
             if dtype.kind in 'iu':
                 info = np.iinfo(dtype)
