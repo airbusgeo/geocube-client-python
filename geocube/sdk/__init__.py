@@ -1,5 +1,6 @@
 import os
 
+from geocube.sdk.aoi import tile_aoi
 from geocube.sdk.connection_params import ConnectionParams
 from geocube.sdk.collection import Collection
 from geocube.sdk.multiprocess import is_pickleable, MultiProcesses, MessageType, Status, ResultsEncoder, \
