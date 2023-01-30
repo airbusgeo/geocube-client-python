@@ -359,7 +359,7 @@ class Client:
     @utils.catch_rpc_error
     def index_dataset(self, uri: str, record: Union[str, entities.Record, Tuple[str, Dict[str, str], datetime]],
                       instance: entities.VariableInstance, dformat: entities.DataFormat, bands: List[int] = None,
-                      min_out: float = None, max_out: float = None, exponent: float = 1):
+                      min_out: float = None, max_out: float = None, exponent: float = 1, managed: bool=False):
         """
         Index the given "bands" of the dataset located at "uri", referenced by a record and an instance.
 
@@ -373,6 +373,7 @@ class Client:
             min_out: (optional, default: instance.dformat.min_value, instance.dformat.dtype) maps dformat.min_value
             max_out: (optional, default: instance.dformat.max_value, instance.dformat.dtype) maps dformat.max_value
             exponent: (optional, default: 1) non-linear scaling between dformat.min_max_value to min_max_out.
+            managed: if True, the geocube takes the ownership of the file, removing it if the dataset is removed
         """
         ds_dtype = "u1"
         if isinstance(record, tuple) or dformat is None:
@@ -395,7 +396,7 @@ class Client:
             dformat = entities.DataFormat.from_user(ds_dtype)
 
         cs = [entities.Container(uri,
-                                 managed=False,
+                                 managed=managed,
                                  datasets=[entities.Dataset(record, instance, bands=bands,
                                                             dformat=entities.DataFormat.from_user(dformat),
                                                             min_out=min_out, max_out=max_out, exponent=exponent)])]
