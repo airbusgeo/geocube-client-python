@@ -23,7 +23,11 @@ class ConnectionParams:
     api_key: str = ""
     verbose: bool = False
 
-    downloader: ConnectionParams = None
+    downloader: Union[str, ConnectionParams] = None
+
+    def __post_init__(self):
+        if isinstance(self.downloader, str):
+            self.downloader = ConnectionParams(self.downloader)
 
     def new_client(self, with_downloader=True) -> Client:
         """
