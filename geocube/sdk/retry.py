@@ -25,8 +25,8 @@ class CopyException:
             self.object_with_exception.exception = e
         return retry
 
-def retry_on_geocube_error(func_name: str, max_delay_s: float):
+def retry_on_geocube_error(func_name: str, max_delay_s: float, error=sdk.is_geocube_error):
     w = ExponentialWait(func_name)
     return retrying.retry(wait_func=w,
                           stop_max_delay=max_delay_s*1000,
-                          retry_on_exception=CopyException(sdk.is_geocube_error, w))
+                          retry_on_exception=CopyException(error, w))

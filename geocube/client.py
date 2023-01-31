@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import typing
 import warnings
 from datetime import datetime
@@ -30,6 +31,7 @@ class Client:
             api_key: (optional) API Key if Geocube Server is secured using a bearer authentication
             verbose: set the default verbose mode
         """
+        self.pid = os.getpid()
         if secure:
             credentials = grpc.ssl_channel_credentials()
             if api_key != "":
@@ -43,6 +45,9 @@ class Client:
         if verbose:
             print("Connected to Geocube v" + self.version())
         self.downloader = None
+
+    def is_pid_ok(self) -> bool:
+        return self.pid == os.getpid()
 
     def use_downloader(self, downloader: Downloader):
         self.downloader = downloader

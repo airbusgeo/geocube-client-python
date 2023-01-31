@@ -1,4 +1,5 @@
 import logging
+import os
 import sys
 from functools import wraps
 
@@ -46,9 +47,15 @@ class GeocubeError(Exception):
 
 def catch_rpc_error(func):
     @wraps(func)
-    def wrapper(*args, **kwargs):
+    def wrapper(c, *args, **kwargs):
         try:
-            return func(*args, **kwargs)
+            if hasattr(c, "is_pid_ok") and not c.is_pid_ok():
+                logging.warning("Close the client before using it in another thread.")
+            return func(c, *args, **kwargs)
         except grpc.RpcError as e:
             raise GeocubeError.from_rpc(e, func.__name__)
+        except ValueError as e:
+            if "Channel closed due to fork" in str(e):
+                logging.warning("Channel closed due to fork. Close the client before using it in another thread.")
+            raise e
     return wrapper

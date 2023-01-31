@@ -71,7 +71,6 @@ def image_do_nothing(image: np.ndarray, **_):
 
 
 def is_geocube_error(error):
-    logging.debug(f"Is '{error}' a geocube error ?")
     return isinstance(error, GeocubeError)
 
 
