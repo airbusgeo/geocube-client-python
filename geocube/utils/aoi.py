@@ -1,12 +1,17 @@
+import warnings
+
 import geopandas
-import shapely
 from shapely import ops
 
 
 def read_aoi(aoi_file):
     """ Read an AOI from file in geographic coordinates """
     df = geopandas.read_file(aoi_file).to_crs("epsg:4326")
-    return shapely.ops.unary_union(list(df.geometry))
+    try:
+        return ops.unary_union(list(df.geometry))
+    except ValueError as e:
+        warnings.warn(f"{e}. Retrying, trying to make the geometry valid...")
+        return ops.unary_union([g.buffer(0) for g in df.geometry])
 
 
 def plot_aoi(aoi: geopandas.GeoSeries, world_path: str = geopandas.datasets.get_path('naturalearth_lowres'),
