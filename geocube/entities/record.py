@@ -47,7 +47,7 @@ def aoi_to_pb(aoi: Union[geometry.Polygon, geometry.MultiPolygon]) -> records_pb
             linearrings=[records_pb2.LinearRing(
                 points=[records_pb2.Coord(lon=coord[0], lat=coord[1]) for coord in lr.coords]
                 ) for lr in [p.exterior, *p.interiors]]
-            ) for p in list(aoi)]
+            ) for p in aoi.geoms]
         )
 
 
