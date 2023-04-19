@@ -271,7 +271,8 @@ class Variable(_ProxyVariable):
         if name in self.instances:
             if metadata is not None and self.instances[name].metadata != metadata:
                 raise utils.GeocubeError("instantiate", "ALREADY EXISTS",
-                                         "Use instance({}).metadata = {} to update the metadata".format(name, metadata))
+                                         "Use instance({}).add_metadata(key, value) and del_metadata(key) "
+                                         "to update the metadata".format(name))
         else:
             req = variables_pb2.InstantiateVariableRequest(
                 variable_id=self.id, instance_name=name, instance_metadata=metadata)
