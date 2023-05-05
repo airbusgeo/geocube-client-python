@@ -3,6 +3,7 @@ from typing import Tuple, List, Any
 
 import numpy as np
 import xarray
+from geocube.entities import cubeiterator
 from xarray.backends import BackendEntrypoint, BackendArray
 from xarray.core import indexing as xarray_indexing
 
@@ -174,7 +175,9 @@ class GeocubeBackendArray(BackendArray):
 
         for image, metadata, err in cube_it:
             if err is not None:
-                continue
+                if err == cubeiterator.NOT_FOUND_ERROR:
+                    continue
+                raise ValueError(err)
             i = self.record_keys.index(self.record_key_func(metadata.grouped_records[0]))
             timeseries.put(i, image.reshape(timeseries.shape[:-1]))
 

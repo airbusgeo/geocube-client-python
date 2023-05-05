@@ -5,6 +5,7 @@ from typing import List, Tuple
 
 import grpc
 import numpy as np
+from geocube.entities import cubeiterator
 
 from geocube.pb import records_pb2, catalog_pb2, layouts_pb2, geocubeDownloader_pb2_grpc as downloader_grpc, \
     datasetMeta_pb2, version_pb2
@@ -63,9 +64,11 @@ class Downloader:
             print("GetCube returns {} images from {} datasets".format(cube.count, cube.nb_datasets))
         for image, metadata, err in cube:
             if err is not None:
-                if verbose:
-                    print(err)
-                continue
+                if err == cubeiterator.NOT_FOUND_ERROR:
+                    if verbose:
+                        print(err)
+                    continue
+                raise ValueError(err)
             if verbose:
                 min_date = metadata.min_date.strftime("%Y-%m-%d_%H:%M:%S")
                 max_date = metadata.max_date.strftime("%Y-%m-%d_%H:%M:%S")

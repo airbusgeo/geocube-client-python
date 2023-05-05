@@ -5,6 +5,7 @@ from typing import Union, List, Callable, Any, Dict, Tuple, Optional
 
 import affine
 import numpy as np
+from geocube.entities import cubeiterator
 
 import geocube
 from geocube import entities, sdk
@@ -186,9 +187,9 @@ def _get_cube(client: geocube.Client, cube_params: entities.CubeParams,
     try:
         for image, metadata, err in cube:
             if err is not None:
-                if verbose and "NotFound" not in err:
-                    log(err)
-                continue
+                if err == cubeiterator.NOT_FOUND_ERROR:
+                    continue
+                raise ValueError(err)
             total_size += metadata.bytes//1024
             if len(timeseries) == 0:
                 timeseries = np.empty((cube.count, *image.shape))

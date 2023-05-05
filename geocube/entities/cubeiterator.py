@@ -9,6 +9,8 @@ from geocube.pb import catalog_pb2
 
 from geocube import entities, utils
 
+NOT_FOUND_ERROR = "rpc error: code = NotFound desc = Not enough valid pixels (skipped)"
+
 
 class CubeIterator:
     """

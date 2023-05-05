@@ -10,6 +10,7 @@ import grpc
 import numpy as np
 import parse
 import rasterio
+from geocube.entities import cubeiterator
 from shapely import geometry
 
 from geocube.pb import records_pb2, operations_pb2, catalog_pb2, layouts_pb2, \
@@ -441,9 +442,11 @@ class Client:
             print("GetCube returns {} images from {} datasets".format(cube.count, cube.nb_datasets))
         for image, metadata, err in cube:
             if err is not None:
-                if verbose:
-                    print(err)
-                continue
+                if err == cubeiterator.NOT_FOUND_ERROR:
+                    if verbose:
+                        print(err)
+                    continue
+                raise ValueError(err)
             if verbose:
                 min_date = metadata.min_date.strftime("%Y-%m-%d_%H:%M:%S")
                 max_date = metadata.max_date.strftime("%Y-%m-%d_%H:%M:%S")
@@ -486,6 +489,8 @@ class Client:
         >>> cube_it = client._get_cube_it(cube_params)
         >>> from matplotlib import pyplot as plt
         >>> for image, _, _, err in cube_it:
+        ...     if err != cubeiterator.NOT_FOUND_ERROR:
+        ...         raise ValueError(err)
         ...     if not err:
         ...         plt.figure(cube_it.index+1)
         ...         plt.imshow(image)
