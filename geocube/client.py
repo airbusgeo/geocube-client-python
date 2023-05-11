@@ -532,7 +532,7 @@ class Client:
         return entities.CubeIterator(self.stub.GetCube(req), file_format, file_pattern)
 
     @utils.catch_rpc_error
-    def tile_aoi(self, aoi: geometry.MultiPolygon,
+    def tile_aoi(self, aoi: Union[geometry.MultiPolygon, geometry.Polygon],
                  layout_name: Optional[str] = None,
                  layout: Optional[entities.Layout] = None,
                  resolution: Optional[float] = None,
