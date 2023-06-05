@@ -112,8 +112,13 @@ class Admin(Consolidater):
                              "Empty instances means that all the datasets for the given records are about to be "
                              "deleted. If this is what is wanted, please set allow_empty_instances=True")
 
+        if file_patterns is not None:
+            if isinstance(file_patterns, str):
+                file_patterns = [file_patterns]
+            assert isinstance(file_patterns, list)
+
         if len(records) == 0 and len(instances) == 0:
-            warnings.warn("this job is about to delete the whole database")
+            warnings.warn("this job may be about to delete the whole database")
             if execution_level == entities.ExecutionLevel.ASYNCHRONOUS or \
                execution_level == entities.ExecutionLevel.SYNCHRONOUS:
                 raise ValueError("I cannot allow that in a non-interactive execution_level. "
