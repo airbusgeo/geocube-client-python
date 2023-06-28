@@ -2,14 +2,17 @@ import warnings
 
 import geopandas
 from shapely import ops
-
+try:
+    from shapely.errors import GEOSException
+except ImportError:
+    GEOSException = ValueError
 
 def read_aoi(aoi_file):
     """ Read an AOI from file in geographic coordinates """
     df = geopandas.read_file(aoi_file).to_crs("epsg:4326")
     try:
         return ops.unary_union(list(df.geometry))
-    except ValueError as e:
+    except GEOSException as e:
         warnings.warn(f"{e}. Retrying, trying to make the geometry valid...")
         return ops.unary_union([g.buffer(0) for g in df.geometry])
 
