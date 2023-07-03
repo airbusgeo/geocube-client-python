@@ -58,7 +58,9 @@ RUN mkdir gdal && cd gdal && curl -sL https://github.com/OSGeo/gdal/releases/dow
     		--with-libtiff=internal \
     		--with-webp \
     		--with-zstd \
-    		--with-geotiff=internal && \
+    		--with-geotiff=internal \
+    		--enable-driver-wmts \
+    		--enable-driver-wms && \
     	make -j8 && \
     	make install &&\
     	 (for i in \
