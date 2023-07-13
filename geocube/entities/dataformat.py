@@ -46,7 +46,7 @@ class DataFormat:
         """
         args=(dtype, no_data, min_value, max_value))
         args=dtype
-        args={'dtype':..., 'no_date':..., 'min_value':..., 'max_value':...}
+        args={'dtype':..., 'no_data':..., 'min_value':..., 'max_value':...}
         """
         if isinstance(args, DataFormat):
             return cls.from_dict(asdict(args))
