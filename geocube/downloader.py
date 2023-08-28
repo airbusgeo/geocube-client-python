@@ -26,6 +26,7 @@ class Downloader:
             api_key: (optional) API Key if Geocube Server is secured using a bearer authentication
             verbose: display the version of the Geocube Server
         """
+        assert uri is not None and uri != "", "geocube.Downloader: Cannot connect: uri is not defined"
         if secure:
             credentials = grpc.ssl_channel_credentials()
             if api_key != "":

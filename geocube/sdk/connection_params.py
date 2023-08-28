@@ -1,4 +1,6 @@
 from __future__ import annotations
+
+import warnings
 from dataclasses import dataclass, asdict
 from typing import Union
 
@@ -32,11 +34,15 @@ class ConnectionParams:
     def new_client(self, with_downloader=True) -> Client:
         """
         Create a new client connected to the geocube, using the ConnectionParams
-        Use `with_downloader` to automatically use the downloader (defined by `self.downloader`) to the client
+        Use `with_downloader` to automatically use the downloader (if defined by `self.downloader`)
         """
         client = Client(**self.__as_dict())
         if with_downloader:
-            client.use_downloader(self.new_downloader())
+            try:
+                client.use_downloader(self.new_downloader())
+            except (AttributeError, AssertionError, ValueError) as e:
+                warnings.warn(f"new_client(with_downloader=True): cannot connect to the downloader ({e}). "
+                              f"Using a downloader may lead to better performance.")
         return client
 
     def use_downloader(self, params: ConnectionParams):

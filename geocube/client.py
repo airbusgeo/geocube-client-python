@@ -32,6 +32,7 @@ class Client:
             api_key: (optional) API Key if Geocube Server is secured using a bearer authentication
             verbose: set the default verbose mode
         """
+        assert uri is not None and uri != "", "geocube.Client: Cannot connect: uri is not defined"
         self.pid = os.getpid()
         if secure:
             credentials = grpc.ssl_channel_credentials()
