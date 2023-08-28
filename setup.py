@@ -15,7 +15,7 @@ def parse_requirements(file):
 
 setuptools.setup(
     name="geocube_client",
-    version="1.0.1",
+    version="1.0.2",
     author="Varoquaux Vincent",
     author_email="vincent.varoquaux[at]airbus.com",
     description="Geocube Python Client library",
