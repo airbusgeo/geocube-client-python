@@ -4,15 +4,18 @@ ARG GEOSVERSION=3.8.1
 ARG GEOCUBEVERSION=v1.0.2
 ARG GEOCUBECLIENTVERSION=v1.0.2
 
-FROM golang as builder
+FROM ubuntu:focal as builder
 ARG PROJVERSION
 ARG GEOSVERSION
 ARG GDALVERSION
 ARG GEOCUBEVERSION
 ARG GEOCUBECLIENTVERSION
 
+ENV DEBIAN_FRONTEND noninteractive
+ENV TZ=Etc/UTC
+
 RUN apt update \
-    && apt install -y pkg-config curl libcurl4-gnutls-dev sqlite3 libsqlite3-dev make g++ libzstd-dev libboost-all-dev libtool libtiff-dev musl-dev autoconf automake build-essential \
+    && apt install -y golang-1.20 git pkg-config curl libcurl4-gnutls-dev sqlite3 libsqlite3-dev make g++ libzstd-dev libboost-all-dev libtool libtiff-dev musl-dev autoconf automake build-essential \
     && rm -rf /var/lib/apt/lists/* \
     && apt autoremove -y \
     && apt clean -y
@@ -117,11 +120,11 @@ RUN mkdir gdal && cd gdal && curl -sL https://github.com/OSGeo/gdal/releases/dow
 
 RUN git clone -b $GEOCUBEVERSION https://github.com/airbusgeo/geocube.git \
     && cd geocube/cmd/downloader \
-    && go build -ldflags="-s -w" \
+    && /usr/lib/go-1.20/bin/go build -ldflags="-s -w" \
     && mv downloader /build/ \
     && cd /build && rm -rf geocube
 
-FROM ubuntu:20.04
+FROM ubuntu:focal
 ARG GDALVERSION
 
 ENV GRPC_ENABLE_FORK_SUPPORT=1

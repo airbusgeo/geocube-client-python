@@ -4,9 +4,16 @@ Geocube Python Client Library is delivered as an example of Geocube Client.
 
 ## Installation
 
+### Package
 ```bash
 pip install git+https://github.com/airbusgeo/geocube-client-python.git
 ```
+
+### Docker with a Geocube Downloader embedded
+```bash
+docker build -f docker/Dockerfile.geocube-client-downloader -t geocube-client-downloader:latest .
+```
+
 ## Quickstart
 
 ### Requirements
