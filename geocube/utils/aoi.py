@@ -16,11 +16,17 @@ def read_aoi(aoi_file):
         warnings.warn(f"{e}. Retrying, trying to make the geometry valid...")
         return ops.unary_union([g.buffer(0) for g in df.geometry])
 
+def gpd_read_remote_file(url):
+    import fsspec
+    with fsspec.open(f"simplecache::{url}") as file:
+        return geopandas.read_file(file)
 
-def plot_aoi(aoi: geopandas.GeoSeries, world_path: str = geopandas.datasets.get_path('naturalearth_lowres'),
+def plot_aoi(aoi: geopandas.GeoSeries,
+             world_path: str = "https://www.naturalearthdata.com/http//www.naturalearthdata.com/"
+                               "download/110m/cultural/ne_110m_admin_0_countries.zip",
              ax=None, margin_pc=5):
     if world_path is not None:
-        base = geopandas.read_file(world_path).plot(color='lightgrey', edgecolor='white', ax=ax)
+        base = gpd_read_remote_file(world_path).plot(color='lightgrey', edgecolor='white', ax=ax)
     else:
         base = ax
 

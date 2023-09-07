@@ -157,6 +157,7 @@ class Tile:
         return affine.Affine.from_gdal(*transform)
 
     @staticmethod
-    def plot(tiles: List[Tile], world_path: str = gpd.datasets.get_path('naturalearth_lowres'), ax=None, margin_pc=5):
+    def plot(tiles: List[Tile], **kwargs):
+        """ kwargs: additional arguments for utils.plot_aoi """
         ts = gpd.GeoSeries(pd.concat([t.geoseries().to_crs("epsg:4326") for t in tiles]))
-        return utils.plot_aoi(ts, world_path, ax, margin_pc)
+        return utils.plot_aoi(ts, **kwargs)
