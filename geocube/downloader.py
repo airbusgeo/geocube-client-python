@@ -38,6 +38,7 @@ class Downloader:
         self.stub = downloader_grpc.GeocubeDownloaderStub(self._channel)
         if verbose:
             print("Connected to Geocube Downloader v" + self.version())
+        self.always_predownload = False
 
     @utils.catch_rpc_error
     def version(self) -> str:
@@ -45,13 +46,15 @@ class Downloader:
         return self.stub.Version(version_pb2.GetVersionRequest()).Version
 
     @utils.catch_rpc_error
-    def get_cube(self, metadata: entities.CubeMetadata, verbose: bool = True) \
+    def get_cube(self, metadata: entities.CubeMetadata, *, predownload: bool = False, verbose: bool = True) \
             -> Tuple[List[np.array], List[entities.GroupedRecords]]:
         """
         Get a cube given a CubeParameters
 
         Args:
             metadata: CubeMetadata (see entities.CubeMetadata and entities.CubeIterator)
+            predownload: Predownload the datasets before merging them. When the dataset is remote and all the
+                dataset is required, it is more efficient to predownload it.
             verbose: add information during the transfer
 
         Returns:
@@ -59,7 +62,7 @@ class Downloader:
                 (several records can be returned for each image when they are grouped together,
                 by date or something else. See entities.Record.group_by)
         """
-        cube = self._get_cube_it(metadata)
+        cube = self._get_cube_it(metadata, predownload=predownload)
         images, grouped_records = [], []
         if verbose:
             print("GetCube returns {} images from {} datasets".format(cube.count, cube.nb_datasets))
@@ -82,7 +85,8 @@ class Downloader:
         return images, grouped_records
 
     @utils.catch_rpc_error
-    def get_cube_it(self, metadata: entities.CubeMetadata, file_format=FileFormatRaw, file_pattern: str = None)\
+    def get_cube_it(self, metadata: entities.CubeMetadata, *, file_format=FileFormatRaw, file_pattern: str = None,
+                    predownload: bool = False)\
             -> entities.CubeIterator:
         """
         Returns a cube iterator over the requested images
@@ -92,13 +96,16 @@ class Downloader:
             file_format: (optional) currently supported geocube.FileFormatRaw & geocube.FileFormatGTiff
             file_pattern: (optional) iif file_format != Raw, pattern of the file name.
                 {#} will be replaced by the number of image, {date} and {id} by the value of the record
+            predownload: Predownload the datasets before merging them. When the dataset is remote and all the
+                dataset is required, it is more efficient to predownload it.
 
         Returns:
             an iterator yielding an image, its associated records, an error (or None) and the size of the image
         """
-        return self._get_cube_it(metadata, file_format, file_pattern)
+        return self._get_cube_it(metadata, file_format, file_pattern, predownload=predownload)
 
-    def _get_cube_it(self, metadata: entities.CubeMetadata, file_format=FileFormatRaw, file_pattern: str = None)\
+    def _get_cube_it(self, metadata: entities.CubeMetadata, file_format=FileFormatRaw, file_pattern: str = None,
+                     predownload: bool = False)\
             -> entities.CubeIterator:
         req = catalog_pb2.GetCubeMetadataRequest(
             grouped_records=[records_pb2.GroupedRecords(records=[r.to_pb() for r in s.grouped_records])
@@ -111,7 +118,8 @@ class Downloader:
                 a=metadata.transform.c, b=metadata.transform.a, c=metadata.transform.b,
                 d=metadata.transform.f, e=metadata.transform.d, f=metadata.transform.e),
             size=layouts_pb2.Size(width=metadata.shape[0], height=metadata.shape[1]),
-            format=file_format
+            format=file_format,
+            predownload=predownload
         )
 
         return entities.CubeIterator(self.stub.DownloadCube(req), file_format, file_pattern)
