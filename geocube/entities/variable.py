@@ -348,10 +348,12 @@ class VariableInstance(_ProxyVariable, Instance):
 
     @utils.catch_rpc_error
     def del_metadata(self, key: str):
-        if key not in self.metadata:
+        if key in self.metadata:
             req = variables_pb2.UpdateInstanceRequest(id=self.instance_id, del_metadata_keys=[key])
             self.client.UpdateInstance(req)
             del self._instance.metadata[key]
+        else:
+            raise ValueError(f"{self.__repr__()}: {key} does not exist in metadata")
 
     def __repr__(self):
         return "VariableInstance {}:{} ({})".format(self.variable_name, self.instance_name, self.instance_id)
