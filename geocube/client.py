@@ -507,7 +507,7 @@ class Client:
             metadata = self._get_cube_it(params, headers_only=True).metadata()
             if resampling_alg != entities.Resampling.undefined:
                 metadata.resampling_alg = resampling_alg
-            return self.downloader.get_cube_it(metadata, file_format, file_pattern)
+            return self.downloader.get_cube_it(metadata, file_format=file_format, file_pattern=file_pattern)
 
         common = {
             "instances_id":      [params.instance],
