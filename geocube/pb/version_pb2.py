@@ -4,9 +4,8 @@
 """Generated protocol buffer code."""
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import descriptor_pool as _descriptor_pool
-from google.protobuf import message as _message
-from google.protobuf import reflection as _reflection
 from google.protobuf import symbol_database as _symbol_database
+from google.protobuf.internal import builder as _builder
 # @@protoc_insertion_point(imports)
 
 _sym_db = _symbol_database.Default()
@@ -16,30 +15,14 @@ _sym_db = _symbol_database.Default()
 
 DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x18geocube/pb/version.proto\x12\x07geocube\"\x13\n\x11GetVersionRequest\"%\n\x12GetVersionResponse\x12\x0f\n\x07Version\x18\x01 \x01(\tB\x0eZ\x0c./pb;geocubeb\x06proto3')
 
-
-
-_GETVERSIONREQUEST = DESCRIPTOR.message_types_by_name['GetVersionRequest']
-_GETVERSIONRESPONSE = DESCRIPTOR.message_types_by_name['GetVersionResponse']
-GetVersionRequest = _reflection.GeneratedProtocolMessageType('GetVersionRequest', (_message.Message,), {
-  'DESCRIPTOR' : _GETVERSIONREQUEST,
-  '__module__' : 'geocube.pb.version_pb2'
-  # @@protoc_insertion_point(class_scope:geocube.GetVersionRequest)
-  })
-_sym_db.RegisterMessage(GetVersionRequest)
-
-GetVersionResponse = _reflection.GeneratedProtocolMessageType('GetVersionResponse', (_message.Message,), {
-  'DESCRIPTOR' : _GETVERSIONRESPONSE,
-  '__module__' : 'geocube.pb.version_pb2'
-  # @@protoc_insertion_point(class_scope:geocube.GetVersionResponse)
-  })
-_sym_db.RegisterMessage(GetVersionResponse)
-
+_globals = globals()
+_builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
+_builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'geocube.pb.version_pb2', _globals)
 if _descriptor._USE_C_DESCRIPTORS == False:
-
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'Z\014./pb;geocube'
-  _GETVERSIONREQUEST._serialized_start=37
-  _GETVERSIONREQUEST._serialized_end=56
-  _GETVERSIONRESPONSE._serialized_start=58
-  _GETVERSIONRESPONSE._serialized_end=95
+  _globals['_GETVERSIONREQUEST']._serialized_start=37
+  _globals['_GETVERSIONREQUEST']._serialized_end=56
+  _globals['_GETVERSIONRESPONSE']._serialized_start=58
+  _globals['_GETVERSIONRESPONSE']._serialized_end=95
 # @@protoc_insertion_point(module_scope)

@@ -260,7 +260,7 @@ class GeocubeServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def DeleteRecords(self, request, context):
-        """Delete records iif no dataset has a reference on
+        """Delete records
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')

@@ -4,9 +4,8 @@
 """Generated protocol buffer code."""
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import descriptor_pool as _descriptor_pool
-from google.protobuf import message as _message
-from google.protobuf import reflection as _reflection
 from google.protobuf import symbol_database as _symbol_database
+from google.protobuf.internal import builder as _builder
 # @@protoc_insertion_point(imports)
 
 _sym_db = _symbol_database.Default()
@@ -17,243 +16,58 @@ from geocube.pb import records_pb2 as geocube_dot_pb_dot_records__pb2
 
 DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x18geocube/pb/layouts.proto\x12\x07geocube\x1a\x18geocube/pb/records.proto\"%\n\x04Size\x12\r\n\x05width\x18\x01 \x01(\x05\x12\x0e\n\x06height\x18\x02 \x01(\x05\"P\n\x0cGeoTransform\x12\t\n\x01\x61\x18\x01 \x01(\x01\x12\t\n\x01\x62\x18\x02 \x01(\x01\x12\t\n\x01\x63\x18\x03 \x01(\x01\x12\t\n\x01\x64\x18\x04 \x01(\x01\x12\t\n\x01\x65\x18\x05 \x01(\x01\x12\t\n\x01\x66\x18\x06 \x01(\x01\"]\n\x04Tile\x12(\n\ttransform\x18\x01 \x01(\x0b\x32\x15.geocube.GeoTransform\x12\x1e\n\x07size_px\x18\x02 \x01(\x0b\x32\r.geocube.Size\x12\x0b\n\x03\x63rs\x18\x03 \x01(\t\"\x99\x02\n\x06Layout\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x12\n\ngrid_flags\x18\x03 \x03(\t\x12<\n\x0fgrid_parameters\x18\x04 \x03(\x0b\x32#.geocube.Layout.GridParametersEntry\x12\x14\n\x0c\x62lock_x_size\x18\x05 \x01(\x03\x12\x14\n\x0c\x62lock_y_size\x18\x06 \x01(\x03\x12\x13\n\x0bmax_records\x18\x07 \x01(\x03\x12\x1a\n\x12overviews_min_size\x18\x08 \x01(\x03\x12\x1b\n\x13interlacing_pattern\x18\t \x01(\t\x1a\x35\n\x13GridParametersEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"6\n\x13\x43reateLayoutRequest\x12\x1f\n\x06layout\x18\x01 \x01(\x0b\x32\x0f.geocube.Layout\"\x16\n\x14\x43reateLayoutResponse\"#\n\x13\x44\x65leteLayoutRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x16\n\x14\x44\x65leteLayoutResponse\"\'\n\x12ListLayoutsRequest\x12\x11\n\tname_like\x18\x01 \x01(\t\"7\n\x13ListLayoutsResponse\x12 \n\x07layouts\x18\x01 \x03(\x0b\x32\x0f.geocube.Layout\"\x9c\x01\n\x1b\x46indContainerLayoutsRequest\x12\x13\n\x0binstance_id\x18\x01 \x01(\t\x12(\n\x07records\x18\x02 \x01(\x0b\x32\x15.geocube.RecordIdListH\x00\x12\x30\n\x07\x66ilters\x18\x03 \x01(\x0b\x32\x1d.geocube.RecordFiltersWithAOIH\x00\x42\x0c\n\nidentifier\"K\n\x1c\x46indContainerLayoutsResponse\x12\x13\n\x0blayout_name\x18\x01 \x01(\t\x12\x16\n\x0e\x63ontainer_uris\x18\x02 \x03(\t\"s\n\x0eTileAOIRequest\x12\x19\n\x03\x61oi\x18\x01 \x01(\x0b\x32\x0c.geocube.AOI\x12\x15\n\x0blayout_name\x18\x05 \x01(\tH\x00\x12!\n\x06layout\x18\x06 \x01(\x0b\x32\x0f.geocube.LayoutH\x00\x42\x0c\n\nidentifier\"/\n\x0fTileAOIResponse\x12\x1c\n\x05tiles\x18\x01 \x03(\x0b\x32\r.geocube.Tile\"G\n\x04Grid\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x1c\n\x05\x63\x65lls\x18\x03 \x03(\x0b\x32\r.geocube.Cell\"I\n\x04\x43\x65ll\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0b\n\x03\x63rs\x18\x02 \x01(\t\x12(\n\x0b\x63oordinates\x18\x03 \x01(\x0b\x32\x13.geocube.LinearRing\"0\n\x11\x43reateGridRequest\x12\x1b\n\x04grid\x18\x01 \x01(\x0b\x32\r.geocube.Grid\"\x14\n\x12\x43reateGridResponse\"!\n\x11\x44\x65leteGridRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x14\n\x12\x44\x65leteGridResponse\"%\n\x10ListGridsRequest\x12\x11\n\tname_like\x18\x01 \x01(\t\"1\n\x11ListGridsResponse\x12\x1c\n\x05grids\x18\x01 \x03(\x0b\x32\r.geocube.GridB\x0eZ\x0c./pb;geocubeb\x06proto3')
 
-
-
-_SIZE = DESCRIPTOR.message_types_by_name['Size']
-_GEOTRANSFORM = DESCRIPTOR.message_types_by_name['GeoTransform']
-_TILE = DESCRIPTOR.message_types_by_name['Tile']
-_LAYOUT = DESCRIPTOR.message_types_by_name['Layout']
-_LAYOUT_GRIDPARAMETERSENTRY = _LAYOUT.nested_types_by_name['GridParametersEntry']
-_CREATELAYOUTREQUEST = DESCRIPTOR.message_types_by_name['CreateLayoutRequest']
-_CREATELAYOUTRESPONSE = DESCRIPTOR.message_types_by_name['CreateLayoutResponse']
-_DELETELAYOUTREQUEST = DESCRIPTOR.message_types_by_name['DeleteLayoutRequest']
-_DELETELAYOUTRESPONSE = DESCRIPTOR.message_types_by_name['DeleteLayoutResponse']
-_LISTLAYOUTSREQUEST = DESCRIPTOR.message_types_by_name['ListLayoutsRequest']
-_LISTLAYOUTSRESPONSE = DESCRIPTOR.message_types_by_name['ListLayoutsResponse']
-_FINDCONTAINERLAYOUTSREQUEST = DESCRIPTOR.message_types_by_name['FindContainerLayoutsRequest']
-_FINDCONTAINERLAYOUTSRESPONSE = DESCRIPTOR.message_types_by_name['FindContainerLayoutsResponse']
-_TILEAOIREQUEST = DESCRIPTOR.message_types_by_name['TileAOIRequest']
-_TILEAOIRESPONSE = DESCRIPTOR.message_types_by_name['TileAOIResponse']
-_GRID = DESCRIPTOR.message_types_by_name['Grid']
-_CELL = DESCRIPTOR.message_types_by_name['Cell']
-_CREATEGRIDREQUEST = DESCRIPTOR.message_types_by_name['CreateGridRequest']
-_CREATEGRIDRESPONSE = DESCRIPTOR.message_types_by_name['CreateGridResponse']
-_DELETEGRIDREQUEST = DESCRIPTOR.message_types_by_name['DeleteGridRequest']
-_DELETEGRIDRESPONSE = DESCRIPTOR.message_types_by_name['DeleteGridResponse']
-_LISTGRIDSREQUEST = DESCRIPTOR.message_types_by_name['ListGridsRequest']
-_LISTGRIDSRESPONSE = DESCRIPTOR.message_types_by_name['ListGridsResponse']
-Size = _reflection.GeneratedProtocolMessageType('Size', (_message.Message,), {
-  'DESCRIPTOR' : _SIZE,
-  '__module__' : 'geocube.pb.layouts_pb2'
-  # @@protoc_insertion_point(class_scope:geocube.Size)
-  })
-_sym_db.RegisterMessage(Size)
-
-GeoTransform = _reflection.GeneratedProtocolMessageType('GeoTransform', (_message.Message,), {
-  'DESCRIPTOR' : _GEOTRANSFORM,
-  '__module__' : 'geocube.pb.layouts_pb2'
-  # @@protoc_insertion_point(class_scope:geocube.GeoTransform)
-  })
-_sym_db.RegisterMessage(GeoTransform)
-
-Tile = _reflection.GeneratedProtocolMessageType('Tile', (_message.Message,), {
-  'DESCRIPTOR' : _TILE,
-  '__module__' : 'geocube.pb.layouts_pb2'
-  # @@protoc_insertion_point(class_scope:geocube.Tile)
-  })
-_sym_db.RegisterMessage(Tile)
-
-Layout = _reflection.GeneratedProtocolMessageType('Layout', (_message.Message,), {
-
-  'GridParametersEntry' : _reflection.GeneratedProtocolMessageType('GridParametersEntry', (_message.Message,), {
-    'DESCRIPTOR' : _LAYOUT_GRIDPARAMETERSENTRY,
-    '__module__' : 'geocube.pb.layouts_pb2'
-    # @@protoc_insertion_point(class_scope:geocube.Layout.GridParametersEntry)
-    })
-  ,
-  'DESCRIPTOR' : _LAYOUT,
-  '__module__' : 'geocube.pb.layouts_pb2'
-  # @@protoc_insertion_point(class_scope:geocube.Layout)
-  })
-_sym_db.RegisterMessage(Layout)
-_sym_db.RegisterMessage(Layout.GridParametersEntry)
-
-CreateLayoutRequest = _reflection.GeneratedProtocolMessageType('CreateLayoutRequest', (_message.Message,), {
-  'DESCRIPTOR' : _CREATELAYOUTREQUEST,
-  '__module__' : 'geocube.pb.layouts_pb2'
-  # @@protoc_insertion_point(class_scope:geocube.CreateLayoutRequest)
-  })
-_sym_db.RegisterMessage(CreateLayoutRequest)
-
-CreateLayoutResponse = _reflection.GeneratedProtocolMessageType('CreateLayoutResponse', (_message.Message,), {
-  'DESCRIPTOR' : _CREATELAYOUTRESPONSE,
-  '__module__' : 'geocube.pb.layouts_pb2'
-  # @@protoc_insertion_point(class_scope:geocube.CreateLayoutResponse)
-  })
-_sym_db.RegisterMessage(CreateLayoutResponse)
-
-DeleteLayoutRequest = _reflection.GeneratedProtocolMessageType('DeleteLayoutRequest', (_message.Message,), {
-  'DESCRIPTOR' : _DELETELAYOUTREQUEST,
-  '__module__' : 'geocube.pb.layouts_pb2'
-  # @@protoc_insertion_point(class_scope:geocube.DeleteLayoutRequest)
-  })
-_sym_db.RegisterMessage(DeleteLayoutRequest)
-
-DeleteLayoutResponse = _reflection.GeneratedProtocolMessageType('DeleteLayoutResponse', (_message.Message,), {
-  'DESCRIPTOR' : _DELETELAYOUTRESPONSE,
-  '__module__' : 'geocube.pb.layouts_pb2'
-  # @@protoc_insertion_point(class_scope:geocube.DeleteLayoutResponse)
-  })
-_sym_db.RegisterMessage(DeleteLayoutResponse)
-
-ListLayoutsRequest = _reflection.GeneratedProtocolMessageType('ListLayoutsRequest', (_message.Message,), {
-  'DESCRIPTOR' : _LISTLAYOUTSREQUEST,
-  '__module__' : 'geocube.pb.layouts_pb2'
-  # @@protoc_insertion_point(class_scope:geocube.ListLayoutsRequest)
-  })
-_sym_db.RegisterMessage(ListLayoutsRequest)
-
-ListLayoutsResponse = _reflection.GeneratedProtocolMessageType('ListLayoutsResponse', (_message.Message,), {
-  'DESCRIPTOR' : _LISTLAYOUTSRESPONSE,
-  '__module__' : 'geocube.pb.layouts_pb2'
-  # @@protoc_insertion_point(class_scope:geocube.ListLayoutsResponse)
-  })
-_sym_db.RegisterMessage(ListLayoutsResponse)
-
-FindContainerLayoutsRequest = _reflection.GeneratedProtocolMessageType('FindContainerLayoutsRequest', (_message.Message,), {
-  'DESCRIPTOR' : _FINDCONTAINERLAYOUTSREQUEST,
-  '__module__' : 'geocube.pb.layouts_pb2'
-  # @@protoc_insertion_point(class_scope:geocube.FindContainerLayoutsRequest)
-  })
-_sym_db.RegisterMessage(FindContainerLayoutsRequest)
-
-FindContainerLayoutsResponse = _reflection.GeneratedProtocolMessageType('FindContainerLayoutsResponse', (_message.Message,), {
-  'DESCRIPTOR' : _FINDCONTAINERLAYOUTSRESPONSE,
-  '__module__' : 'geocube.pb.layouts_pb2'
-  # @@protoc_insertion_point(class_scope:geocube.FindContainerLayoutsResponse)
-  })
-_sym_db.RegisterMessage(FindContainerLayoutsResponse)
-
-TileAOIRequest = _reflection.GeneratedProtocolMessageType('TileAOIRequest', (_message.Message,), {
-  'DESCRIPTOR' : _TILEAOIREQUEST,
-  '__module__' : 'geocube.pb.layouts_pb2'
-  # @@protoc_insertion_point(class_scope:geocube.TileAOIRequest)
-  })
-_sym_db.RegisterMessage(TileAOIRequest)
-
-TileAOIResponse = _reflection.GeneratedProtocolMessageType('TileAOIResponse', (_message.Message,), {
-  'DESCRIPTOR' : _TILEAOIRESPONSE,
-  '__module__' : 'geocube.pb.layouts_pb2'
-  # @@protoc_insertion_point(class_scope:geocube.TileAOIResponse)
-  })
-_sym_db.RegisterMessage(TileAOIResponse)
-
-Grid = _reflection.GeneratedProtocolMessageType('Grid', (_message.Message,), {
-  'DESCRIPTOR' : _GRID,
-  '__module__' : 'geocube.pb.layouts_pb2'
-  # @@protoc_insertion_point(class_scope:geocube.Grid)
-  })
-_sym_db.RegisterMessage(Grid)
-
-Cell = _reflection.GeneratedProtocolMessageType('Cell', (_message.Message,), {
-  'DESCRIPTOR' : _CELL,
-  '__module__' : 'geocube.pb.layouts_pb2'
-  # @@protoc_insertion_point(class_scope:geocube.Cell)
-  })
-_sym_db.RegisterMessage(Cell)
-
-CreateGridRequest = _reflection.GeneratedProtocolMessageType('CreateGridRequest', (_message.Message,), {
-  'DESCRIPTOR' : _CREATEGRIDREQUEST,
-  '__module__' : 'geocube.pb.layouts_pb2'
-  # @@protoc_insertion_point(class_scope:geocube.CreateGridRequest)
-  })
-_sym_db.RegisterMessage(CreateGridRequest)
-
-CreateGridResponse = _reflection.GeneratedProtocolMessageType('CreateGridResponse', (_message.Message,), {
-  'DESCRIPTOR' : _CREATEGRIDRESPONSE,
-  '__module__' : 'geocube.pb.layouts_pb2'
-  # @@protoc_insertion_point(class_scope:geocube.CreateGridResponse)
-  })
-_sym_db.RegisterMessage(CreateGridResponse)
-
-DeleteGridRequest = _reflection.GeneratedProtocolMessageType('DeleteGridRequest', (_message.Message,), {
-  'DESCRIPTOR' : _DELETEGRIDREQUEST,
-  '__module__' : 'geocube.pb.layouts_pb2'
-  # @@protoc_insertion_point(class_scope:geocube.DeleteGridRequest)
-  })
-_sym_db.RegisterMessage(DeleteGridRequest)
-
-DeleteGridResponse = _reflection.GeneratedProtocolMessageType('DeleteGridResponse', (_message.Message,), {
-  'DESCRIPTOR' : _DELETEGRIDRESPONSE,
-  '__module__' : 'geocube.pb.layouts_pb2'
-  # @@protoc_insertion_point(class_scope:geocube.DeleteGridResponse)
-  })
-_sym_db.RegisterMessage(DeleteGridResponse)
-
-ListGridsRequest = _reflection.GeneratedProtocolMessageType('ListGridsRequest', (_message.Message,), {
-  'DESCRIPTOR' : _LISTGRIDSREQUEST,
-  '__module__' : 'geocube.pb.layouts_pb2'
-  # @@protoc_insertion_point(class_scope:geocube.ListGridsRequest)
-  })
-_sym_db.RegisterMessage(ListGridsRequest)
-
-ListGridsResponse = _reflection.GeneratedProtocolMessageType('ListGridsResponse', (_message.Message,), {
-  'DESCRIPTOR' : _LISTGRIDSRESPONSE,
-  '__module__' : 'geocube.pb.layouts_pb2'
-  # @@protoc_insertion_point(class_scope:geocube.ListGridsResponse)
-  })
-_sym_db.RegisterMessage(ListGridsResponse)
-
+_globals = globals()
+_builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
+_builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'geocube.pb.layouts_pb2', _globals)
 if _descriptor._USE_C_DESCRIPTORS == False:
-
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'Z\014./pb;geocube'
   _LAYOUT_GRIDPARAMETERSENTRY._options = None
   _LAYOUT_GRIDPARAMETERSENTRY._serialized_options = b'8\001'
-  _SIZE._serialized_start=63
-  _SIZE._serialized_end=100
-  _GEOTRANSFORM._serialized_start=102
-  _GEOTRANSFORM._serialized_end=182
-  _TILE._serialized_start=184
-  _TILE._serialized_end=277
-  _LAYOUT._serialized_start=280
-  _LAYOUT._serialized_end=561
-  _LAYOUT_GRIDPARAMETERSENTRY._serialized_start=508
-  _LAYOUT_GRIDPARAMETERSENTRY._serialized_end=561
-  _CREATELAYOUTREQUEST._serialized_start=563
-  _CREATELAYOUTREQUEST._serialized_end=617
-  _CREATELAYOUTRESPONSE._serialized_start=619
-  _CREATELAYOUTRESPONSE._serialized_end=641
-  _DELETELAYOUTREQUEST._serialized_start=643
-  _DELETELAYOUTREQUEST._serialized_end=678
-  _DELETELAYOUTRESPONSE._serialized_start=680
-  _DELETELAYOUTRESPONSE._serialized_end=702
-  _LISTLAYOUTSREQUEST._serialized_start=704
-  _LISTLAYOUTSREQUEST._serialized_end=743
-  _LISTLAYOUTSRESPONSE._serialized_start=745
-  _LISTLAYOUTSRESPONSE._serialized_end=800
-  _FINDCONTAINERLAYOUTSREQUEST._serialized_start=803
-  _FINDCONTAINERLAYOUTSREQUEST._serialized_end=959
-  _FINDCONTAINERLAYOUTSRESPONSE._serialized_start=961
-  _FINDCONTAINERLAYOUTSRESPONSE._serialized_end=1036
-  _TILEAOIREQUEST._serialized_start=1038
-  _TILEAOIREQUEST._serialized_end=1153
-  _TILEAOIRESPONSE._serialized_start=1155
-  _TILEAOIRESPONSE._serialized_end=1202
-  _GRID._serialized_start=1204
-  _GRID._serialized_end=1275
-  _CELL._serialized_start=1277
-  _CELL._serialized_end=1350
-  _CREATEGRIDREQUEST._serialized_start=1352
-  _CREATEGRIDREQUEST._serialized_end=1400
-  _CREATEGRIDRESPONSE._serialized_start=1402
-  _CREATEGRIDRESPONSE._serialized_end=1422
-  _DELETEGRIDREQUEST._serialized_start=1424
-  _DELETEGRIDREQUEST._serialized_end=1457
-  _DELETEGRIDRESPONSE._serialized_start=1459
-  _DELETEGRIDRESPONSE._serialized_end=1479
-  _LISTGRIDSREQUEST._serialized_start=1481
-  _LISTGRIDSREQUEST._serialized_end=1518
-  _LISTGRIDSRESPONSE._serialized_start=1520
-  _LISTGRIDSRESPONSE._serialized_end=1569
+  _globals['_SIZE']._serialized_start=63
+  _globals['_SIZE']._serialized_end=100
+  _globals['_GEOTRANSFORM']._serialized_start=102
+  _globals['_GEOTRANSFORM']._serialized_end=182
+  _globals['_TILE']._serialized_start=184
+  _globals['_TILE']._serialized_end=277
+  _globals['_LAYOUT']._serialized_start=280
+  _globals['_LAYOUT']._serialized_end=561
+  _globals['_LAYOUT_GRIDPARAMETERSENTRY']._serialized_start=508
+  _globals['_LAYOUT_GRIDPARAMETERSENTRY']._serialized_end=561
+  _globals['_CREATELAYOUTREQUEST']._serialized_start=563
+  _globals['_CREATELAYOUTREQUEST']._serialized_end=617
+  _globals['_CREATELAYOUTRESPONSE']._serialized_start=619
+  _globals['_CREATELAYOUTRESPONSE']._serialized_end=641
+  _globals['_DELETELAYOUTREQUEST']._serialized_start=643
+  _globals['_DELETELAYOUTREQUEST']._serialized_end=678
+  _globals['_DELETELAYOUTRESPONSE']._serialized_start=680
+  _globals['_DELETELAYOUTRESPONSE']._serialized_end=702
+  _globals['_LISTLAYOUTSREQUEST']._serialized_start=704
+  _globals['_LISTLAYOUTSREQUEST']._serialized_end=743
+  _globals['_LISTLAYOUTSRESPONSE']._serialized_start=745
+  _globals['_LISTLAYOUTSRESPONSE']._serialized_end=800
+  _globals['_FINDCONTAINERLAYOUTSREQUEST']._serialized_start=803
+  _globals['_FINDCONTAINERLAYOUTSREQUEST']._serialized_end=959
+  _globals['_FINDCONTAINERLAYOUTSRESPONSE']._serialized_start=961
+  _globals['_FINDCONTAINERLAYOUTSRESPONSE']._serialized_end=1036
+  _globals['_TILEAOIREQUEST']._serialized_start=1038
+  _globals['_TILEAOIREQUEST']._serialized_end=1153
+  _globals['_TILEAOIRESPONSE']._serialized_start=1155
+  _globals['_TILEAOIRESPONSE']._serialized_end=1202
+  _globals['_GRID']._serialized_start=1204
+  _globals['_GRID']._serialized_end=1275
+  _globals['_CELL']._serialized_start=1277
+  _globals['_CELL']._serialized_end=1350
+  _globals['_CREATEGRIDREQUEST']._serialized_start=1352
+  _globals['_CREATEGRIDREQUEST']._serialized_end=1400
+  _globals['_CREATEGRIDRESPONSE']._serialized_start=1402
+  _globals['_CREATEGRIDRESPONSE']._serialized_end=1422
+  _globals['_DELETEGRIDREQUEST']._serialized_start=1424
+  _globals['_DELETEGRIDREQUEST']._serialized_end=1457
+  _globals['_DELETEGRIDRESPONSE']._serialized_start=1459
+  _globals['_DELETEGRIDRESPONSE']._serialized_end=1479
+  _globals['_LISTGRIDSREQUEST']._serialized_start=1481
+  _globals['_LISTGRIDSREQUEST']._serialized_end=1518
+  _globals['_LISTGRIDSRESPONSE']._serialized_start=1520
+  _globals['_LISTGRIDSRESPONSE']._serialized_end=1569
 # @@protoc_insertion_point(module_scope)

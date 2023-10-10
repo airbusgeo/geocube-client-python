@@ -330,14 +330,15 @@ class Client:
         return self.stub.RemoveRecordsTags(req).nb
 
     @utils.catch_rpc_error
-    def delete_records(self, records: List[Union[str, entities.Record]]):
+    def delete_records(self, records: List[Union[str, entities.Record]], no_fail: bool = False):
         """
         Delete records iif no dataset are indexed to them.
 
         Args:
             records: List of records to be deleted
+            no_fail: if true, do not fail if some records still have datasets that refer to them, and delete the others
         """
-        req = records_pb2.DeleteRecordsRequest(ids=entities.get_ids(records))
+        req = records_pb2.DeleteRecordsRequest(ids=entities.get_ids(records), no_fail=no_fail)
         self.stub.DeleteRecords(req)
 
     @utils.catch_rpc_error
