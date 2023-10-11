@@ -120,12 +120,12 @@ class Tile:
     def __str__(self):
         return "Tile {}\n" \
                "    transform: ({}, {} {}, {}, {} {})\n" \
-               "    bounds:    ({} {}) {}\n" \
+               "    bounds:    {} {}\n" \
                "    shape:     {} \n" \
                "    crs:       {}\n".format(self.shape,
                                             self.transform.c, self.transform.a, self.transform.b,
                                             self.transform.f, self.transform.d, self.transform.e,
-                                            self.transform.c, self.transform.f, self.transform*self.shape,
+                                            self.transform*(0, 0), self.transform*self.shape,
                                             self.shape, self.crs)
 
     def __repr__(self):
@@ -157,7 +157,11 @@ class Tile:
         return affine.Affine.from_gdal(*transform)
 
     @staticmethod
+    def to_geoseries(tiles: List[Tile]):
+        """ return list of Tiles as geoseries """
+        return gpd.GeoSeries(pd.concat([t.geoseries().to_crs("epsg:4326") for t in tiles]))
+
+    @staticmethod
     def plot(tiles: List[Tile], **kwargs):
         """ kwargs: additional arguments for utils.plot_aoi """
-        ts = gpd.GeoSeries(pd.concat([t.geoseries().to_crs("epsg:4326") for t in tiles]))
-        return utils.plot_aoi(ts, **kwargs)
+        return utils.plot_aoi(Tile.to_geoseries(tiles), **kwargs)

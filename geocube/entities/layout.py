@@ -100,8 +100,7 @@ class Layout:
         """ Define a regular layout using web-mercator projection at a given z_level """
         earth_perimeter = 2*6378137*math.pi
         ox, oy, resolution = -earth_perimeter/2, earth_perimeter/2, earth_perimeter/(256*(1 << z_level))
-        return Layout.regular(name, "epsg:3857", cell_size=cell_size, resolution=resolution,
-                              block_size=256, origin=(ox, oy), **kwargs)
+        return Layout.regular(name, "epsg:3857", cell_size=cell_size, resolution=resolution, origin=(ox, oy), **kwargs)
 
     def __repr__(self):
         return f"Layout '{self.name}'"

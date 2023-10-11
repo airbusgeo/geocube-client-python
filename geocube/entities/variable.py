@@ -248,12 +248,14 @@ class Variable(_ProxyVariable):
         if name is None:
             if len(self.instances) != 1:
                 raise utils.GeocubeError("instance", "NOT EXISTS",
-                                         "Default instance does not exist (or more than one instance is defined).")
+                                         f"Default instance does not exist for variable {self.variable_name}"
+                                         f" (or more than one instance is defined).")
             return VariableInstance(self, next(iter(self.instances.values())))
 
         if name not in self.instances:
             raise utils.GeocubeError("instance", "NOT EXISTS",
-                                     f"Instance {name} does not exist. To instantiate a variable, use instantiate()")
+                                     f"Instance {name} does not exist for variable {self.variable_name}. "
+                                     f"To instantiate a variable, use instantiate()")
 
         return VariableInstance(self, self.instances[name])
 
