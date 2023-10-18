@@ -67,16 +67,19 @@ class Consolidater(Client):
                     job_name: str,
                     instance: Union[str, entities.VariableInstance],
                     layout: Union[str, entities.Layout],
+                    *,
                     records: Union[List[entities.RecordIdentifiers], None] = None,
                     tags: Union[Dict[str, str], None] = None,
                     from_time: Union[datetime, None] = None,
                     to_time: Union[datetime, None] = None,
+                    collapse_on_record: Union[entities.Record, str, None] = None,
                     execution_level: entities.ExecutionLevel = entities.ExecutionLevel.ASYNCHRONOUS):
         common = {
-            "job_name":        job_name,
-            "instance_id":     entities.get_id(instance),
-            "layout_name":     entities.get_id(layout),
-            "execution_level": execution_level.value,
+            "job_name":              job_name,
+            "instance_id":           entities.get_id(instance),
+            "layout_name":           entities.get_id(layout),
+            "execution_level":       execution_level.value,
+            "collapse_on_record_id": entities.get_id(collapse_on_record) if collapse_on_record is not None else "",
         }
 
         if records is not None:
