@@ -20,7 +20,6 @@ class Admin(Consolidater):
         super().__init__(uri, secure, api_key, verbose)
         self.admin_stub = admin_pb2_grpc.AdminStub(self._channel)
 
-    @utils.catch_rpc_error
     def admin_tidy(self, aois: bool = False, records: bool = False, variables: bool = False, instances: bool = False,
                    containers: bool = False, consolidation_params: bool = False, simulate: bool = True):
         """
@@ -37,21 +36,8 @@ class Admin(Consolidater):
             consolidation_params: remove the pending ConsolidationParams
             simulate: if True no operation is performed. Only the number of entities that would have been deleted
         """
-        res = self.admin_stub.TidyDB(admin_pb2.TidyDBRequest(
-            PendingAOIs=aois, PendingRecords=records, PendingVariables=variables, PendingInstances=instances,
-            PendingContainers=containers, PendingParams=consolidation_params, Simulate=simulate
-        ))
-        if simulate:
-            print("Simulation:")
+        return self._admin_tidy(aois, records, variables, instances, containers, consolidation_params, simulate)
 
-        print("{} aois deleted\n"
-              "{} records deleted\n"
-              "{} variables deleted\n"
-              "{} instances deleted\n"
-              "{} containers deleted\n"
-              .format(res.NbAOIs, res.NbRecords, res.NbVariables, res.NbInstances, res.NbContainers))
-
-    @utils.catch_rpc_error
     def admin_update_datasets(self, instance: Union[str, entities.VariableInstance],
                               records: List[Union[str, entities.Record]],
                               dformat: Union[Dict, Tuple, str], min_out: float, max_out: float,
@@ -68,23 +54,13 @@ class Admin(Consolidater):
             exponent: new exponent
             simulate: if True, no operation is performed. Only display the datasets that would have been updated.
         """
-        res = self.admin_stub.UpdateDatasets(admin_pb2.UpdateDatasetsRequest(
-            simulate=simulate, instance_id=entities.get_id(instance),
-            record_ids=entities.get_ids(records),
-            dformat=entities.DataFormat.from_user(dformat).to_pb(),
-            real_min_value=min_out, real_max_value=max_out, exponent=exponent))
-        if simulate:
-            print("Simulation:")
+        self._admin_update_datasets(instance, records, dformat, min_out, max_out, exponent, simulate)
 
-        for r, count in res.results.items():
-            print("{} : {}\n".format(r, count))
-
-    @utils.catch_rpc_error
     def admin_delete_datasets(self, instances: List[Union[str, entities.VariableInstance]],
                               records: List[Union[str, entities.Record]],
                               file_patterns: List[str] = None,
                               execution_level: entities.ExecutionLevel = entities.ExecutionLevel.STEP_BY_STEP_CRITICAL,
-                              job_name: str = None, allow_empty_instances=False, allow_empty_records=False)\
+                              job_name: str = None, allow_empty_instances=False, allow_empty_records=False) \
             -> entities.Job:
         """
         Admin function to delete datasets that are referenced by a list of instances and a list of records.
@@ -103,6 +79,49 @@ class Admin(Consolidater):
             allow_empty_records: [optional] allows records to be empty.
                 @warning It means that the job will delete all the records for the given instances.
         """
+        return self._admin_delete_datasets(instances, records, file_patterns,  execution_level,
+                                           job_name, allow_empty_instances, allow_empty_records)
+
+    @utils.catch_rpc_error
+    def _admin_tidy(self, aois: bool, records: bool, variables: bool, instances: bool,
+                    containers: bool, consolidation_params: bool, simulate: bool):
+        res = self.admin_stub.TidyDB(admin_pb2.TidyDBRequest(
+            PendingAOIs=aois, PendingRecords=records, PendingVariables=variables, PendingInstances=instances,
+            PendingContainers=containers, PendingParams=consolidation_params, Simulate=simulate
+        ))
+        if simulate:
+            print("Simulation:")
+
+        print("{} aois deleted\n"
+              "{} records deleted\n"
+              "{} variables deleted\n"
+              "{} instances deleted\n"
+              "{} containers deleted\n"
+              .format(res.NbAOIs, res.NbRecords, res.NbVariables, res.NbInstances, res.NbContainers))
+
+    @utils.catch_rpc_error
+    def _admin_update_datasets(self, instance: Union[str, entities.VariableInstance],
+                               records: List[Union[str, entities.Record]],
+                               dformat: Union[Dict, Tuple, str], min_out: float, max_out: float,
+                               exponent: float, simulate: bool):
+        res = self.admin_stub.UpdateDatasets(admin_pb2.UpdateDatasetsRequest(
+            simulate=simulate, instance_id=entities.get_id(instance),
+            record_ids=entities.get_ids(records),
+            dformat=entities.DataFormat.from_user(dformat).to_pb(),
+            real_min_value=min_out, real_max_value=max_out, exponent=exponent))
+        if simulate:
+            print("Simulation:")
+
+        for r, count in res.results.items():
+            print("{} : {}\n".format(r, count))
+
+    @utils.catch_rpc_error
+    def _admin_delete_datasets(self, instances: List[Union[str, entities.VariableInstance]],
+                               records: List[Union[str, entities.Record]],
+                               file_patterns: List[str],
+                               execution_level: entities.ExecutionLevel,
+                               job_name: str, allow_empty_instances, allow_empty_records) \
+            -> entities.Job:
         if len(records) == 0 and not allow_empty_records:
             raise ValueError("DeleteDataset: records is empty, but it has not been allowed. "
                              "Empty records means that all the datasets for the given instances are about to be "
@@ -120,7 +139,7 @@ class Admin(Consolidater):
         if len(records) == 0 and len(instances) == 0:
             warnings.warn("this job may be about to delete the whole database")
             if execution_level == entities.ExecutionLevel.ASYNCHRONOUS or \
-               execution_level == entities.ExecutionLevel.SYNCHRONOUS:
+                    execution_level == entities.ExecutionLevel.SYNCHRONOUS:
                 raise ValueError("I cannot allow that in a non-interactive execution_level. "
                                  "Please use execution_level == entities.ExecutionLevel.STEP_BY_STEP_CRITICAL.")
 

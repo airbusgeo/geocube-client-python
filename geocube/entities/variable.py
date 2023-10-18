@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import pprint
+import re
 import typing
 from dataclasses import dataclass, field, asdict
 from typing import Dict, List, Union
@@ -247,13 +248,13 @@ class Variable(_ProxyVariable):
         """
         if name is None:
             if len(self.instances) != 1:
-                raise utils.GeocubeError("instance", "NOT EXISTS",
+                raise utils.GeocubeError("instance", grpc.StatusCode.NOT_FOUND.name,
                                          f"Default instance does not exist for variable {self.variable_name}"
                                          f" (or more than one instance is defined).")
             return VariableInstance(self, next(iter(self.instances.values())))
 
         if name not in self.instances:
-            raise utils.GeocubeError("instance", "NOT EXISTS",
+            raise utils.GeocubeError("instance", grpc.StatusCode.NOT_FOUND.name,
                                      f"Instance {name} does not exist for variable {self.variable_name}. "
                                      f"To instantiate a variable, use instantiate()")
 
@@ -283,9 +284,11 @@ class Variable(_ProxyVariable):
         return VariableInstance(self, self.instances[name])
 
     @utils.catch_rpc_error
-    def delete_instances(self, prefix=''):
+    def delete_instances(self, pattern=''):
+        """ delete empty instances whose name match pattern (only * and ? are supported) """
+        pattern = re.escape(pattern).replace("\*", ".*").replace("\?", ".")
         for instance in self.instances.values():
-            if instance.name.startswith(prefix):
+            if re.match(pattern, instance.name):
                 req = variables_pb2.DeleteInstanceRequest(id=instance.id)
                 self.client.DeleteInstance(req)
 

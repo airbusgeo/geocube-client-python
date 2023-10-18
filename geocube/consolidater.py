@@ -9,32 +9,23 @@ from geocube.pb import operations_pb2, records_pb2
 
 class Consolidater(Client):
 
-    @utils.catch_rpc_error
     def list_jobs(self, name_like: str = ""):
         """
         List jobs by name
         name_like: pattern of the name. * and ? are supported to match all or any character.
         """
-        res = self.stub.ListJobs(operations_pb2.ListJobsRequest(name_like=name_like))
-        return [entities.Job.from_pb(self.stub, r) for r in res.jobs]
+        return self._list_jobs(name_like)
 
-    @utils.catch_rpc_error
     def job(self, name: str):
         """ Get job by name. Shortcut for ListJobs(name)[0]. Only few logs are loaded. """
-        res = self.stub.ListJobs(operations_pb2.ListJobsRequest(name_like=name))
-        if len(res.jobs) == 0:
-            raise utils.GeocubeError("job", "NOT_FOUND", "with name: " + name)
-        return entities.Job.from_pb(self.stub, res.jobs[0])
+        return self._job(name)
 
-    @utils.catch_rpc_error
     def get_job(self, job_id: Union[str, entities.Job], log_page=0, log_limit=1000):
         """
         Get job by id.
         Logs are loaded by pages, because some big jobs have too many logs to fit in a gRPC response.
         """
-        res = self.stub.GetJob(operations_pb2.GetJobRequest(id=entities.get_id(job_id),
-                                                            log_page=log_page, log_limit=log_limit))
-        return entities.Job.from_pb(self.stub, res.job)
+        return self._get_job(job_id, log_page, log_limit)
 
     def wait_job(self, job: entities.Job, wait_secs=15, verbose=True):
         """
@@ -53,16 +44,14 @@ class Consolidater(Client):
             if job.waiting:
                 job.next()
 
-    @utils.catch_rpc_error
     def remove_terminated_jobs(self, name_like: str = "", state: str = ""):
         """
         Remove all the jobs from the Geocube given a name pattern (by default, all terminated jobs)
         name_like: pattern of the name. * and ? are supported to match all or any character.
         state: state of the jobs to be removed.
         """
-        self.stub.CleanJobs(operations_pb2.CleanJobsRequest(name_like=name_like, state=state))
+        return self._remove_terminated_jobs(name_like, state)
 
-    @utils.catch_rpc_error
     def consolidate(self,
                     job_name: str,
                     instance: Union[str, entities.VariableInstance],
@@ -74,6 +63,42 @@ class Consolidater(Client):
                     to_time: Union[datetime, None] = None,
                     collapse_on_record: Union[entities.Record, str, None] = None,
                     execution_level: entities.ExecutionLevel = entities.ExecutionLevel.ASYNCHRONOUS):
+        return self._consolidate(job_name, instance, layout, records, tags, from_time, to_time,
+                                 collapse_on_record, execution_level)
+
+    @utils.catch_rpc_error
+    def _list_jobs(self, name_like: str):
+        res = self.stub.ListJobs(operations_pb2.ListJobsRequest(name_like=name_like))
+        return [entities.Job.from_pb(self.stub, r) for r in res.jobs]
+
+    @utils.catch_rpc_error
+    def _job(self, name: str):
+        res = self.stub.ListJobs(operations_pb2.ListJobsRequest(name_like=name))
+        if len(res.jobs) == 0:
+            raise utils.GeocubeError("job", "NOT_FOUND", "with name: " + name)
+        return entities.Job.from_pb(self.stub, res.jobs[0])
+
+    @utils.catch_rpc_error
+    def _get_job(self, job_id: Union[str, entities.Job], log_page, log_limit):
+        res = self.stub.GetJob(operations_pb2.GetJobRequest(id=entities.get_id(job_id),
+                                                            log_page=log_page, log_limit=log_limit))
+        return entities.Job.from_pb(self.stub, res.job)
+
+    @utils.catch_rpc_error
+    def _remove_terminated_jobs(self, name_like: str, state: str):
+        self.stub.CleanJobs(operations_pb2.CleanJobsRequest(name_like=name_like, state=state))
+
+    @utils.catch_rpc_error
+    def _consolidate(self,
+                    job_name: str,
+                    instance: Union[str, entities.VariableInstance],
+                    layout: Union[str, entities.Layout],
+                    records: Union[List[entities.RecordIdentifiers], None],
+                    tags: Union[Dict[str, str], None],
+                    from_time: Union[datetime, None],
+                    to_time: Union[datetime, None],
+                    collapse_on_record: Union[entities.Record, str, None],
+                    execution_level: entities.ExecutionLevel):
         common = {
             "job_name":              job_name,
             "instance_id":           entities.get_id(instance),
