@@ -172,6 +172,11 @@ class Client:
         return self._create_records(aoi_ids, names, tags, dates)
 
     def get_record(self, _id: str) -> entities.Record:
+        """ Deprecated: use record() instead """
+        return self.record(_id)
+
+    def record(self, _id: str) -> entities.Record:
+        """ Get a record by id """
         r = self.get_records([_id])
         assert len(r) > 0, utils.GeocubeError("get_record", grpc.StatusCode.NOT_FOUND.name, "record with id " + _id)
         return r[0]
@@ -251,6 +256,15 @@ class Client:
             no_fail: if true, do not fail if some records still have datasets that refer to them, and delete the others
         """
         return self._delete_records(records, no_fail)
+
+    def containers(self, uris: Union[str, List[str]]) -> Union[entities.Container, List[entities.Container]]:
+        """
+        Get containers and their datasets by uris
+
+        Args:
+            uris: uri or list of uris
+        """
+        return self._containers(uris)
 
     def index(self, containers: List[entities.Container]):
         """
@@ -586,6 +600,16 @@ class Client:
     def _delete_records(self, records: List[Union[str, entities.Record]], no_fail: bool):
         req = records_pb2.DeleteRecordsRequest(ids=entities.get_ids(records), no_fail=no_fail)
         self.stub.DeleteRecords(req)
+
+    @utils.catch_rpc_error
+    def _containers(self, uris: Union[str, List[str]]) -> Union[entities.Container, List[entities.Container]]:
+        singleton = isinstance(uris, str)
+        if singleton:
+            uris = [uris]
+        req = operations_pb2.GetContainersRequest(uris=uris)
+        res = self.stub.GetContainers(req)
+        containers = [entities.Container.from_pb(pb_container) for pb_container in res.containers]
+        return containers[0] if singleton else containers
 
     @utils.catch_rpc_error
     def _index(self, containers: List[entities.Container]):

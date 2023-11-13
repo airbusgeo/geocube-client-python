@@ -97,7 +97,7 @@ class Job:
         tasks = []
         for i, log in enumerate(self.logs):
             log_task = parse.search("Prepare {container:d} container(s) with {records:d} record(s) "
-                                    "and {datasets:d} dataset(s) (geographic: {coordinates})", log)
+                                    "and {datasets:d} dataset(s) (Cell:{cell}, geographic: {coordinates})", log)
             if log_task is not None:
                 if i < 3:
                     warnings.warn("tasks_from_logs might have missed tasks. Please, reload job with more logs")

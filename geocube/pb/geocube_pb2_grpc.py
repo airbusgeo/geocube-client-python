@@ -109,6 +109,11 @@ class GeocubeStub(object):
                 request_serializer=geocube_dot_pb_dot_variables__pb2.CreatePaletteRequest.SerializeToString,
                 response_deserializer=geocube_dot_pb_dot_variables__pb2.CreatePaletteResponse.FromString,
                 )
+        self.GetContainers = channel.unary_unary(
+                '/geocube.Geocube/GetContainers',
+                request_serializer=geocube_dot_pb_dot_operations__pb2.GetContainersRequest.SerializeToString,
+                response_deserializer=geocube_dot_pb_dot_operations__pb2.GetContainersResponse.FromString,
+                )
         self.IndexDatasets = channel.unary_unary(
                 '/geocube.Geocube/IndexDatasets',
                 request_serializer=geocube_dot_pb_dot_operations__pb2.IndexDatasetsRequest.SerializeToString,
@@ -338,6 +343,13 @@ class GeocubeServicer(object):
 
     def CreatePalette(self, request, context):
         """Create or update a palette that can be used to create a display of a dataset
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetContainers(self, request, context):
+        """GetInfo on containers
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -577,6 +589,11 @@ def add_GeocubeServicer_to_server(servicer, server):
                     servicer.CreatePalette,
                     request_deserializer=geocube_dot_pb_dot_variables__pb2.CreatePaletteRequest.FromString,
                     response_serializer=geocube_dot_pb_dot_variables__pb2.CreatePaletteResponse.SerializeToString,
+            ),
+            'GetContainers': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetContainers,
+                    request_deserializer=geocube_dot_pb_dot_operations__pb2.GetContainersRequest.FromString,
+                    response_serializer=geocube_dot_pb_dot_operations__pb2.GetContainersResponse.SerializeToString,
             ),
             'IndexDatasets': grpc.unary_unary_rpc_method_handler(
                     servicer.IndexDatasets,
@@ -984,6 +1001,23 @@ class Geocube(object):
         return grpc.experimental.unary_unary(request, target, '/geocube.Geocube/CreatePalette',
             geocube_dot_pb_dot_variables__pb2.CreatePaletteRequest.SerializeToString,
             geocube_dot_pb_dot_variables__pb2.CreatePaletteResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetContainers(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/geocube.Geocube/GetContainers',
+            geocube_dot_pb_dot_operations__pb2.GetContainersRequest.SerializeToString,
+            geocube_dot_pb_dot_operations__pb2.GetContainersResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

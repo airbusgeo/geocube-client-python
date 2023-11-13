@@ -64,6 +64,19 @@ class Dataset:
             bands=self.bands)
         return pbd
 
+    @classmethod
+    def from_pb(cls, pb: operations_pb2.Dataset):
+        return cls(
+            record_id=pb.record_id,
+            instance_id=pb.instance_id,
+            container_subdir=pb.container_subdir,
+            bands=pb.bands,
+            dformat=entities.DataFormat.from_pb(pb.dformat),
+            min_out=pb.real_min_value,
+            max_out=pb.real_max_value,
+            exponent=pb.exponent,
+        )
+
 
 @dataclass
 class Container:
@@ -80,3 +93,11 @@ class Container:
     uri: str
     managed: bool
     datasets: List[Dataset]
+
+    @classmethod
+    def from_pb(cls, pb: operations_pb2.Container):
+        return cls(
+            uri=pb.uri,
+            managed=pb.managed,
+            datasets=[entities.Dataset.from_pb(pb_dataset) for pb_dataset in pb.datasets],
+        )
