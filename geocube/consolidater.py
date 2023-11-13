@@ -9,12 +9,12 @@ from geocube.pb import operations_pb2, records_pb2
 
 class Consolidater(Client):
 
-    def list_jobs(self, name_like: str = ""):
+    def list_jobs(self, name_like: str = "", page=0, limit=10):
         """
         List jobs by name
         name_like: pattern of the name. * and ? are supported to match all or any character.
         """
-        return self._list_jobs(name_like)
+        return self._list_jobs(name_like, page, limit)
 
     def job(self, name: str):
         """ Get job by name. Shortcut for ListJobs(name)[0]. Only few logs are loaded. """
@@ -27,7 +27,8 @@ class Consolidater(Client):
         """
         return self._get_job(job_id, log_page, log_limit)
 
-    def wait_job(self, job: entities.Job, wait_secs=15, verbose=True):
+    @staticmethod
+    def wait_job(job: entities.Job, wait_secs=15, verbose=True):
         """
         Wait for the job to finish or fail.
         If the execution level is step-by-step, it will automatically continue.
@@ -36,7 +37,7 @@ class Consolidater(Client):
         prev_state = job.state
         while job.state not in ['DONE', 'FAILED', 'DONEBUTUNTIDY']:
             time.sleep(wait_secs)
-            job = self.job(job.name)
+            job.refresh()
             if job.state != prev_state:
                 prev_state = job.state
                 if verbose:
@@ -67,8 +68,8 @@ class Consolidater(Client):
                                  collapse_on_record, execution_level)
 
     @utils.catch_rpc_error
-    def _list_jobs(self, name_like: str):
-        res = self.stub.ListJobs(operations_pb2.ListJobsRequest(name_like=name_like))
+    def _list_jobs(self, name_like: str, page: int, limit: int):
+        res = self.stub.ListJobs(operations_pb2.ListJobsRequest(name_like=name_like, page=page, limit=limit))
         return [entities.Job.from_pb(self.stub, r) for r in res.jobs]
 
     @utils.catch_rpc_error
