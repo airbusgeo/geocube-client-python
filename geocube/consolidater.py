@@ -28,7 +28,7 @@ class Consolidater(Client):
         return self._get_job(job_id, log_page, log_limit)
 
     @staticmethod
-    def wait_job(job: entities.Job, wait_secs=15, verbose=True):
+    def wait_job(job: entities.Job, wait_secs=15, timeout_secs=None, verbose=True):
         """
         Wait for the job to finish or fail.
         If the execution level is step-by-step, it will automatically continue.
@@ -37,13 +37,17 @@ class Consolidater(Client):
         prev_state = job.state
         while job.state not in ['DONE', 'FAILED', 'DONEBUTUNTIDY']:
             time.sleep(wait_secs)
-            job.refresh()
+            job.refresh(log_limit=1 if verbose else 0)
             if job.state != prev_state:
                 prev_state = job.state
                 if verbose:
                     print(job.logs[-1])
             if job.waiting:
                 job.next()
+            if timeout_secs is not None:
+                timeout_secs -= wait_secs
+                if timeout_secs < 0:
+                    raise TimeoutError(f"job {job.name}: state={job.state}")
 
     def remove_terminated_jobs(self, name_like: str = "", state: str = ""):
         """
