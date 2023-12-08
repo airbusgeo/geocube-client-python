@@ -10,11 +10,12 @@ import grpc
 
 from geocube.pb import operations_pb2, variables_pb2, geocube_pb2_grpc as geocube_grpc
 from geocube import entities, utils
+from geocube.stub import Stub
 
 
 @dataclass
 class _BaseVariable:
-    stub: Union[geocube_grpc.GeocubeStub, None] = field(hash=False, compare=False)
+    stub: Union[Stub, None] = field(hash=False, compare=False)
     id: str
     name: str
     unit: str
@@ -43,7 +44,7 @@ class _ProxyVariable:
         self._variable = variable
 
     @property
-    def client(self) -> geocube_grpc.GeocubeStub:
+    def client(self) -> Stub:
         return self._variable.stub
 
     @property
@@ -211,7 +212,7 @@ class Variable(_ProxyVariable):
     True
     """
     @classmethod
-    def from_pb(cls, stub: geocube_grpc.GeocubeStub, pb: variables_pb2.Variable):
+    def from_pb(cls, stub: Stub, pb: variables_pb2.Variable):
         return cls(_BaseVariable(
             stub=stub,
             id=pb.id,

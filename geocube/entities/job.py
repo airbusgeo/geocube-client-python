@@ -10,6 +10,7 @@ import geopandas as gpd
 
 from geocube import utils
 from geocube.pb import operations_pb2, geocube_pb2_grpc as geocube_grpc
+from geocube.stub import Stub
 
 
 class ExecutionLevel(Enum):
@@ -30,7 +31,7 @@ class Task:
 
 @dataclass
 class Job:
-    _stub:            geocube_grpc.GeocubeStub
+    _stub:            Stub
     id:               str
     name:             str
     type:             str
@@ -44,7 +45,7 @@ class Job:
     waiting:          bool
 
     @classmethod
-    def from_pb(cls, stub: geocube_grpc.GeocubeStub, pb_job: operations_pb2.Job):
+    def from_pb(cls, stub: Stub, pb_job: operations_pb2.Job):
         return Job(
             _stub=stub,
             id=pb_job.id,

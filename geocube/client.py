@@ -16,6 +16,7 @@ from shapely import geometry
 from geocube.pb import records_pb2, operations_pb2, catalog_pb2, layouts_pb2, \
     geocube_pb2_grpc as geocube_grpc, variables_pb2, version_pb2
 from geocube import entities, utils, Downloader
+from geocube.stub import Stub
 
 FileFormatRaw = catalog_pb2.Raw
 FileFormatGTiff = catalog_pb2.GTiff
@@ -42,7 +43,7 @@ class Client:
             self._channel = grpc.secure_channel(uri, credentials)
         else:
             self._channel = grpc.insecure_channel(uri)
-        self.stub = geocube_grpc.GeocubeStub(self._channel)
+        self.stub = Stub(geocube_grpc.GeocubeStub(self._channel))
         self.verbose = verbose
         if verbose:
             print("Connected to Geocube v" + self.version())
@@ -53,6 +54,9 @@ class Client:
 
     def use_downloader(self, downloader: Downloader):
         self.downloader = downloader
+
+    def set_timeout(self, timeout_sec: float):
+        self.stub.timeout = timeout_sec
 
     def version(self) -> str:
         """ Returns the version of the Geocube Server """

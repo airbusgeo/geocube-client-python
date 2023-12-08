@@ -4,6 +4,7 @@ from typing import List, Union, Dict, Tuple
 
 from geocube import utils, entities, Consolidater
 from geocube.pb import admin_pb2, admin_pb2_grpc
+from geocube.stub import Stub
 
 
 class Admin(Consolidater):
@@ -18,7 +19,11 @@ class Admin(Consolidater):
             verbose: display the version of the Geocube Server
         """
         super().__init__(uri, secure, api_key, verbose)
-        self.admin_stub = admin_pb2_grpc.AdminStub(self._channel)
+        self.admin_stub = Stub(admin_pb2_grpc.AdminStub(self._channel))
+
+    def set_timeout(self, timeout_sec: float):
+        super().set_timeout(timeout_sec)
+        self.admin_stub.timeout = timeout_sec
 
     def admin_tidy(self, aois: bool = False, records: bool = False, variables: bool = False, instances: bool = False,
                    containers: bool = False, consolidation_params: bool = False, simulate: bool = True):
