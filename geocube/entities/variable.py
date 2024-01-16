@@ -300,11 +300,13 @@ class Variable(_ProxyVariable):
 
     def config_consolidation(self, dformat: entities.DataFormat, exponent=1.,
                              compression: entities.Compression = entities.Compression.LOSSLESS,
+                             creation_params: Dict[str, str] = None,
                              resampling_alg: entities.Resampling = entities.Resampling.near):
         """ See entities.ConsolidationParams """
         self.consolidation_params = entities.ConsolidationParams(
             dformat=entities.DataFormat.from_user(dformat), exponent=exponent,
-            compression=compression, resampling_alg=resampling_alg)
+            compression=compression, creation_params={} if creation_params is None else creation_params,
+            resampling_alg=resampling_alg)
 
     def __str__(self):
         return "{}\n" \

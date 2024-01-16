@@ -5,9 +5,10 @@ class Compression(Enum):
     NO = 1
     LOSSLESS = 2
     LOSSY = 3
+    CUSTOM = 4
 
 
-pb_compression = [Compression.NO, Compression.LOSSLESS, Compression.LOSSY]
+pb_compression = [Compression.NO, Compression.LOSSLESS, Compression.LOSSY, Compression.CUSTOM]
 
 
 class Resampling(Enum):
