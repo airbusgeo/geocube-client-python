@@ -24,13 +24,13 @@ def gpd_read_remote_file(url):
 def plot_aoi(aoi: geopandas.GeoSeries,
              world_path: str = "https://www.naturalearthdata.com/http//www.naturalearthdata.com/"
                                "download/110m/cultural/ne_110m_admin_0_countries.zip",
-             ax=None, margin_pc=5):
+             ax=None, margin_pc=5, color=None):
     if world_path is not None:
         base = gpd_read_remote_file(world_path).plot(color='lightgrey', edgecolor='white', ax=ax)
     else:
         base = ax
 
-    aoi.plot(ax=base, alpha=0.5, edgecolor='gray')
+    aoi.plot(ax=base, alpha=0.5, edgecolor='gray', color=color)
     bounds = aoi.total_bounds
     margin = (margin_pc / 100) * min(bounds[2] - bounds[0], bounds[3] - bounds[1])
     base.set_xlim(bounds[0] - margin, bounds[2] + margin)

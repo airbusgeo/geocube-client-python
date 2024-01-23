@@ -23,10 +23,12 @@ class ExecutionLevel(Enum):
 
 @dataclass
 class Task:
+    cell: str
     nb_containers: int
     nb_records: int
     nb_datasets: int
     coordinates: geometry.LinearRing
+    status: str
 
 
 @dataclass
@@ -95,10 +97,10 @@ class Job:
         return self
 
     def tasks_from_logs(self) -> List[Task]:
-        tasks = []
+        tasks = {}
         for i, log in enumerate(self.logs):
             log_task = parse.search("Prepare {container:d} container(s) with {records:d} record(s) "
-                                    "and {datasets:d} dataset(s) (Cell:{cell}, geographic: {coordinates})", log)
+                                    "and {datasets:d} dataset(s) (Cell:{cell}, geographic: {coordinates}) (id:{taskid})", log)
             if log_task is not None:
                 if i < 3:
                     warnings.warn("tasks_from_logs might have missed tasks. Please, reload job with more logs")
@@ -106,8 +108,18 @@ class Job:
                 coordinates = parse.findall("{lon:g} {lat:g}", log_task['coordinates'])
                 coordinates = geometry.LinearRing([[p['lon'], p['lat']] for p in coordinates])
 
-                tasks.append(Task(log_task['container'], log_task['records'], log_task['datasets'], coordinates))
-        return tasks
+                tasks[log_task['taskid']] = Task(log_task['cell'], log_task['container'], log_task['records'],
+                                                 log_task['datasets'], coordinates, "")
+            else:
+                log_task_status = parse.search("TaskEvt received with status Task{status} (id:{taskid},", log)
+                if log_task_status is not None:
+                    task_id = log_task_status["taskid"]
+                    if task_id in tasks:
+                        tasks[task_id].status = log_task_status["status"]
+                    else:
+                        warnings.warn(f"taskEvt for id {task_id} found, but task not found")
+
+        return list(tasks.values())
 
     def deletion_job_from_logs(self) -> str:
         for log in self.logs:
@@ -120,10 +132,12 @@ class Job:
         tasks = self.tasks_from_logs()
         if len(tasks) == 0:
             raise ValueError("Tasks not found from logs. Cannot display")
-        base = utils.plot_aoi(gpd.GeoSeries([task.coordinates for task in tasks]))
-        for task in tasks:
+        color = ['r' if task.status=='Failed' else 'g' if task.status=='Successful' else 'black' for task in tasks]
+        base = utils.plot_aoi(gpd.GeoSeries([task.coordinates for task in tasks]), color=color)
+        for i, task in enumerate(tasks):
             center = task.coordinates.centroid
-            base.text(center.x, center.y, f"{task.nb_records} rec\n{task.nb_datasets} ds", ha='center', va='center')
+            base.text(center.x, center.y, f"{task.nb_records} rec\n{task.nb_datasets} ds",
+                      ha='center', va='center', color=color[i])
         base.set_title(f"Job '{self.name}'\n"
                        f"{len(tasks)} cells ({self.active_tasks} active tasks - {self.failed_tasks} failed)")
         return base
