@@ -639,7 +639,7 @@ class Client:
         if isinstance(record, tuple) or dformat is None:
             try:
                 with rasterio.open(uri) as ds:
-                    tile = entities.Tile.from_geotransform(ds.transform, ds.crs, ds.shape)
+                    tile = entities.Tile.from_geotransform(ds.transform, ds.crs, ds.shape[::-1])
                     ds_dtype = ds.dtypes[0]
             except Exception as e:
                 raise ValueError(f'if "record" is a tuple or "bands" or "dformat" is not defined, geocube-client tries'
