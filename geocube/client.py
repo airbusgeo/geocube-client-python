@@ -775,7 +775,7 @@ class Client:
             to_time_pb = utils.pb_null_timestamp()
             if to_time is not None:
                 to_time_pb.FromDatetime(to_time)
-            req = catalog_pb2.GetCubeRequest(
+            req = catalog_pb2.FindContainerLayoutsRequest(
                 instance_id=entities.get_id(instance),
                 filters=records_pb2.RecordFiltersWithAOI(aoi=aoi, tags=tags,
                                                          from_time=from_time_pb, to_time=to_time_pb))
