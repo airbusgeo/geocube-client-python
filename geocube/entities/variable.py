@@ -274,7 +274,7 @@ class Variable(_ProxyVariable):
         """
         if name in self.instances:
             if metadata is not None and self.instances[name].metadata != metadata:
-                raise utils.GeocubeError("instantiate", "ALREADY EXISTS",
+                raise utils.GeocubeError("instantiate", grpc.StatusCode.ALREADY_EXISTS.name,
                                          "Use instance({}).add_metadata(key, value) and del_metadata(key) "
                                          "to update the metadata".format(name))
         else:
@@ -287,7 +287,7 @@ class Variable(_ProxyVariable):
     @utils.catch_rpc_error
     def delete_instances(self, pattern=''):
         """ delete empty instances whose name match pattern (only * and ? are supported) """
-        pattern = re.escape(pattern).replace("\*", ".*").replace("\?", ".")
+        pattern = re.escape(pattern).replace("\\*", ".*").replace("\\?", ".")
         for instance in self.instances.values():
             if re.match(pattern, instance.name):
                 req = variables_pb2.DeleteInstanceRequest(id=instance.id)
