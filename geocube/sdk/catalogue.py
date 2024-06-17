@@ -4,7 +4,6 @@ from typing import Union, List, Callable, Any, Dict, Tuple, Optional
 
 import affine
 import numpy as np
-from geocube.entities import cubeiterator
 
 import geocube
 from geocube import entities, sdk
@@ -68,10 +67,6 @@ def cube_do_nothing(cube: np.ndarray, grouped_records: List[List[entities.Record
 def image_do_nothing(image: np.ndarray, **_):
     """ image_callback_t, doing nothing, returning input image """
     return image
-
-
-def is_geocube_error(error):
-    return isinstance(error, GeocubeError)
 
 
 def get_cube(connection_params: ConnectionParams, cube_params: entities.CubeParams,

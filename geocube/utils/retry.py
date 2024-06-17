@@ -1,5 +1,5 @@
 import retrying
-from geocube import sdk
+from geocube.utils import GeocubeError
 
 
 class ExponentialWait:
@@ -25,8 +25,18 @@ class CopyException:
             self.object_with_exception.exception = e
         return retry
 
-def retry_on_geocube_error(func_name: str, max_delay_s: float, error=sdk.is_geocube_error):
+
+def is_geocube_error(error):
+    return isinstance(error, GeocubeError)
+
+
+def is_retriable_geocube_error(error):
+    return isinstance(error, GeocubeError) and not error.is_not_found() and not error.is_already_exists()
+
+
+def retry_on_geocube_error(func_name: str, max_delay_s: float, error=is_retriable_geocube_error):
     w = ExponentialWait(func_name)
     return retrying.retry(wait_func=w,
                           stop_max_delay=max_delay_s*1000,
                           retry_on_exception=CopyException(error, w))
+
