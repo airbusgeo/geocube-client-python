@@ -3,6 +3,8 @@ import warnings
 from datetime import datetime
 from typing import Union, Dict, List
 
+from tqdm import tqdm
+
 from geocube import Client, utils, entities
 from geocube.pb import operations_pb2, records_pb2
 
@@ -35,12 +37,17 @@ class Consolidater(Client):
         If verbose=True, the last log is printed every time a state change is detected.
         """
         prev_state = job.state
+        pbar = None
         while job.state not in ['DONE', 'FAILED', 'DONEBUTUNTIDY']:
             time.sleep(wait_secs)
             job.refresh(log_limit=1 if verbose else 0)
-            if job.state != prev_state:
-                prev_state = job.state
-                if verbose:
+            if verbose:
+                if job.active_tasks > 0 and pbar is None:
+                    pbar = tqdm(total=job.active_tasks, desc="tasks")
+                if pbar is not None and pbar.n != pbar.total - job.active_tasks:
+                    pbar.update(pbar.total - job.active_tasks - pbar.n)
+                if job.state != prev_state:
+                    prev_state = job.state
                     print(job.logs[-1])
             if job.waiting:
                 job.next()
@@ -95,15 +102,15 @@ class Consolidater(Client):
 
     @utils.catch_rpc_error
     def _consolidate(self,
-                    job_name: str,
-                    instance: Union[str, entities.VariableInstance],
-                    layout: Union[str, entities.Layout],
-                    records: Union[List[entities.RecordIdentifiers], None],
-                    tags: Union[Dict[str, str], None],
-                    from_time: Union[datetime, None],
-                    to_time: Union[datetime, None],
-                    collapse_on_record: Union[entities.Record, str, None],
-                    execution_level: entities.ExecutionLevel):
+                     job_name: str,
+                     instance: Union[str, entities.VariableInstance],
+                     layout: Union[str, entities.Layout],
+                     records: Union[List[entities.RecordIdentifiers], None],
+                     tags: Union[Dict[str, str], None],
+                     from_time: Union[datetime, None],
+                     to_time: Union[datetime, None],
+                     collapse_on_record: Union[entities.Record, str, None],
+                     execution_level: entities.ExecutionLevel):
         common = {
             "job_name":              job_name,
             "instance_id":           entities.get_id(instance),
