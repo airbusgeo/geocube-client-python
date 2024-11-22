@@ -1,12 +1,12 @@
 from typing import List, Union, Dict, Tuple
 
-from geocube import utils, entities, Consolidater
+from geocube import utils, entities, Client
 from geocube.pb import admin_pb2, admin_pb2_grpc
 from geocube.stub import Stub
 from geocube.utils import deprecated, GeocubeError
 
 
-class Admin(Consolidater):
+class Admin(Client):
     def __init__(self, uri: str, secure: bool = False, api_key: str = "", verbose: bool = True):
         """
         Initialise the connexion to the Geocube Server

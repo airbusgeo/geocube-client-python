@@ -7,7 +7,6 @@ nav:
         - 'Tutorials': user-guide/tutorials.md
         - 'Client':
           - 'Basic access': user-guide/client/client-reference.md
-          - 'Consolidater': user-guide/client/consolidater-reference.md
           - 'Admin': user-guide/client/admin-reference.md
         - 'Entities':
           - 'Variable': user-guide/entities/variable-reference.md
