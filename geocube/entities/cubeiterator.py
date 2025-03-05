@@ -113,7 +113,10 @@ class CubeIterator:
             f.close()
             return filename, metadata, None
 
+    def __del__(self):
+        self.stream.cancel()
+
     def metadata(self) -> entities.CubeMetadata:
-        for _, _, _ in self:
+        for _ in self:
             pass
         return self._cube_metadata
