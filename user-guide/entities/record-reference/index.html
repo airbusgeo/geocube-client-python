@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://github.com/airbusgeo/geocube-client-python/user-guide/entities/record-reference/" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Records - Geocube Client Python</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Records";
+        var mkdocs_page_input_path = "user-guide/entities/record-reference.md";
+        var mkdocs_page_url = "/airbusgeo/geocube-client-python/user-guide/entities/record-reference/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> Geocube Client Python
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../../quickstart/">Getting started</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">User guide</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/">Tutorials</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Client</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../client/client-reference/">Basic access</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../client/consolidater-reference/">Consolidater</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../client/admin-reference/">Admin</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" >Entities</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../variable-reference/">Variable</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="#">Records</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#geocube.entities.Record">Record</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#geocube.entities.Record.group_by">group_by</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#geocube.entities.Record.key_date">key_date</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#geocube.entities.Record.key_datetime">key_datetime</a>
+    </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../dataset-reference/">Dataset & Container</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../layout-reference/">Layout & Grid</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../job-reference/">Job</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >GetCube</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../getcube/tile-reference/">Tile</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../getcube/cubeparams-reference/">CubeParams</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../getcube/cubemetadata-reference/">CubeMetadata</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../grpc/">GRPC Interface</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">About</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../about/help/">Getting help</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../about/CONTRIBUTING/">Contributing</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../about/license/">License</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../about/release-notes/">Release Notes</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">Geocube Client Python</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">User guide</li>
+          <li class="breadcrumb-item">Entities</li>
+      <li class="breadcrumb-item active">Records</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="record">Record</h1>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="geocube.entities.Record"></a>
+    <div class="doc doc-contents first">
+
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>geocube/entities/record.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Record</span><span class="p">:</span>
+    <span class="nb">id</span><span class="p">:</span>       <span class="nb">str</span>
+    <span class="n">name</span><span class="p">:</span>     <span class="nb">str</span>
+    <span class="n">datetime</span><span class="p">:</span> <span class="n">datetime</span>
+    <span class="n">tags</span><span class="p">:</span>     <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
+    <span class="n">aoi_id</span><span class="p">:</span>   <span class="nb">str</span>
+
+    <span class="n">_aoi</span><span class="p">:</span>     <span class="n">geometry</span><span class="o">.</span><span class="n">MultiPolygon</span> <span class="o">=</span> <span class="n">geometry</span><span class="o">.</span><span class="n">MultiPolygon</span><span class="p">()</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_pb</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">pb</span><span class="p">:</span> <span class="n">records_pb2</span><span class="o">.</span><span class="n">Record</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="nb">id</span><span class="o">=</span><span class="n">pb</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">pb</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">tags</span><span class="o">=</span><span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">value</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">pb</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">items</span><span class="p">()},</span>
+            <span class="n">datetime</span><span class="o">=</span><span class="n">pb</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">ToDatetime</span><span class="p">(),</span>
+            <span class="n">aoi_id</span><span class="o">=</span><span class="n">pb</span><span class="o">.</span><span class="n">aoi_id</span><span class="p">,</span>
+            <span class="n">_aoi</span><span class="o">=</span><span class="n">aoi_from_pb</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">aoi</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_geodataframe</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">gdf</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="nb">id</span><span class="o">=</span><span class="n">gdf</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">gdf</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">tags</span><span class="o">=</span><span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">gdf</span><span class="p">[</span><span class="s2">&quot;tags&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]},</span>
+            <span class="n">datetime</span><span class="o">=</span><span class="n">gdf</span><span class="p">[</span><span class="s2">&quot;datetime&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">aoi_id</span><span class="o">=</span><span class="n">gdf</span><span class="p">[</span><span class="s2">&quot;aoi_id&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">_aoi</span><span class="o">=</span><span class="n">gdf</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_pb</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">records_pb2</span><span class="o">.</span><span class="n">Record</span><span class="p">:</span>
+        <span class="n">pb</span> <span class="o">=</span> <span class="n">records_pb2</span><span class="o">.</span><span class="n">Record</span><span class="p">(</span>
+            <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">tags</span><span class="o">=</span><span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">value</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">items</span><span class="p">()},</span>
+            <span class="n">aoi_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">aoi_id</span>
+        <span class="p">)</span>
+        <span class="n">pb</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">FromDatetime</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">datetime</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pb</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">geodataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_aoi</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">],</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">],</span>
+                <span class="s2">&quot;tags&quot;</span><span class="p">:</span> <span class="p">[[(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">items</span><span class="p">()]],</span>
+                <span class="s2">&quot;datetime&quot;</span><span class="p">:</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">datetime</span><span class="p">)],</span>
+                <span class="s2">&quot;aoi_id&quot;</span><span class="p">:</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">aoi_id</span><span class="p">],</span>
+                <span class="s2">&quot;geometry&quot;</span><span class="p">:</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">aoi</span><span class="p">]</span>
+            <span class="p">},</span>
+            <span class="n">crs</span><span class="o">=</span><span class="s1">&#39;epsg:4326&#39;</span>
+        <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@utils</span><span class="o">.</span><span class="n">catch_rpc_error</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">aoi</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">geometry</span><span class="o">.</span><span class="n">MultiPolygon</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_aoi</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aoi</span>
+
+    <span class="nd">@aoi</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">aoi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">aoi</span><span class="p">:</span> <span class="n">geometry</span><span class="o">.</span><span class="n">MultiPolygon</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_aoi</span> <span class="o">=</span> <span class="n">aoi</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Record </span><span class="si">{}</span><span class="s2"> (</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Record </span><span class="si">{}</span><span class="s2"> (</span><span class="si">{}</span><span class="s2">)</span><span class="se">\n</span><span class="s2">&quot;</span> \
+               <span class="s2">&quot;    datetime </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span> \
+               <span class="s2">&quot;    tags     </span><span class="se">\n</span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span>\
+               <span class="s2">&quot;    aoi_id   </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">datetime</span><span class="p">,</span>
+                                          <span class="n">pprint</span><span class="o">.</span><span class="n">pformat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tags</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">aoi_id</span><span class="p">)</span> <span class="o">+</span> \
+               <span class="s2">&quot;    aoi      </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">aoi</span> <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aoi</span><span class="o">.</span><span class="n">is_empty</span> <span class="k">else</span> <span class="s2">&quot;(not loaded)&quot;</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">key_date</span><span class="p">(</span><span class="n">r</span><span class="p">:</span> <span class="n">Record</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Returns the date of the record (without time).</span>
+<span class="sd">         It&#39;s a GroupByKeyFunc, thus it can be used to group_by.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">key_datetime</span><span class="p">(</span><span class="n">r</span><span class="p">:</span> <span class="n">Record</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Returns the datetime of the record.</span>
+<span class="sd">        It&#39;s a GroupByKeyFunc, thus it can be used to group_by.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">datetime</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">group_by</span><span class="p">(</span><span class="n">records</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Record</span><span class="p">,</span> <span class="n">GroupedRecords</span><span class="p">]],</span> <span class="n">func_key</span><span class="p">:</span> <span class="n">GroupByKeyFunc</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">GroupedRecords</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        group_by groups the records of the list by the key provided by the func_key(Record)</span>
+<span class="sd">        Returns a list of lists of records</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            records : list of records to group.</span>
+<span class="sd">                If records is a list of list, records is flattened.</span>
+<span class="sd">            func_key : function taking a record and returning a key</span>
+<span class="sd">                (e.g. entities.Record.key_date, lambda r:r.datetime)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A list of grouped records (which is actually a list of records)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">records</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">records</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">records</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">records</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">rs</span> <span class="ow">in</span> <span class="n">records</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rs</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">Record</span><span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="n">records</span><span class="p">,</span> <span class="n">func_key</span><span class="p">)</span>
+
+        <span class="n">dict_rs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">records</span><span class="p">:</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="n">func_key</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dict_rs</span><span class="p">:</span>
+                <span class="n">dict_rs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">dict_rs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">dict_rs</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">list_to_geodataframe</span><span class="p">(</span><span class="n">records</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Record</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">records</span><span class="p">],</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">records</span><span class="p">],</span>
+                <span class="s2">&quot;tags&quot;</span><span class="p">:</span> <span class="p">[[(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">records</span><span class="p">],</span>
+                <span class="s2">&quot;datetime&quot;</span><span class="p">:</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">datetime</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">records</span><span class="p">],</span>
+                <span class="s2">&quot;aoi_id&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">aoi_id</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">records</span><span class="p">],</span>
+                <span class="s2">&quot;geometry&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">aoi</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">records</span><span class="p">],</span>
+            <span class="p">},</span>
+            <span class="n">crs</span><span class="o">=</span><span class="s1">&#39;epsg:4326&#39;</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_aoi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raise_if_empty</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aoi</span><span class="o">.</span><span class="n">is_empty</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">raise_if_empty</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ReferenceError</span><span class="p">(</span><span class="s2">&quot;AOI is not loaded. Call &#39;client.load_aoi(record)&#39;&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="geocube.entities.Record.group_by" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">group_by</span><span class="p">(</span><span class="n">records</span><span class="p">,</span> <span class="n">func_key</span><span class="p">)</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-staticmethod"><code>staticmethod</code></small>
+  </span>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>group_by groups the records of the list by the key provided by the func_key(Record)
+Returns a list of lists of records</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>records</code></b>
+              –
+              <div class="doc-md-description">
+                <p>list of records to group.
+If records is a list of list, records is flattened.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>func_key</code></b>
+              –
+              <div class="doc-md-description">
+                <p>function taking a record and returning a key
+(e.g. entities.Record.key_date, lambda r:r.datetime)</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><span title="typing.List">List</span>[<span title="geocube.entities.record.GroupedRecords">GroupedRecords</span>]</code>
+              –
+              <div class="doc-md-description">
+                <p>A list of grouped records (which is actually a list of records)</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+            <details class="quote">
+              <summary>Source code in <code>geocube/entities/record.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">group_by</span><span class="p">(</span><span class="n">records</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Record</span><span class="p">,</span> <span class="n">GroupedRecords</span><span class="p">]],</span> <span class="n">func_key</span><span class="p">:</span> <span class="n">GroupByKeyFunc</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">GroupedRecords</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    group_by groups the records of the list by the key provided by the func_key(Record)</span>
+<span class="sd">    Returns a list of lists of records</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        records : list of records to group.</span>
+<span class="sd">            If records is a list of list, records is flattened.</span>
+<span class="sd">        func_key : function taking a record and returning a key</span>
+<span class="sd">            (e.g. entities.Record.key_date, lambda r:r.datetime)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A list of grouped records (which is actually a list of records)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">records</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">records</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">records</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">records</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">rs</span> <span class="ow">in</span> <span class="n">records</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rs</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">Record</span><span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="n">records</span><span class="p">,</span> <span class="n">func_key</span><span class="p">)</span>
+
+    <span class="n">dict_rs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">records</span><span class="p">:</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">func_key</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dict_rs</span><span class="p">:</span>
+            <span class="n">dict_rs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dict_rs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">dict_rs</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="geocube.entities.Record.key_date" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">key_date</span><span class="p">(</span><span class="n">r</span><span class="p">)</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-staticmethod"><code>staticmethod</code></small>
+  </span>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Returns the date of the record (without time).
+It's a GroupByKeyFunc, thus it can be used to group_by.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>geocube/entities/record.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">key_date</span><span class="p">(</span><span class="n">r</span><span class="p">:</span> <span class="n">Record</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Returns the date of the record (without time).</span>
+<span class="sd">     It&#39;s a GroupByKeyFunc, thus it can be used to group_by.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="geocube.entities.Record.key_datetime" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">key_datetime</span><span class="p">(</span><span class="n">r</span><span class="p">)</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-staticmethod"><code>staticmethod</code></small>
+  </span>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Returns the datetime of the record.
+It's a GroupByKeyFunc, thus it can be used to group_by.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>geocube/entities/record.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">key_datetime</span><span class="p">(</span><span class="n">r</span><span class="p">:</span> <span class="n">Record</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Returns the datetime of the record.</span>
+<span class="sd">    It&#39;s a GroupByKeyFunc, thus it can be used to group_by.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">datetime</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../variable-reference/" class="btn btn-neutral float-left" title="Variable"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../dataset-reference/" class="btn btn-neutral float-right" title="Dataset & Container">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../variable-reference/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../dataset-reference/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

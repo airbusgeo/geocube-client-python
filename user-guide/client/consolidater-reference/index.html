@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://github.com/airbusgeo/geocube-client-python/user-guide/client/consolidater-reference/" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Consolidater - Geocube Client Python</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Consolidater";
+        var mkdocs_page_input_path = "user-guide/client/consolidater-reference.md";
+        var mkdocs_page_url = "/airbusgeo/geocube-client-python/user-guide/client/consolidater-reference/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> Geocube Client Python
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../../quickstart/">Getting started</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">User guide</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/">Tutorials</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" >Client</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../client-reference/">Basic access</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="#">Consolidater</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#geocube.Consolidater">Consolidater</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#geocube.Consolidater.get_job">get_job</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#geocube.Consolidater.job">job</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#geocube.Consolidater.list_jobs">list_jobs</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#geocube.Consolidater.remove_terminated_jobs">remove_terminated_jobs</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#geocube.Consolidater.wait_job">wait_job</a>
+    </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../admin-reference/">Admin</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Entities</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../entities/variable-reference/">Variable</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../entities/record-reference/">Records</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../entities/dataset-reference/">Dataset & Container</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../entities/layout-reference/">Layout & Grid</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../entities/job-reference/">Job</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >GetCube</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../getcube/tile-reference/">Tile</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../getcube/cubeparams-reference/">CubeParams</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../getcube/cubemetadata-reference/">CubeMetadata</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../grpc/">GRPC Interface</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">About</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../about/help/">Getting help</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../about/CONTRIBUTING/">Contributing</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../about/license/">License</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../about/release-notes/">Release Notes</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">Geocube Client Python</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">User guide</li>
+          <li class="breadcrumb-item">Client</li>
+      <li class="breadcrumb-item active">Consolidater</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="consolidater">Consolidater</h1>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="geocube.Consolidater"></a>
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="geocube.Client" href="../client-reference/#geocube.Client">Client</a></code></p>
+
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>geocube/consolidater.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 10</span>
+<span class="normal"> 11</span>
+<span class="normal"> 12</span>
+<span class="normal"> 13</span>
+<span class="normal"> 14</span>
+<span class="normal"> 15</span>
+<span class="normal"> 16</span>
+<span class="normal"> 17</span>
+<span class="normal"> 18</span>
+<span class="normal"> 19</span>
+<span class="normal"> 20</span>
+<span class="normal"> 21</span>
+<span class="normal"> 22</span>
+<span class="normal"> 23</span>
+<span class="normal"> 24</span>
+<span class="normal"> 25</span>
+<span class="normal"> 26</span>
+<span class="normal"> 27</span>
+<span class="normal"> 28</span>
+<span class="normal"> 29</span>
+<span class="normal"> 30</span>
+<span class="normal"> 31</span>
+<span class="normal"> 32</span>
+<span class="normal"> 33</span>
+<span class="normal"> 34</span>
+<span class="normal"> 35</span>
+<span class="normal"> 36</span>
+<span class="normal"> 37</span>
+<span class="normal"> 38</span>
+<span class="normal"> 39</span>
+<span class="normal"> 40</span>
+<span class="normal"> 41</span>
+<span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Consolidater</span><span class="p">(</span><span class="n">Client</span><span class="p">):</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">list_jobs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name_like</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        List jobs by name</span>
+<span class="sd">        name_like: pattern of the name. * and ? are supported to match all or any character.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list_jobs</span><span class="p">(</span><span class="n">name_like</span><span class="p">,</span> <span class="n">page</span><span class="p">,</span> <span class="n">limit</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">job</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Get job by name. Shortcut for ListJobs(name)[0]. Only few logs are loaded. &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_job</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_job</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job_id</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">entities</span><span class="o">.</span><span class="n">Job</span><span class="p">],</span> <span class="n">log_page</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">log_limit</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get job by id.</span>
+<span class="sd">        Logs are loaded by pages, because some big jobs have too many logs to fit in a gRPC response.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_job</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="n">log_page</span><span class="p">,</span> <span class="n">log_limit</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">wait_job</span><span class="p">(</span><span class="n">job</span><span class="p">:</span> <span class="n">entities</span><span class="o">.</span><span class="n">Job</span><span class="p">,</span> <span class="n">wait_secs</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">timeout_secs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Wait for the job to finish or fail.</span>
+<span class="sd">        If the execution level is step-by-step, it will automatically continue.</span>
+<span class="sd">        If verbose=True, the last log is printed every time a state change is detected.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">prev_state</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">state</span>
+        <span class="k">while</span> <span class="n">job</span><span class="o">.</span><span class="n">state</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;DONE&#39;</span><span class="p">,</span> <span class="s1">&#39;FAILED&#39;</span><span class="p">,</span> <span class="s1">&#39;DONEBUTUNTIDY&#39;</span><span class="p">]:</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">wait_secs</span><span class="p">)</span>
+            <span class="n">job</span><span class="o">.</span><span class="n">refresh</span><span class="p">(</span><span class="n">log_limit</span><span class="o">=</span><span class="mi">1</span> <span class="k">if</span> <span class="n">verbose</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">job</span><span class="o">.</span><span class="n">state</span> <span class="o">!=</span> <span class="n">prev_state</span><span class="p">:</span>
+                <span class="n">prev_state</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">state</span>
+                <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">logs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">job</span><span class="o">.</span><span class="n">waiting</span><span class="p">:</span>
+                <span class="n">job</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">timeout_secs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">timeout_secs</span> <span class="o">-=</span> <span class="n">wait_secs</span>
+                <span class="k">if</span> <span class="n">timeout_secs</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">TimeoutError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;job </span><span class="si">{</span><span class="n">job</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: state=</span><span class="si">{</span><span class="n">job</span><span class="o">.</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">remove_terminated_jobs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name_like</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove all the jobs from the Geocube given a name pattern (by default, all terminated jobs)</span>
+<span class="sd">        name_like: pattern of the name. * and ? are supported to match all or any character.</span>
+<span class="sd">        state: state of the jobs to be removed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_remove_terminated_jobs</span><span class="p">(</span><span class="n">name_like</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">consolidate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                    <span class="n">job_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                    <span class="n">instance</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">entities</span><span class="o">.</span><span class="n">VariableInstance</span><span class="p">],</span>
+                    <span class="n">layout</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">entities</span><span class="o">.</span><span class="n">Layout</span><span class="p">],</span>
+                    <span class="o">*</span><span class="p">,</span>
+                    <span class="n">records</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">entities</span><span class="o">.</span><span class="n">RecordIdentifiers</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="n">tags</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="n">from_time</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">datetime</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="n">to_time</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">datetime</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="n">collapse_on_record</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">entities</span><span class="o">.</span><span class="n">Record</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="n">execution_level</span><span class="p">:</span> <span class="n">entities</span><span class="o">.</span><span class="n">ExecutionLevel</span> <span class="o">=</span> <span class="n">entities</span><span class="o">.</span><span class="n">ExecutionLevel</span><span class="o">.</span><span class="n">ASYNCHRONOUS</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_consolidate</span><span class="p">(</span><span class="n">job_name</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">layout</span><span class="p">,</span> <span class="n">records</span><span class="p">,</span> <span class="n">tags</span><span class="p">,</span> <span class="n">from_time</span><span class="p">,</span> <span class="n">to_time</span><span class="p">,</span>
+                                 <span class="n">collapse_on_record</span><span class="p">,</span> <span class="n">execution_level</span><span class="p">)</span>
+
+    <span class="nd">@utils</span><span class="o">.</span><span class="n">catch_rpc_error</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_list_jobs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name_like</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">page</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stub</span><span class="o">.</span><span class="n">ListJobs</span><span class="p">(</span><span class="n">operations_pb2</span><span class="o">.</span><span class="n">ListJobsRequest</span><span class="p">(</span><span class="n">name_like</span><span class="o">=</span><span class="n">name_like</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="n">page</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="n">limit</span><span class="p">))</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">entities</span><span class="o">.</span><span class="n">Job</span><span class="o">.</span><span class="n">from_pb</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stub</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">res</span><span class="o">.</span><span class="n">jobs</span><span class="p">]</span>
+
+    <span class="nd">@utils</span><span class="o">.</span><span class="n">catch_rpc_error</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_job</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stub</span><span class="o">.</span><span class="n">ListJobs</span><span class="p">(</span><span class="n">operations_pb2</span><span class="o">.</span><span class="n">ListJobsRequest</span><span class="p">(</span><span class="n">name_like</span><span class="o">=</span><span class="n">name</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">jobs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">utils</span><span class="o">.</span><span class="n">GeocubeError</span><span class="p">(</span><span class="s2">&quot;job&quot;</span><span class="p">,</span> <span class="s2">&quot;NOT_FOUND&quot;</span><span class="p">,</span> <span class="s2">&quot;with name: &quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">entities</span><span class="o">.</span><span class="n">Job</span><span class="o">.</span><span class="n">from_pb</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stub</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">jobs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="nd">@utils</span><span class="o">.</span><span class="n">catch_rpc_error</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_job</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job_id</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">entities</span><span class="o">.</span><span class="n">Job</span><span class="p">],</span> <span class="n">log_page</span><span class="p">,</span> <span class="n">log_limit</span><span class="p">):</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stub</span><span class="o">.</span><span class="n">GetJob</span><span class="p">(</span><span class="n">operations_pb2</span><span class="o">.</span><span class="n">GetJobRequest</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">entities</span><span class="o">.</span><span class="n">get_id</span><span class="p">(</span><span class="n">job_id</span><span class="p">),</span>
+                                                            <span class="n">log_page</span><span class="o">=</span><span class="n">log_page</span><span class="p">,</span> <span class="n">log_limit</span><span class="o">=</span><span class="n">log_limit</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">entities</span><span class="o">.</span><span class="n">Job</span><span class="o">.</span><span class="n">from_pb</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stub</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">job</span><span class="p">)</span>
+
+    <span class="nd">@utils</span><span class="o">.</span><span class="n">catch_rpc_error</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_remove_terminated_jobs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name_like</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stub</span><span class="o">.</span><span class="n">CleanJobs</span><span class="p">(</span><span class="n">operations_pb2</span><span class="o">.</span><span class="n">CleanJobsRequest</span><span class="p">(</span><span class="n">name_like</span><span class="o">=</span><span class="n">name_like</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">))</span>
+
+    <span class="nd">@utils</span><span class="o">.</span><span class="n">catch_rpc_error</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_consolidate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                    <span class="n">job_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                    <span class="n">instance</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">entities</span><span class="o">.</span><span class="n">VariableInstance</span><span class="p">],</span>
+                    <span class="n">layout</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">entities</span><span class="o">.</span><span class="n">Layout</span><span class="p">],</span>
+                    <span class="n">records</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">entities</span><span class="o">.</span><span class="n">RecordIdentifiers</span><span class="p">],</span> <span class="kc">None</span><span class="p">],</span>
+                    <span class="n">tags</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="kc">None</span><span class="p">],</span>
+                    <span class="n">from_time</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">datetime</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
+                    <span class="n">to_time</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">datetime</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
+                    <span class="n">collapse_on_record</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">entities</span><span class="o">.</span><span class="n">Record</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
+                    <span class="n">execution_level</span><span class="p">:</span> <span class="n">entities</span><span class="o">.</span><span class="n">ExecutionLevel</span><span class="p">):</span>
+        <span class="n">common</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;job_name&quot;</span><span class="p">:</span>              <span class="n">job_name</span><span class="p">,</span>
+            <span class="s2">&quot;instance_id&quot;</span><span class="p">:</span>           <span class="n">entities</span><span class="o">.</span><span class="n">get_id</span><span class="p">(</span><span class="n">instance</span><span class="p">),</span>
+            <span class="s2">&quot;layout_name&quot;</span><span class="p">:</span>           <span class="n">entities</span><span class="o">.</span><span class="n">get_id</span><span class="p">(</span><span class="n">layout</span><span class="p">),</span>
+            <span class="s2">&quot;execution_level&quot;</span><span class="p">:</span>       <span class="n">execution_level</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="s2">&quot;collapse_on_record_id&quot;</span><span class="p">:</span> <span class="n">entities</span><span class="o">.</span><span class="n">get_id</span><span class="p">(</span><span class="n">collapse_on_record</span><span class="p">)</span> <span class="k">if</span> <span class="n">collapse_on_record</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="n">records</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">req</span> <span class="o">=</span> <span class="n">operations_pb2</span><span class="o">.</span><span class="n">ConsolidateRequest</span><span class="p">(</span>
+                <span class="o">**</span><span class="n">common</span><span class="p">,</span> <span class="n">records</span><span class="o">=</span><span class="n">records_pb2</span><span class="o">.</span><span class="n">RecordIdList</span><span class="p">(</span><span class="n">ids</span><span class="o">=</span><span class="n">entities</span><span class="o">.</span><span class="n">get_ids</span><span class="p">(</span><span class="n">records</span><span class="p">)))</span>
+            <span class="k">if</span> <span class="n">from_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;from_time is ignored if records is provided as argument to consolidate&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">to_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;to_time is ignored if records is provided as argument to consolidate&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">tags</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;tags is ignored if records is provided as argument to consolidate&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">from_time_pb</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">pb_null_timestamp</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">from_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">from_time_pb</span><span class="o">.</span><span class="n">FromDatetime</span><span class="p">(</span><span class="n">from_time</span><span class="p">)</span>
+            <span class="n">to_time_pb</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">pb_null_timestamp</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">to_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">to_time_pb</span><span class="o">.</span><span class="n">FromDatetime</span><span class="p">(</span><span class="n">to_time</span><span class="p">)</span>
+            <span class="n">req</span> <span class="o">=</span> <span class="n">operations_pb2</span><span class="o">.</span><span class="n">ConsolidateRequest</span><span class="p">(</span><span class="o">**</span><span class="n">common</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="n">records_pb2</span><span class="o">.</span><span class="n">RecordFilters</span><span class="p">(</span>
+                <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">,</span> <span class="n">from_time</span><span class="o">=</span><span class="n">from_time_pb</span><span class="p">,</span> <span class="n">to_time</span><span class="o">=</span><span class="n">to_time_pb</span>
+            <span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_job</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stub</span><span class="o">.</span><span class="n">Consolidate</span><span class="p">(</span><span class="n">req</span><span class="p">)</span><span class="o">.</span><span class="n">job_id</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="geocube.Consolidater.get_job" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_job</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="n">log_page</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">log_limit</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Get job by id.
+Logs are loaded by pages, because some big jobs have too many logs to fit in a gRPC response.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>geocube/consolidater.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_job</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job_id</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">entities</span><span class="o">.</span><span class="n">Job</span><span class="p">],</span> <span class="n">log_page</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">log_limit</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get job by id.</span>
+<span class="sd">    Logs are loaded by pages, because some big jobs have too many logs to fit in a gRPC response.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_job</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="n">log_page</span><span class="p">,</span> <span class="n">log_limit</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="geocube.Consolidater.job" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">job</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Get job by name. Shortcut for ListJobs(name)[0]. Only few logs are loaded.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>geocube/consolidater.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">job</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Get job by name. Shortcut for ListJobs(name)[0]. Only few logs are loaded. &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_job</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="geocube.Consolidater.list_jobs" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">list_jobs</span><span class="p">(</span><span class="n">name_like</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>List jobs by name
+name_like: pattern of the name. * and ? are supported to match all or any character.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>geocube/consolidater.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">list_jobs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name_like</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    List jobs by name</span>
+<span class="sd">    name_like: pattern of the name. * and ? are supported to match all or any character.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list_jobs</span><span class="p">(</span><span class="n">name_like</span><span class="p">,</span> <span class="n">page</span><span class="p">,</span> <span class="n">limit</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="geocube.Consolidater.remove_terminated_jobs" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">remove_terminated_jobs</span><span class="p">(</span><span class="n">name_like</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Remove all the jobs from the Geocube given a name pattern (by default, all terminated jobs)
+name_like: pattern of the name. * and ? are supported to match all or any character.
+state: state of the jobs to be removed.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>geocube/consolidater.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">remove_terminated_jobs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name_like</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Remove all the jobs from the Geocube given a name pattern (by default, all terminated jobs)</span>
+<span class="sd">    name_like: pattern of the name. * and ? are supported to match all or any character.</span>
+<span class="sd">    state: state of the jobs to be removed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_remove_terminated_jobs</span><span class="p">(</span><span class="n">name_like</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="geocube.Consolidater.wait_job" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">wait_job</span><span class="p">(</span><span class="n">job</span><span class="p">,</span> <span class="n">wait_secs</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">timeout_secs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-staticmethod"><code>staticmethod</code></small>
+  </span>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Wait for the job to finish or fail.
+If the execution level is step-by-step, it will automatically continue.
+If verbose=True, the last log is printed every time a state change is detected.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>geocube/consolidater.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">wait_job</span><span class="p">(</span><span class="n">job</span><span class="p">:</span> <span class="n">entities</span><span class="o">.</span><span class="n">Job</span><span class="p">,</span> <span class="n">wait_secs</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">timeout_secs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Wait for the job to finish or fail.</span>
+<span class="sd">    If the execution level is step-by-step, it will automatically continue.</span>
+<span class="sd">    If verbose=True, the last log is printed every time a state change is detected.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">prev_state</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">state</span>
+    <span class="k">while</span> <span class="n">job</span><span class="o">.</span><span class="n">state</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;DONE&#39;</span><span class="p">,</span> <span class="s1">&#39;FAILED&#39;</span><span class="p">,</span> <span class="s1">&#39;DONEBUTUNTIDY&#39;</span><span class="p">]:</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">wait_secs</span><span class="p">)</span>
+        <span class="n">job</span><span class="o">.</span><span class="n">refresh</span><span class="p">(</span><span class="n">log_limit</span><span class="o">=</span><span class="mi">1</span> <span class="k">if</span> <span class="n">verbose</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">job</span><span class="o">.</span><span class="n">state</span> <span class="o">!=</span> <span class="n">prev_state</span><span class="p">:</span>
+            <span class="n">prev_state</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">state</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">logs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">job</span><span class="o">.</span><span class="n">waiting</span><span class="p">:</span>
+            <span class="n">job</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">timeout_secs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">timeout_secs</span> <span class="o">-=</span> <span class="n">wait_secs</span>
+            <span class="k">if</span> <span class="n">timeout_secs</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TimeoutError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;job </span><span class="si">{</span><span class="n">job</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: state=</span><span class="si">{</span><span class="n">job</span><span class="o">.</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../client-reference/" class="btn btn-neutral float-left" title="Basic access"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../admin-reference/" class="btn btn-neutral float-right" title="Admin">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../client-reference/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../admin-reference/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

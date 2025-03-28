@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://github.com/airbusgeo/geocube-client-python/user-guide/entities/variable-reference/" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Variable - Geocube Client Python</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Variable";
+        var mkdocs_page_input_path = "user-guide/entities/variable-reference.md";
+        var mkdocs_page_url = "/airbusgeo/geocube-client-python/user-guide/entities/variable-reference/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> Geocube Client Python
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../../quickstart/">Getting started</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">User guide</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/">Tutorials</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Client</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../client/client-reference/">Basic access</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../client/consolidater-reference/">Consolidater</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../client/admin-reference/">Admin</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" >Entities</a>
+    <ul class="current">
+                <li class="toctree-l2 current"><a class="reference internal current" href="#">Variable</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#variable">Variable</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#geocube.entities.Variable">Variable</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#geocube.entities.Variable.config_consolidation">config_consolidation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#geocube.entities.Variable.delete_instances">delete_instances</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#geocube.entities.Variable.instance">instance</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#geocube.entities.Variable.instantiate">instantiate</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#instance">Instance</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#geocube.entities.VariableInstance">VariableInstance</a>
+    </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../record-reference/">Records</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../dataset-reference/">Dataset & Container</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../layout-reference/">Layout & Grid</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../job-reference/">Job</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >GetCube</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../getcube/tile-reference/">Tile</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../getcube/cubeparams-reference/">CubeParams</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../getcube/cubemetadata-reference/">CubeMetadata</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../grpc/">GRPC Interface</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">About</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../about/help/">Getting help</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../about/CONTRIBUTING/">Contributing</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../about/license/">License</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../about/release-notes/">Release Notes</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">Geocube Client Python</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">User guide</li>
+          <li class="breadcrumb-item">Entities</li>
+      <li class="breadcrumb-item active">Variable</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="variable-instance">Variable &amp; Instance</h1>
+<h2 id="variable">Variable</h2>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="geocube.entities.Variable"></a>
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="geocube.entities.variable._ProxyVariable">_ProxyVariable</span></code></p>
+
+
+        <blockquote>
+<blockquote>
+<blockquote>
+<p>from geocube import Client
+client = Client('127.0.0.1:8080')
+vs = client.list_variables("test")
+for v in vs:
+...    v.delete()
+profile = {'dformat': ('f8', -1, 0, 1),                    'bands': ['R', 'G', 'B']}
+v = client.create_variable('test/vegetation/NDVI', **profile)
+v2 = client.variable('test/vegetation/NDVI')
+v.id==v2.id
+True
+vi = v.instance('master')
+v.description = "normalize difference vegetation index "
+vi.instance_metadata = {'version': 'v1'}
+vi2 = client.variable('test/vegetation/NDVI').instance('master')
+vi.id == vi2.id
+True</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>geocube/entities/variable.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Variable</span><span class="p">(</span><span class="n">_ProxyVariable</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    &gt;&gt;&gt; from geocube import Client</span>
+<span class="sd">    &gt;&gt;&gt; client = Client(&#39;127.0.0.1:8080&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; vs = client.list_variables(&quot;test&quot;)</span>
+<span class="sd">    &gt;&gt;&gt; for v in vs:</span>
+<span class="sd">    ...    v.delete()</span>
+<span class="sd">    &gt;&gt;&gt; profile = {&#39;dformat&#39;: (&#39;f8&#39;, -1, 0, 1), \</span>
+<span class="sd">                   &#39;bands&#39;: [&#39;R&#39;, &#39;G&#39;, &#39;B&#39;]}</span>
+<span class="sd">    &gt;&gt;&gt; v = client.create_variable(&#39;test/vegetation/NDVI&#39;, **profile)</span>
+<span class="sd">    &gt;&gt;&gt; v2 = client.variable(&#39;test/vegetation/NDVI&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; v.id==v2.id</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; vi = v.instance(&#39;master&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; v.description = &quot;normalize difference vegetation index &quot;</span>
+<span class="sd">    &gt;&gt;&gt; vi.instance_metadata = {&#39;version&#39;: &#39;v1&#39;}</span>
+<span class="sd">    &gt;&gt;&gt; vi2 = client.variable(&#39;test/vegetation/NDVI&#39;).instance(&#39;master&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; vi.id == vi2.id</span>
+<span class="sd">    True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_pb</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">stub</span><span class="p">:</span> <span class="n">Stub</span><span class="p">,</span> <span class="n">pb</span><span class="p">:</span> <span class="n">variables_pb2</span><span class="o">.</span><span class="n">Variable</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">_BaseVariable</span><span class="p">(</span>
+            <span class="n">stub</span><span class="o">=</span><span class="n">stub</span><span class="p">,</span>
+            <span class="nb">id</span><span class="o">=</span><span class="n">pb</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">pb</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">unit</span><span class="o">=</span><span class="n">pb</span><span class="o">.</span><span class="n">unit</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="n">pb</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
+            <span class="n">dformat</span><span class="o">=</span><span class="n">entities</span><span class="o">.</span><span class="n">DataFormat</span><span class="o">.</span><span class="n">from_pb</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">dformat</span><span class="p">),</span>
+            <span class="n">bands</span><span class="o">=</span><span class="p">[</span><span class="n">b</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">pb</span><span class="o">.</span><span class="n">bands</span><span class="p">],</span>
+            <span class="n">palette</span><span class="o">=</span><span class="n">pb</span><span class="o">.</span><span class="n">palette</span><span class="p">,</span>
+            <span class="n">resampling_alg</span><span class="o">=</span><span class="n">entities</span><span class="o">.</span><span class="n">pb_resampling</span><span class="p">[</span><span class="n">pb</span><span class="o">.</span><span class="n">resampling_alg</span><span class="p">],</span>
+        <span class="p">),</span> <span class="p">{</span><span class="n">pbi</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">Instance</span><span class="o">.</span><span class="n">from_pb</span><span class="p">(</span><span class="n">pbi</span><span class="p">)</span> <span class="k">for</span> <span class="n">pbi</span> <span class="ow">in</span> <span class="n">pb</span><span class="o">.</span><span class="n">instances</span><span class="p">})</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_variable</span><span class="p">,</span> <span class="n">instances</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">base_variable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instances</span> <span class="o">=</span> <span class="n">instances</span> <span class="k">if</span> <span class="n">instances</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{}</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">variable_id</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">variable_name</span>
+
+    <span class="nd">@utils</span><span class="o">.</span><span class="n">catch_rpc_error</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">instance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VariableInstance</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Load the given instance</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name: of the instance (or if None: the default instance if exists)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Specialization of the variable</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instances</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">utils</span><span class="o">.</span><span class="n">GeocubeError</span><span class="p">(</span><span class="s2">&quot;instance&quot;</span><span class="p">,</span> <span class="n">grpc</span><span class="o">.</span><span class="n">StatusCode</span><span class="o">.</span><span class="n">NOT_FOUND</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                         <span class="sa">f</span><span class="s2">&quot;Default instance does not exist for variable </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">variable_name</span><span class="si">}</span><span class="s2">&quot;</span>
+                                         <span class="sa">f</span><span class="s2">&quot; (or more than one instance is defined).&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">VariableInstance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">values</span><span class="p">())))</span>
+
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">instances</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">utils</span><span class="o">.</span><span class="n">GeocubeError</span><span class="p">(</span><span class="s2">&quot;instance&quot;</span><span class="p">,</span> <span class="n">grpc</span><span class="o">.</span><span class="n">StatusCode</span><span class="o">.</span><span class="n">NOT_FOUND</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                     <span class="sa">f</span><span class="s2">&quot;Instance </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> does not exist for variable </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">variable_name</span><span class="si">}</span><span class="s2">. &quot;</span>
+                                     <span class="sa">f</span><span class="s2">&quot;To instantiate a variable, use instantiate()&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">VariableInstance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">instances</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+
+    <span class="nd">@utils</span><span class="o">.</span><span class="n">catch_rpc_error</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">instantiate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">metadata</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">VariableInstance</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Instantiate the variable (create a specialization)</span>
+<span class="sd">        Args:</span>
+<span class="sd">            name: of the instance</span>
+<span class="sd">            metadata: of the instance (e.g. processing parameters, version...) can be empty</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The specialization of this variable</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">instances</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">metadata</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">instances</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span> <span class="o">!=</span> <span class="n">metadata</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">utils</span><span class="o">.</span><span class="n">GeocubeError</span><span class="p">(</span><span class="s2">&quot;instantiate&quot;</span><span class="p">,</span> <span class="n">grpc</span><span class="o">.</span><span class="n">StatusCode</span><span class="o">.</span><span class="n">ALREADY_EXISTS</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                         <span class="s2">&quot;Use instance(</span><span class="si">{}</span><span class="s2">).add_metadata(key, value) and del_metadata(key) &quot;</span>
+                                         <span class="s2">&quot;to update the metadata&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">req</span> <span class="o">=</span> <span class="n">variables_pb2</span><span class="o">.</span><span class="n">InstantiateVariableRequest</span><span class="p">(</span>
+                <span class="n">variable_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">instance_name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">instance_metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">instances</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">Instance</span><span class="o">.</span><span class="n">from_pb</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">InstantiateVariable</span><span class="p">(</span><span class="n">req</span><span class="p">)</span><span class="o">.</span><span class="n">instance</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">VariableInstance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">instances</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+
+    <span class="nd">@utils</span><span class="o">.</span><span class="n">catch_rpc_error</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">delete_instances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; delete empty instances whose name match pattern (only * and ? are supported) &quot;&quot;&quot;</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">*&quot;</span><span class="p">,</span> <span class="s2">&quot;.*&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">?&quot;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">instance</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">instance</span><span class="o">.</span><span class="n">name</span><span class="p">):</span>
+                <span class="n">req</span> <span class="o">=</span> <span class="n">variables_pb2</span><span class="o">.</span><span class="n">DeleteInstanceRequest</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">instance</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">DeleteInstance</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+
+    <span class="nd">@utils</span><span class="o">.</span><span class="n">catch_rpc_error</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">delete_instances</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">req</span> <span class="o">=</span> <span class="n">variables_pb2</span><span class="o">.</span><span class="n">DeleteVariableRequest</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">DeleteVariable</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">config_consolidation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dformat</span><span class="p">:</span> <span class="n">entities</span><span class="o">.</span><span class="n">DataFormat</span><span class="p">,</span> <span class="n">exponent</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span>
+                             <span class="n">compression</span><span class="p">:</span> <span class="n">entities</span><span class="o">.</span><span class="n">Compression</span> <span class="o">=</span> <span class="n">entities</span><span class="o">.</span><span class="n">Compression</span><span class="o">.</span><span class="n">LOSSLESS</span><span class="p">,</span>
+                             <span class="n">creation_params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                             <span class="n">resampling_alg</span><span class="p">:</span> <span class="n">entities</span><span class="o">.</span><span class="n">Resampling</span> <span class="o">=</span> <span class="n">entities</span><span class="o">.</span><span class="n">Resampling</span><span class="o">.</span><span class="n">near</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; See entities.ConsolidationParams &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">consolidation_params</span> <span class="o">=</span> <span class="n">entities</span><span class="o">.</span><span class="n">ConsolidationParams</span><span class="p">(</span>
+            <span class="n">dformat</span><span class="o">=</span><span class="n">entities</span><span class="o">.</span><span class="n">DataFormat</span><span class="o">.</span><span class="n">from_user</span><span class="p">(</span><span class="n">dformat</span><span class="p">),</span> <span class="n">exponent</span><span class="o">=</span><span class="n">exponent</span><span class="p">,</span>
+            <span class="n">compression</span><span class="o">=</span><span class="n">compression</span><span class="p">,</span> <span class="n">creation_params</span><span class="o">=</span><span class="p">{}</span> <span class="k">if</span> <span class="n">creation_params</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">creation_params</span><span class="p">,</span>
+            <span class="n">resampling_alg</span><span class="o">=</span><span class="n">resampling_alg</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span> \
+               <span class="s2">&quot;Instances: </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span>\
+            <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">_ProxyVariable</span><span class="o">.</span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">instances</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="geocube.entities.Variable.config_consolidation" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">config_consolidation</span><span class="p">(</span><span class="n">dformat</span><span class="p">,</span> <span class="n">exponent</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">compression</span><span class="o">=</span><span class="n">entities</span><span class="o">.</span><span class="n">Compression</span><span class="o">.</span><span class="n">LOSSLESS</span><span class="p">,</span> <span class="n">creation_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">resampling_alg</span><span class="o">=</span><span class="n">entities</span><span class="o">.</span><span class="n">Resampling</span><span class="o">.</span><span class="n">near</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>See entities.ConsolidationParams</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>geocube/entities/variable.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">config_consolidation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dformat</span><span class="p">:</span> <span class="n">entities</span><span class="o">.</span><span class="n">DataFormat</span><span class="p">,</span> <span class="n">exponent</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span>
+                         <span class="n">compression</span><span class="p">:</span> <span class="n">entities</span><span class="o">.</span><span class="n">Compression</span> <span class="o">=</span> <span class="n">entities</span><span class="o">.</span><span class="n">Compression</span><span class="o">.</span><span class="n">LOSSLESS</span><span class="p">,</span>
+                         <span class="n">creation_params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                         <span class="n">resampling_alg</span><span class="p">:</span> <span class="n">entities</span><span class="o">.</span><span class="n">Resampling</span> <span class="o">=</span> <span class="n">entities</span><span class="o">.</span><span class="n">Resampling</span><span class="o">.</span><span class="n">near</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; See entities.ConsolidationParams &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">consolidation_params</span> <span class="o">=</span> <span class="n">entities</span><span class="o">.</span><span class="n">ConsolidationParams</span><span class="p">(</span>
+        <span class="n">dformat</span><span class="o">=</span><span class="n">entities</span><span class="o">.</span><span class="n">DataFormat</span><span class="o">.</span><span class="n">from_user</span><span class="p">(</span><span class="n">dformat</span><span class="p">),</span> <span class="n">exponent</span><span class="o">=</span><span class="n">exponent</span><span class="p">,</span>
+        <span class="n">compression</span><span class="o">=</span><span class="n">compression</span><span class="p">,</span> <span class="n">creation_params</span><span class="o">=</span><span class="p">{}</span> <span class="k">if</span> <span class="n">creation_params</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">creation_params</span><span class="p">,</span>
+        <span class="n">resampling_alg</span><span class="o">=</span><span class="n">resampling_alg</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="geocube.entities.Variable.delete_instances" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">delete_instances</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>delete empty instances whose name match pattern (only * and ? are supported)</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>geocube/entities/variable.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@utils</span><span class="o">.</span><span class="n">catch_rpc_error</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">delete_instances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; delete empty instances whose name match pattern (only * and ? are supported) &quot;&quot;&quot;</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">*&quot;</span><span class="p">,</span> <span class="s2">&quot;.*&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">?&quot;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">instance</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">instance</span><span class="o">.</span><span class="n">name</span><span class="p">):</span>
+            <span class="n">req</span> <span class="o">=</span> <span class="n">variables_pb2</span><span class="o">.</span><span class="n">DeleteInstanceRequest</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">instance</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">DeleteInstance</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="geocube.entities.Variable.instance" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">instance</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Load the given instance</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>name</code></b>
+                  (<code><span title="typing.Union">Union</span>[None, <span title="str">str</span>]</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>of the instance (or if None: the default instance if exists)</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><a class="autorefs autorefs-internal" title="geocube.entities.variable.VariableInstance" href="#geocube.entities.VariableInstance">VariableInstance</a></code>
+              –
+              <div class="doc-md-description">
+                <p>Specialization of the variable</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+            <details class="quote">
+              <summary>Source code in <code>geocube/entities/variable.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@utils</span><span class="o">.</span><span class="n">catch_rpc_error</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">instance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VariableInstance</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Load the given instance</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name: of the instance (or if None: the default instance if exists)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Specialization of the variable</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instances</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">utils</span><span class="o">.</span><span class="n">GeocubeError</span><span class="p">(</span><span class="s2">&quot;instance&quot;</span><span class="p">,</span> <span class="n">grpc</span><span class="o">.</span><span class="n">StatusCode</span><span class="o">.</span><span class="n">NOT_FOUND</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                     <span class="sa">f</span><span class="s2">&quot;Default instance does not exist for variable </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">variable_name</span><span class="si">}</span><span class="s2">&quot;</span>
+                                     <span class="sa">f</span><span class="s2">&quot; (or more than one instance is defined).&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">VariableInstance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">values</span><span class="p">())))</span>
+
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">instances</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">utils</span><span class="o">.</span><span class="n">GeocubeError</span><span class="p">(</span><span class="s2">&quot;instance&quot;</span><span class="p">,</span> <span class="n">grpc</span><span class="o">.</span><span class="n">StatusCode</span><span class="o">.</span><span class="n">NOT_FOUND</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                 <span class="sa">f</span><span class="s2">&quot;Instance </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> does not exist for variable </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">variable_name</span><span class="si">}</span><span class="s2">. &quot;</span>
+                                 <span class="sa">f</span><span class="s2">&quot;To instantiate a variable, use instantiate()&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">VariableInstance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">instances</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="geocube.entities.Variable.instantiate" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">instantiate</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">metadata</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Instantiate the variable (create a specialization)
+Args:
+    name: of the instance
+    metadata: of the instance (e.g. processing parameters, version...) can be empty</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+                  <code><a class="autorefs autorefs-internal" title="geocube.entities.variable.VariableInstance" href="#geocube.entities.VariableInstance">VariableInstance</a></code>
+              –
+              <div class="doc-md-description">
+                <p>The specialization of this variable</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+            <details class="quote">
+              <summary>Source code in <code>geocube/entities/variable.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@utils</span><span class="o">.</span><span class="n">catch_rpc_error</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">instantiate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">metadata</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">VariableInstance</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Instantiate the variable (create a specialization)</span>
+<span class="sd">    Args:</span>
+<span class="sd">        name: of the instance</span>
+<span class="sd">        metadata: of the instance (e.g. processing parameters, version...) can be empty</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The specialization of this variable</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">instances</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">metadata</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">instances</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span> <span class="o">!=</span> <span class="n">metadata</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">utils</span><span class="o">.</span><span class="n">GeocubeError</span><span class="p">(</span><span class="s2">&quot;instantiate&quot;</span><span class="p">,</span> <span class="n">grpc</span><span class="o">.</span><span class="n">StatusCode</span><span class="o">.</span><span class="n">ALREADY_EXISTS</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                     <span class="s2">&quot;Use instance(</span><span class="si">{}</span><span class="s2">).add_metadata(key, value) and del_metadata(key) &quot;</span>
+                                     <span class="s2">&quot;to update the metadata&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">req</span> <span class="o">=</span> <span class="n">variables_pb2</span><span class="o">.</span><span class="n">InstantiateVariableRequest</span><span class="p">(</span>
+            <span class="n">variable_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">instance_name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">instance_metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instances</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">Instance</span><span class="o">.</span><span class="n">from_pb</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">InstantiateVariable</span><span class="p">(</span><span class="n">req</span><span class="p">)</span><span class="o">.</span><span class="n">instance</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">VariableInstance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">instances</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="instance">Instance</h2>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="geocube.entities.VariableInstance"></a>
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="geocube.entities.variable._ProxyVariable">_ProxyVariable</span></code>, <code><span title="geocube.entities.variable.Instance">Instance</span></code></p>
+
+
+        <p>VariableInstance is an instantiation of a Variable.</p>
+<p>It inherits from Variable (except for id() and name() that are replaced by variable_id() and variable_name()
+to prevent confusion with id and name of the instance) and from Instance (except for id() and name() that are
+replaced by instance_id() and instance_name())</p>
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>geocube/entities/variable.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span>
+<span class="normal">324</span>
+<span class="normal">325</span>
+<span class="normal">326</span>
+<span class="normal">327</span>
+<span class="normal">328</span>
+<span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span>
+<span class="normal">333</span>
+<span class="normal">334</span>
+<span class="normal">335</span>
+<span class="normal">336</span>
+<span class="normal">337</span>
+<span class="normal">338</span>
+<span class="normal">339</span>
+<span class="normal">340</span>
+<span class="normal">341</span>
+<span class="normal">342</span>
+<span class="normal">343</span>
+<span class="normal">344</span>
+<span class="normal">345</span>
+<span class="normal">346</span>
+<span class="normal">347</span>
+<span class="normal">348</span>
+<span class="normal">349</span>
+<span class="normal">350</span>
+<span class="normal">351</span>
+<span class="normal">352</span>
+<span class="normal">353</span>
+<span class="normal">354</span>
+<span class="normal">355</span>
+<span class="normal">356</span>
+<span class="normal">357</span>
+<span class="normal">358</span>
+<span class="normal">359</span>
+<span class="normal">360</span>
+<span class="normal">361</span>
+<span class="normal">362</span>
+<span class="normal">363</span>
+<span class="normal">364</span>
+<span class="normal">365</span>
+<span class="normal">366</span>
+<span class="normal">367</span>
+<span class="normal">368</span>
+<span class="normal">369</span>
+<span class="normal">370</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">VariableInstance</span><span class="p">(</span><span class="n">_ProxyVariable</span><span class="p">,</span> <span class="n">Instance</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; VariableInstance is an instantiation of a Variable.</span>
+
+<span class="sd">    It inherits from Variable (except for id() and name() that are replaced by variable_id() and variable_name()</span>
+<span class="sd">    to prevent confusion with id and name of the instance) and from Instance (except for id() and name() that are</span>
+<span class="sd">    replaced by instance_id() and instance_name())</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variable</span><span class="p">:</span> <span class="n">Variable</span><span class="p">,</span>
+                 <span class="n">instance</span><span class="p">:</span> <span class="n">Instance</span><span class="p">):</span>
+        <span class="n">_ProxyVariable</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variable</span><span class="o">.</span><span class="n">_variable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_instance</span> <span class="o">=</span> <span class="n">instance</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">instance_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instance</span><span class="o">.</span><span class="n">id</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">instance_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instance</span><span class="o">.</span><span class="n">name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instance</span><span class="o">.</span><span class="n">metadata</span>
+
+    <span class="nd">@instance_name</span><span class="o">.</span><span class="n">setter</span>
+    <span class="nd">@utils</span><span class="o">.</span><span class="n">catch_rpc_error</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">instance_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">instance_name</span> <span class="o">!=</span> <span class="n">name</span><span class="p">:</span>
+            <span class="n">req</span> <span class="o">=</span> <span class="n">variables_pb2</span><span class="o">.</span><span class="n">UpdateInstanceRequest</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instance_id</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">utils</span><span class="o">.</span><span class="n">pb_string</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">UpdateInstance</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_instance</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="nd">@utils</span><span class="o">.</span><span class="n">catch_rpc_error</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">!=</span> <span class="n">value</span><span class="p">:</span>
+            <span class="n">req</span> <span class="o">=</span> <span class="n">variables_pb2</span><span class="o">.</span><span class="n">UpdateInstanceRequest</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instance_id</span><span class="p">,</span> <span class="n">add_metadata</span><span class="o">=</span><span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">value</span><span class="p">})</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">UpdateInstance</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_instance</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@utils</span><span class="o">.</span><span class="n">catch_rpc_error</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">del_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">:</span>
+            <span class="n">req</span> <span class="o">=</span> <span class="n">variables_pb2</span><span class="o">.</span><span class="n">UpdateInstanceRequest</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instance_id</span><span class="p">,</span> <span class="n">del_metadata_keys</span><span class="o">=</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">UpdateInstance</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instance</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> does not exist in metadata&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;VariableInstance </span><span class="si">{}</span><span class="s2">:</span><span class="si">{}</span><span class="s2"> (</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">variable_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">instance_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">instance_id</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">  </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">_ProxyVariable</span><span class="o">.</span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instance</span><span class="o">.</span><span class="fm">__str__</span><span class="p">())</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../../client/admin-reference/" class="btn btn-neutral float-left" title="Admin"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../record-reference/" class="btn btn-neutral float-right" title="Records">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../../client/admin-reference/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../record-reference/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
