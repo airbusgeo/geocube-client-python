@@ -3,12 +3,11 @@ from typing import Tuple, List, Any
 
 import numpy as np
 import xarray
-from geocube.entities import cubeiterator
 from xarray.backends import BackendEntrypoint, BackendArray
 from xarray.core import indexing as xarray_indexing
 
 from geocube import entities, sdk
-from geocube.utils import SparseFullArray, indexing
+from geocube.sdk.array import SparseFullArray, indexing
 
 
 def open_geocube(

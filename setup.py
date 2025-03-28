@@ -30,7 +30,7 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     entry_points={
-        "xarray.backends": ["geocube=geocube.sdk.geocube_xarray:GeocubeBackendEntrypoint"],
+        "xarray.backends": ["geocube=geocube.sdk.xarray:GeocubeBackendEntrypoint"],
     },
     python_requires='>=3.7',
 )
