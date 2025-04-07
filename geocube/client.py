@@ -299,6 +299,30 @@ class Client:
         """
         return self._index_dataset(uri, record, instance, dformat, bands, min_out, max_out, exponent, managed)
 
+    def delete_datasets(self, instances: List[Union[str, entities.VariableInstance]],
+                        records: List[Union[str, entities.Record]],
+                        file_patterns: List[str] = None,
+                        execution_level: entities.ExecutionLevel = entities.ExecutionLevel.STEP_BY_STEP_CRITICAL,
+                        job_name: str = None, allow_empty_instances=False, allow_empty_records=False) \
+            -> entities.Job:
+        """
+        Function to delete datasets that are referenced by a list of instances and a list of records.
+
+        Args:
+            instances: select all the datasets referenced by these instances.
+            records: select all the datasets referenced by these records.
+            file_patterns: select all the datasets with on of the given file patterns
+                (support * and ? for all or any characters and trailing (?i) for case-insensitiveness)
+            execution_level: see entities.ExecutionLevel.
+            job_name: [optional] gives a name to the job, otherwise, a name will be automatically generated
+            allow_empty_instances: [optional] allows instances to be empty.
+                @warning It means that the job will delete all the instances for the given records.
+            allow_empty_records: [optional] allows records to be empty.
+                @warning It means that the job will delete all the records for the given instances.
+        """
+        return self._delete_datasets(instances, records, file_patterns,  execution_level,
+                                     job_name, allow_empty_instances, allow_empty_records)
+
     def get_cube_metadata(self, params: entities.CubeParams) -> entities.CubeMetadata:
         return self._get_cube_metadata(params)
 
@@ -661,6 +685,45 @@ class Client:
                                                             dformat=entities.DataFormat.from_user(dformat),
                                                             min_out=min_out, max_out=max_out, exponent=exponent)])]
         return self.index(cs)
+
+    @utils.catch_rpc_error
+    def _delete_datasets(self, instances: List[Union[str, entities.VariableInstance]],
+                         records: List[Union[str, entities.Record]],
+                         file_patterns: List[str],
+                         execution_level: entities.ExecutionLevel,
+                         job_name: str, allow_empty_instances: bool, allow_empty_records: bool,
+                         stub=None) \
+            -> entities.Job:
+        if len(records) == 0 and not allow_empty_records:
+            raise ValueError("DeleteDataset: records is empty, but it has not been allowed. "
+                             "Empty records means that all the datasets for the given instances are about to be "
+                             "deleted. If this is what is wanted, please set allow_empty_records=True")
+        if len(instances) == 0 and not allow_empty_instances:
+            raise ValueError("DeleteDataset: instances is empty, but it has not been allowed. "
+                             "Empty instances means that all the datasets for the given records are about to be "
+                             "deleted. If this is what is wanted, please set allow_empty_instances=True")
+
+        if file_patterns is not None:
+            if isinstance(file_patterns, str):
+                file_patterns = [file_patterns]
+            assert isinstance(file_patterns, list)
+
+        if len(records) == 0 and len(instances) == 0:
+            warnings.warn("this job may be about to delete the whole database")
+            if execution_level == entities.ExecutionLevel.ASYNCHRONOUS or \
+                    execution_level == entities.ExecutionLevel.SYNCHRONOUS:
+                raise ValueError("I cannot allow that in a non-interactive execution_level. "
+                                 "Please use execution_level == entities.ExecutionLevel.STEP_BY_STEP_CRITICAL.")
+        if stub is None:
+            stub = self.stub
+        res = stub.DeleteDatasets(operations_pb2.DeleteDatasetsRequest(
+            job_name=job_name if job_name is not None else f"Deletion_{datetime.now()}_{len(records)}_records",
+            execution_level=execution_level.value,
+            instance_ids=entities.get_ids(instances), record_ids=entities.get_ids(records),
+            dataset_patterns=file_patterns)
+        )
+
+        return entities.Job.from_pb(self.stub, res.job)
 
     @utils.catch_rpc_error
     def _get_cube_metadata(self, params: entities.CubeParams) -> entities.CubeMetadata:

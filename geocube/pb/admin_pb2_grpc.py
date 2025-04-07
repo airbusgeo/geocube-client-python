@@ -3,6 +3,7 @@
 import grpc
 
 from geocube.pb import admin_pb2 as geocube_dot_pb_dot_admin__pb2
+from geocube.pb import operations_pb2 as geocube_dot_pb_dot_operations__pb2
 
 
 class AdminStub(object):
@@ -29,8 +30,8 @@ class AdminStub(object):
                 )
         self.DeleteDatasets = channel.unary_unary(
                 '/geocube.Admin/DeleteDatasets',
-                request_serializer=geocube_dot_pb_dot_admin__pb2.DeleteDatasetsRequest.SerializeToString,
-                response_deserializer=geocube_dot_pb_dot_admin__pb2.DeleteDatasetsResponse.FromString,
+                request_serializer=geocube_dot_pb_dot_operations__pb2.DeleteDatasetsRequest.SerializeToString,
+                response_deserializer=geocube_dot_pb_dot_operations__pb2.DeleteDatasetsResponse.FromString,
                 )
 
 
@@ -73,8 +74,8 @@ def add_AdminServicer_to_server(servicer, server):
             ),
             'DeleteDatasets': grpc.unary_unary_rpc_method_handler(
                     servicer.DeleteDatasets,
-                    request_deserializer=geocube_dot_pb_dot_admin__pb2.DeleteDatasetsRequest.FromString,
-                    response_serializer=geocube_dot_pb_dot_admin__pb2.DeleteDatasetsResponse.SerializeToString,
+                    request_deserializer=geocube_dot_pb_dot_operations__pb2.DeleteDatasetsRequest.FromString,
+                    response_serializer=geocube_dot_pb_dot_operations__pb2.DeleteDatasetsResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -135,7 +136,7 @@ class Admin(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/geocube.Admin/DeleteDatasets',
-            geocube_dot_pb_dot_admin__pb2.DeleteDatasetsRequest.SerializeToString,
-            geocube_dot_pb_dot_admin__pb2.DeleteDatasetsResponse.FromString,
+            geocube_dot_pb_dot_operations__pb2.DeleteDatasetsRequest.SerializeToString,
+            geocube_dot_pb_dot_operations__pb2.DeleteDatasetsResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

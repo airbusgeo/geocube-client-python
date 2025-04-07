@@ -119,6 +119,11 @@ class GeocubeStub(object):
                 request_serializer=geocube_dot_pb_dot_operations__pb2.IndexDatasetsRequest.SerializeToString,
                 response_deserializer=geocube_dot_pb_dot_operations__pb2.IndexDatasetsResponse.FromString,
                 )
+        self.DeleteDatasets = channel.unary_unary(
+                '/geocube.Geocube/DeleteDatasets',
+                request_serializer=geocube_dot_pb_dot_operations__pb2.DeleteDatasetsRequest.SerializeToString,
+                response_deserializer=geocube_dot_pb_dot_operations__pb2.DeleteDatasetsResponse.FromString,
+                )
         self.ConfigConsolidation = channel.unary_unary(
                 '/geocube.Geocube/ConfigConsolidation',
                 request_serializer=geocube_dot_pb_dot_operations__pb2.ConfigConsolidationRequest.SerializeToString,
@@ -362,6 +367,13 @@ class GeocubeServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def DeleteDatasets(self, request, context):
+        """Delete datasets using records, instances and/or filepath
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def ConfigConsolidation(self, request, context):
         """Configurate a consolidation process
         """
@@ -599,6 +611,11 @@ def add_GeocubeServicer_to_server(servicer, server):
                     servicer.IndexDatasets,
                     request_deserializer=geocube_dot_pb_dot_operations__pb2.IndexDatasetsRequest.FromString,
                     response_serializer=geocube_dot_pb_dot_operations__pb2.IndexDatasetsResponse.SerializeToString,
+            ),
+            'DeleteDatasets': grpc.unary_unary_rpc_method_handler(
+                    servicer.DeleteDatasets,
+                    request_deserializer=geocube_dot_pb_dot_operations__pb2.DeleteDatasetsRequest.FromString,
+                    response_serializer=geocube_dot_pb_dot_operations__pb2.DeleteDatasetsResponse.SerializeToString,
             ),
             'ConfigConsolidation': grpc.unary_unary_rpc_method_handler(
                     servicer.ConfigConsolidation,
@@ -1035,6 +1052,23 @@ class Geocube(object):
         return grpc.experimental.unary_unary(request, target, '/geocube.Geocube/IndexDatasets',
             geocube_dot_pb_dot_operations__pb2.IndexDatasetsRequest.SerializeToString,
             geocube_dot_pb_dot_operations__pb2.IndexDatasetsResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def DeleteDatasets(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/geocube.Geocube/DeleteDatasets',
+            geocube_dot_pb_dot_operations__pb2.DeleteDatasetsRequest.SerializeToString,
+            geocube_dot_pb_dot_operations__pb2.DeleteDatasetsResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
