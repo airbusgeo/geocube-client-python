@@ -7,7 +7,9 @@ from xarray.backends import BackendEntrypoint, BackendArray
 from xarray.core import indexing as xarray_indexing
 
 from geocube import entities, sdk
-from geocube.sdk.array import SparseFullArray, indexing
+from geocube.entities import cubeiterator
+from geocube.sdk.xarray import SparseFullArray
+from geocube.utils import indexing
 
 
 def open_geocube(

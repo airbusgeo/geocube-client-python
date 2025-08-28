@@ -1,3 +1,4 @@
+from typing import Callable
 import retrying
 from geocube.utils import GeocubeError
 
@@ -34,9 +35,11 @@ def is_retriable_geocube_error(error):
     return isinstance(error, GeocubeError) and not error.is_not_found() and not error.is_already_exists()
 
 
-def retry_on_geocube_error(func_name: str, max_delay_s: float, error=is_retriable_geocube_error):
+def retry_on_geocube_error(func_name: str, max_delay_s: float, error: Callable[[Exception], bool] = is_retriable_geocube_error):
+    return exponential_retry(func_name, max_delay_s, error)
+
+def exponential_retry(func_name: str, max_delay_s: float, error: Callable[[Exception], bool]):
     w = ExponentialWait(func_name)
     return retrying.retry(wait_func=w,
                           stop_max_delay=max_delay_s*1000,
                           retry_on_exception=CopyException(error, w))
-
