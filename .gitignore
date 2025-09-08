@@ -2,3 +2,5 @@
 /.idea/
 /Jupyter/.ipynb_checkpoints/*
 /Jupyter/dask-worker-space/
+build
+geocube_client.egg-info

@@ -7,6 +7,7 @@ import numpy as np
 
 import geocube
 from geocube import entities, sdk
+from geocube.entities import cubeiterator
 from geocube.sdk import ConnectionParams
 from geocube.sdk.multiprocess import _has_parameter
 from geocube.utils import GeocubeError
