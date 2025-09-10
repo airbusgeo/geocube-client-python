@@ -24,7 +24,9 @@ if [ "$DOWNLOADER_GDAL_NUM_BLOCKS" != "" ]; then
 fi
 
 # We start Downloader.
-loop_exec "/usr/bin/downloader -port 8083 -with-gcs $OPTIONS" 10 > /var/log/downloader_output.log 2>&1 &
+export LOGLEVEL=INFO
+echo "/usr/bin/downloader -port 8083 -with-gcs -maxConnectionAge 3600 -gdalNumThreads=-1 $OPTIONS"
+loop_exec "/usr/bin/downloader -port 8083 -with-gcs -maxConnectionAge 3600 -gdalNumThreads=-1 $OPTIONS" 10 > /var/log/downloader_output.log 2>&1 &
 
 # We start by adding extra apt packages, since pip modules may required library
 if [ "$EXTRA_APT_PACKAGES" ]; then

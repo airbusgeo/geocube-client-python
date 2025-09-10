@@ -1,139 +1,79 @@
-ARG GDALVERSION=3.4.1
-ARG PROJVERSION=7.2.1
-ARG GEOSVERSION=3.8.1
+ARG GDALVERSION=3.8.4
 ARG GEOCUBEVERSION=v1.0.3
 ARG GEOCUBECLIENTVERSION=v1.0.3
-
-FROM ubuntu:focal AS builder
-ARG PROJVERSION
-ARG GEOSVERSION
-ARG GDALVERSION
-ARG GEOCUBEVERSION
-ARG GEOCUBECLIENTVERSION
 ARG GO_VERSION=1.23.2
 
-ENV DEBIAN_FRONTEND noninteractive
+FROM ubuntu:noble AS builder
+ARG GDALVERSION
+ARG GEOCUBEVERSION
+ARG GO_VERSION
+
+ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=Etc/UTC
 
 RUN apt update \
-    && apt install -y git pkg-config curl libcurl4-gnutls-dev sqlite3 libsqlite3-dev make g++ libzstd-dev libboost-all-dev libtool libtiff-dev musl-dev autoconf automake build-essential \
+    && apt install -y \
+        build-essential \
+        cmake \
+        curl \
+        git \
+        g++ \
+        libboost-filesystem-dev \
+        libcurl4-openssl-dev \
+        libdeflate-dev \
+        libjpeg-dev \
+        liblerc-dev \
+        libproj-dev \
+        libwebp-dev \
+        libtiff-dev \
+        libzstd-dev \
+        pkg-config \
     && rm -rf /var/lib/apt/lists/* \
     && apt autoremove -y \
     && apt clean -y
 
-RUN curl -fsL "https://golang.org/dl/go${GO_VERSION}.linux-amd64.tar.gz" | tar -C /usr/local -xzf -
-
-ENV PATH="/usr/local/go/bin:${PATH}"
-
 WORKDIR /build
 
-RUN mkdir proj && cd proj && curl -sL https://github.com/OSGeo/proj.4/releases/download/$PROJVERSION/proj-$PROJVERSION.tar.gz -o proj-$PROJVERSION.tar.gz && \
-    mkdir proj && \
-    tar  xzf proj-$PROJVERSION.tar.gz -C proj --strip-components 1 && \
-    cd proj && \
-    ./configure && \
-    make -j8 && \
-    make install && \
-    cd /build && rm -rf proj
+RUN mkdir gdal && cd gdal &&\
+    curl -sL https://github.com/OSGeo/gdal/releases/download/v$GDALVERSION/gdal-$GDALVERSION.tar.gz | tar xz --strip-components 1 &&\
+	mkdir -p build && cd build && \
+    cmake .. \
+        -DBUILD_TESTING=OFF \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DOGR_BUILD_OPTIONAL_DRIVERS=OFF \
+        -DGDAL_BUILD_OPTIONAL_DRIVERS=OFF \
+        -DGDAL_USE_CURL=ON \
+        -DGDAL_USE_OPENCL=OFF \
+        -DGDAL_USE_EXPAT=OFF \
+        -DGDAL_USE_LIBXML2=OFF \
+        -DGDAL_USE_SQLITE3=OFF \
+        -DGDAL_USE_XERCESC=OFF \
+        -DGDAL_USE_TIFF_INTERNAL=ON \
+        -DGDAL_USE_GEOTIFF_INTERNAL=ON \
+        -DGDAL_ENABLE_DRIVER_WEBP=ON \
+        -DGDAL_ENABLE_DRIVER_JPEG=ON \
+        -DGDAL_USE_LERC=ON \
+        -DGDAL_USE_ZSTD=ON && \
+    cmake --build . --target install && \
+    ldconfig /usr/local/lib &&\
+    cd /build && rm -rf gdal
+ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/
 
-RUN mkdir geos && cd geos && curl -sL http://download.osgeo.org/geos/geos-$GEOSVERSION.tar.bz2 -o geos.tbz2 && \
-     tar xf geos.tbz2 && \
-     cd geos-$GEOSVERSION && \
-     ./configure && \
-     make -j8 && \
-     make install && \
-     cd /build && rm -rf geos
+RUN curl -fsL "https://golang.org/dl/go${GO_VERSION}.linux-amd64.tar.gz" | tar -C /usr/local -xzf -
+ENV PATH="/usr/local/go/bin:${PATH}"
 
-
-RUN mkdir gdal && cd gdal && curl -sL https://github.com/OSGeo/gdal/releases/download/v$GDALVERSION/gdal-$GDALVERSION.tar.gz -o gdal.tar.gz && \
-    mkdir gdal && \
-    tar xzf gdal.tar.gz -C gdal --strip-components 1 && \
-    cd gdal && \
-    ./configure \
-    	    --disable-lto \
-    		--disable-static \
-    		--enable-shared \
-    		--disable-all-optional-drivers \
-    		--without-gnm \
-    		--without-qhull \
-    		--without-sqlite3 \
-    		--without-pcidsk \
-    		--without-gif \
-    		--without-pcraster \
-    		--with-geos \
-    		--with-curl \
-    		--with-jpeg \
-    		--with-libtiff=internal \
-    		--with-webp \
-    		--with-zstd \
-    		--with-geotiff=internal \
-    		--enable-driver-wmts \
-    		--enable-driver-wms && \
-    	make -j8 && \
-    	make install &&\
-    	 (for i in \
-                # BAG driver
-                /usr/local/share/gdal/bag*.xml \
-                # SXF driver
-                /usr/local/share/gdal/default.rsc \
-                # unused
-                /usr/local/share/gdal/*.svg \
-                # unused
-                /usr/local/share/gdal/*.png \
-                # GML driver
-                /usr/local/share/gdal/*.gfs \
-                # GML driver
-                /usr/local/share/gdal/gml_registry.xml \
-                # NITF driver
-                /usr/local/share/gdal/nitf* \
-                # NITF driver
-                /usr/local/share/gdal/gt_datum.csv \
-                # NITF driver
-                /usr/local/share/gdal/gt_ellips.csv \
-                # PDF driver
-                /usr/local/share/gdal/pdf* \
-                # PDS4 driver
-                /usr/local/share/gdal/pds* \
-                # S57 driver
-                /usr/local/share/gdal/s57* \
-                # VDV driver
-                /usr/local/share/gdal/vdv* \
-                # DXF driver
-                /usr/local/share/gdal/*.dxf \
-                # DGN driver
-                /usr/local/share/gdal/*.dgn \
-                # OSM driver
-                /usr/local/share/gdal/osm* \
-                # GMLAS driver
-                /usr/local/share/gdal/gmlas* \
-                # PLScenes driver
-                /usr/local/share/gdal/plscenes* \
-                # netCDF driver
-                /usr/local/share/gdal/netcdf_config.xsd \
-                # PCIDSK driver
-                /usr/local/share/gdal/pci* \
-                # ECW and ERS drivers
-                /usr/local/share/gdal/ecw_cs.wkt \
-                # EEDA driver
-                /usr/local/share/gdal/eedaconf.json \
-                # MAP driver / ImportFromOZI()
-                /usr/local/share/gdal/ozi_* \
-           ;do rm $i; done) &&\
-        (for i in /usr/local/lib/*; do strip -s $i 2>/dev/null || /bin/true; done) &&\
-        ldconfig /usr/local/lib &&\
-        cd /build && rm -rf gdal
-
-RUN git clone -b $GEOCUBEVERSION https://github.com/airbusgeo/geocube.git \
+RUN git clone -b $GEOCUBEVERSION --depth 1 https://github.com/airbusgeo/geocube.git \
     && cd geocube/cmd/downloader \
     && go build -ldflags="-s -w" \
     && mv downloader /build/ \
     && cd /build && rm -rf geocube
 
-FROM ubuntu:focal
+FROM ubuntu:noble
 ARG GDALVERSION
+ARG GEOCUBECLIENTVERSION
 
 ENV GRPC_ENABLE_FORK_SUPPORT=1
-ENV TINI_VERSION v0.19.0
+ENV TINI_VERSION=v0.19.0
 
 COPY --from=builder /usr/local/lib /usr/local/lib
 COPY --from=builder /usr/local/share /usr/local/share
@@ -149,34 +89,32 @@ RUN apt update \
         python3-pip \
         python3-setuptools \
         python3-dev \
+        python3-numpy \
         pkg-config \
+        libcurl4 \
         libjpeg62 \
         libdeflate0 \
-        libcurl4-gnutls-dev \
-        libtiff5 \
+        liblerc4 \
+        libwebp7 \
+        libzstd1 \
+        libproj25 \
+        libtiff6 \
     && ln -s /usr/bin/python3 /usr/bin/python \
-    && python3 -m pip install \
+    && python3 -m pip install --break-system-packages \
         gcloud \
-        "protobuf < 4" \
-        "numpy < 1.22" \
         git+https://github.com/airbusgeo/geocube-client-python.git@$GEOCUBECLIENTVERSION \
-        click~=7.1.2 \
-        bokeh>=2.1.1 \
-    # gdal must be installed after numpy
-    && python3 -m pip install GDAL==$GDALVERSION \
+        GDAL==$GDALVERSION \
     && apt remove -y git g++ python3-dev --purge \
     && rm -rf /var/lib/apt/lists/* \
     && apt autoremove -y \
     && apt clean -y
 
+# Test critical imports (move to separate layer for better caching)
+RUN python -c "from osgeo import gdal, gdal_array; print('GDAL version:', gdal.__version__);"
+
+ENV GEOCUBE_DOWNLOADER=127.0.0.1:8083
 
 # Add Tini
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 RUN chmod +x /tini && chmod +x /usr/bin/prepare_downloader.sh && mkdir /var/log/container
 ENTRYPOINT ["/tini", "-g", "--", "/usr/bin/prepare_downloader.sh"]
-
-# Test critical imports (move to separate layer for better caching)
-RUN python -c "\
-from osgeo import gdal, gdal_array, ogr, osr; \
-print('GDAL version:', gdal.__version__); \
-print('GDAL array support: OK')"
