@@ -4,21 +4,26 @@ ARG GEOSVERSION=3.8.1
 ARG GEOCUBEVERSION=v1.0.3
 ARG GEOCUBECLIENTVERSION=v1.0.3
 
-FROM ubuntu:focal as builder
+FROM ubuntu:focal AS builder
 ARG PROJVERSION
 ARG GEOSVERSION
 ARG GDALVERSION
 ARG GEOCUBEVERSION
 ARG GEOCUBECLIENTVERSION
+ARG GO_VERSION=1.23.2
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV TZ=Etc/UTC
 
 RUN apt update \
-    && apt install -y golang-1.20 git pkg-config curl libcurl4-gnutls-dev sqlite3 libsqlite3-dev make g++ libzstd-dev libboost-all-dev libtool libtiff-dev musl-dev autoconf automake build-essential \
+    && apt install -y git pkg-config curl libcurl4-gnutls-dev sqlite3 libsqlite3-dev make g++ libzstd-dev libboost-all-dev libtool libtiff-dev musl-dev autoconf automake build-essential \
     && rm -rf /var/lib/apt/lists/* \
     && apt autoremove -y \
     && apt clean -y
+
+RUN curl -fsL "https://golang.org/dl/go${GO_VERSION}.linux-amd64.tar.gz" | tar -C /usr/local -xzf -
+
+ENV PATH="/usr/local/go/bin:${PATH}"
 
 WORKDIR /build
 
@@ -120,7 +125,7 @@ RUN mkdir gdal && cd gdal && curl -sL https://github.com/OSGeo/gdal/releases/dow
 
 RUN git clone -b $GEOCUBEVERSION https://github.com/airbusgeo/geocube.git \
     && cd geocube/cmd/downloader \
-    && /usr/lib/go-1.20/bin/go build -ldflags="-s -w" \
+    && go build -ldflags="-s -w" \
     && mv downloader /build/ \
     && cd /build && rm -rf geocube
 
@@ -169,3 +174,9 @@ RUN apt update \
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 RUN chmod +x /tini && chmod +x /usr/bin/prepare_downloader.sh && mkdir /var/log/container
 ENTRYPOINT ["/tini", "-g", "--", "/usr/bin/prepare_downloader.sh"]
+
+# Test critical imports (move to separate layer for better caching)
+RUN python -c "\
+from osgeo import gdal, gdal_array, ogr, osr; \
+print('GDAL version:', gdal.__version__); \
+print('GDAL array support: OK')"
