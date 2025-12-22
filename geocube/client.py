@@ -24,28 +24,46 @@ from geocube.stub import Stub
 FileFormatRaw = catalog_pb2.Raw
 FileFormatGTiff = catalog_pb2.GTiff
 
-
 class Client:
-    def __init__(self, uri: str, secure: bool = False, api_key: str = "", verbose: bool = True):
+    def __init__(self, uri: str, secure: bool = False, api_key: str = "", verbose: bool = True,
+                 root_certificates: Optional[bytes] = None, ssl_target_name_override: Optional[str] = None):
         """
         Initialise the connexion to the Geocube Server
 
         Args:
             uri: of the Geocube Server
             secure: True to use a TLS Connexion
-            api_key: (optional) API Key if Geocube Server is secured using a bearer authentication
+            api_key: (optional) API Key if Geocube Server is secured using bearer authentication
             verbose: set the default verbose mode
+            root_certificates: (optional) PEM-encoded root certificates for server authentication.
+                This is needed if the server uses a self-signed certificate.
+            ssl_target_name_override: (optional) Used to override the server name for SSL verification.
+                This is useful in cases where the server's certificate does not match the hostname.
         """
         assert uri is not None and uri != "", "geocube.Client: Cannot connect: uri is not defined"
         self.pid = os.getpid()
         if secure:
-            credentials = grpc.ssl_channel_credentials()
+            # Start with SSL credentials. If root_certificates is None, system CAs are used.
+            channel_credentials = grpc.ssl_channel_credentials(root_certificates=root_certificates)
+
+            # If an API key is provided, combine it with the SSL credentials.
             if api_key != "":
                 token_credentials = grpc.access_token_call_credentials(api_key)
-                credentials = grpc.composite_channel_credentials(credentials, token_credentials)
-            self._channel = grpc.secure_channel(uri, credentials)
+                channel_credentials = grpc.composite_channel_credentials(channel_credentials, token_credentials)
+
+            # Prepare channel options, like overriding the SSL target name for verification.
+            options = []
+            if ssl_target_name_override:
+                options.append(('grpc.ssl_target_name_override', ssl_target_name_override))
+
+            self._channel = grpc.secure_channel(uri, channel_credentials, options=options)
         else:
             self._channel = grpc.insecure_channel(uri)
+            if root_certificates is not None:
+                warnings.warn("`root_certificates` is provided, but `secure` is False. The certificate will be ignored.")
+            if ssl_target_name_override is not None:
+                warnings.warn("`ssl_target_name_override` is provided, but `secure` is False. The override will be ignored.")
+
         self.stub = Stub(geocube_grpc.GeocubeStub(self._channel))
         self.verbose = verbose
         if verbose:
