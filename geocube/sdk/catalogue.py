@@ -22,6 +22,7 @@ image_callback_t = Union[
              np.ndarray],
     functools.partial
 ]
+
 """
 image_callback_t is the prototype of a function called for every image received by a sdk.get_cube().
 It can be used to process each new image on the fly during a get_cube process.
