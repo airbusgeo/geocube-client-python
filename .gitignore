@@ -4,3 +4,4 @@
 /Jupyter/dask-worker-space/
 build
 geocube_client.egg-info
+.venv
