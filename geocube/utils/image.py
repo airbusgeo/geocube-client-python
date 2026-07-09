@@ -6,7 +6,7 @@ import numpy as np
 os.environ["GDAL_DISABLE_READDIR_ON_OPEN"] = "EMPTY_DIR"
 
 
-def timeseries_to_animation(images: List[np.array], gif_name: str, duration=0.2, legend: List[str] = None):
+def timeseries_to_animation(images: List[np.array], gif_name: str, duration=0.2, legend: List[str] = None) -> None:
     """
     image = (np.clip(image, 0, 1)*255).astype("uint8")
     """
@@ -27,12 +27,17 @@ def timeseries_to_animation(images: List[np.array], gif_name: str, duration=0.2,
             writer.append_data(image)
 
 
-def image_to_geotiff(image: np.ndarray, transform: affine.Affine, projection: str, no_data: float, filename: str):
-    import rasterio
+def image_to_geotiff_value(image: np.ndarray) -> np.ndarray:
     if len(image.shape) == 2:
-        image = np.expand_dims(image, 0)
-    elif image.shape[0] > image.shape[2]:
-        image = np.moveaxis(image, -1, 0)
+        return np.expand_dims(image, 0)
+    if image.shape[0] > image.shape[2]:
+        return np.moveaxis(image, -1, 0)
+    return image
+
+
+def image_to_geotiff(image: np.ndarray, transform: affine.Affine, projection: str, no_data: float, filename: str) -> None:
+    import rasterio
+    image = image_to_geotiff_value(image)
 
     meta = {'driver': 'GTiff',
             'dtype': image.dtype.name,
