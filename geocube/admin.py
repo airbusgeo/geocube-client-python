@@ -1,9 +1,10 @@
 from typing import List, Union, Dict, Tuple
+from warnings import deprecated
 
 from geocube import utils, entities, Client
 from geocube.pb import admin_pb2, admin_pb2_grpc
 from geocube.stub import Stub
-from geocube.utils import deprecated, GeocubeError
+from geocube.utils import GeocubeError
 
 
 class Admin(Client):
