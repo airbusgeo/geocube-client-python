@@ -196,14 +196,14 @@ class Client:
         """
         return self._create_records(aoi_ids, names, tags, dates)
 
-    def get_record(self, _id: str) -> entities.Record:
+    def get_record(self, an_id: str, /) -> entities.Record:
         """ Deprecated: use record() instead """
-        return self.record(_id)
+        return self.record(an_id)
 
-    def record(self, _id: str) -> entities.Record:
+    def record(self, an_id: str, /) -> entities.Record:
         """ Get a record by id """
-        r = self.get_records([_id])
-        assert len(r) > 0, utils.GeocubeError("get_record", grpc.StatusCode.NOT_FOUND.name, "record with id " + _id)
+        r = self.get_records([an_id])
+        assert len(r) > 0, utils.GeocubeError("get_record", grpc.StatusCode.NOT_FOUND.name, "record with id " + an_id)
         return r[0]
 
     def get_records(self, ids: List[str]) -> List[entities.Record]:
