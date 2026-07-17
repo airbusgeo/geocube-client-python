@@ -685,6 +685,9 @@ class Client:
                                              aoi=entities.aoi_to_pb(aoi),
                                              limit=limit, page=page, with_aoi=with_aoi)
 
+        if from_time is not None and to_time is not None and from_time >= to_time:
+            message = f"Dates problem: from time ({from_time.isoformat()}) must be before to time ({to_time.isoformat()})"
+            raise ValueError(message)
         if from_time is not None:
             req.from_time.FromDatetime(from_time)
         if to_time is not None:
