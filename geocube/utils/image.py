@@ -27,7 +27,7 @@ def timeseries_to_animation(images: List[np.array], gif_name: str, duration=0.2,
             writer.append_data(image)
 
 
-def image_to_geotiff(image: np.ndarray, transform: affine.Affine, projection: str, no_data: float, filename: str):
+def image_to_geotiff(image: np.ndarray, transform: affine.Affine, projection: str, no_data: float | None, filename: str):
     import rasterio
     if len(image.shape) == 2:
         image = np.expand_dims(image, 0)
