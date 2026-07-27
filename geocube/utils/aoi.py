@@ -22,8 +22,7 @@ def gpd_read_remote_file(url):
         return geopandas.read_file(file)
 
 def plot_aoi(aoi: geopandas.GeoSeries,
-             world_path: str = "https://www.naturalearthdata.com/http//www.naturalearthdata.com/"
-                               "download/110m/cultural/ne_110m_admin_0_countries.zip",
+             world_path: str = "https://naciscdn.org/naturalearth/110m/cultural/ne_110m_admin_0_countries.zip",
              ax=None, margin_pc=5, color=None):
     if world_path is not None:
         base = gpd_read_remote_file(world_path).plot(color='lightgrey', edgecolor='white', ax=ax)

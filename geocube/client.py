@@ -345,6 +345,16 @@ class Client:
                                      job_name, allow_empty_instances, allow_empty_records)
 
     def get_cube_metadata(self, params: entities.CubeParams) -> entities.CubeMetadata:
+        """ Retrieves all the information on the images to create the a cube defined by the provided `CubeParams`, without processing and returning the images.
+        Metadata provides the URL and the internal data format of the images, the records... 
+        The metadata can be send to a Downloader Service that will be able to create the cube of data.
+
+        Args:
+            params: CubeParams (see entities.CubeParams)
+
+        Returns:
+            An entities.CubeMetadata object containing metadata about the cube, such as the number of images, datasets, and other relevant information.
+        """
         return self._get_cube_metadata(params)
 
     def get_cube(self, params: entities.CubeParams, *,
@@ -360,7 +370,7 @@ class Client:
             compression: define a level of compression to speed up the transfer.
                 (0: no compression, 1 fastest to 9 best, -2: huffman-only)
                 The data is compressed by the server and decompressed by the Client.
-                Compression=0 or -2 is advised if the bandwidth is not limited
+                Compression=0, 1 or -2 is advised if the bandwidth is not limited
             verbose: display information during the transfer (if None, use the default verbose mode)
 
         Returns:
@@ -421,7 +431,7 @@ class Client:
         affine.Affine.translation(366162, 4833123)*affine.Affine.scale(30, -30))
         >>> cube_it = client.get_cube_it(cube_params)
         >>> from matplotlib import pyplot as plt
-        >>> for image, _, _, err in cube_it:
+        >>> for image, _, err in cube_it:
         ...     if err != cubeiterator.NOT_FOUND_ERROR:
         ...         raise ValueError(err)
         ...     if not err:
