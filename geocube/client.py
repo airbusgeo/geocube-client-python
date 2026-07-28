@@ -196,8 +196,8 @@ class Client:
         """
         return self._create_records(aoi_ids, names, tags, dates)
 
+    @warnings.deprecated("Use record() instead")
     def get_record(self, _id: str) -> entities.Record:
-        """ Deprecated: use record() instead """
         return self.record(_id)
 
     def record(self, _id: str) -> entities.Record:
@@ -539,8 +539,8 @@ class Client:
             return self._get_job_by_id(id_, log_page, log_limit)
         raise ValueError("job: either name or id_ must be defined")
 
+    @warnings.deprecated("Use job() instead")
     def get_job(self, job_id: Union[str, entities.Job], log_page=0, log_limit=1000):
-        """ Deprecated: use job() """
         return self.job(id_=job_id, log_page=log_page, log_limit=log_limit)
 
     def list_jobs(self, name_like: str = "", page=0, limit=10):
@@ -1040,5 +1040,6 @@ class Client:
             ))
         return self.get_job(self.stub.Consolidate(req).job_id)
 
+@warnings.deprecated("Use Client instead")
 class Consolidater(Client):
-    """ Deprecated: use Client instead """
+    pass
